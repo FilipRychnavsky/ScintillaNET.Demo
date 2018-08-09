@@ -1,4 +1,6 @@
-﻿using System;
+﻿// MainForm.cs
+// Filip,20180809 10:13:04
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
