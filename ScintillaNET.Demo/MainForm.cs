@@ -18,12 +18,12 @@ namespace ScintillaNET.Demo {
 			InitializeComponent();
 		}
 
-		ScintillaNET.Scintilla m_rScintilla_TextArea;
+		StandardScintilla m_rScintilla_TextArea;
 
 		private void MainForm_Load(object sender, EventArgs e) {
 
 			// CREATE CONTROL
-			m_rScintilla_TextArea = new ScintillaNET.Scintilla();
+			m_rScintilla_TextArea = new StandardScintilla();
 			TextPanel.Controls.Add(m_rScintilla_TextArea);
 
 			// BASIC CONFIG

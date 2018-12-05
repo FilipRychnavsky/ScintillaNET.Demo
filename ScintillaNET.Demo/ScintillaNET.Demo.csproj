@@ -52,6 +52,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StandardScintilla.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\HotKeyManager.cs" />
     <Compile Include="Utils\SearchManager.cs" />
     <EmbeddedResource Include="MainForm.resx">
