@@ -140,6 +140,7 @@ namespace ScintillaNET.Demo
 			//https://github.com/jacobslusser/ScintillaNET/issues/111
 			m_rScintilla_TextArea.Text = "http://www.google.com";
 			m_rScintilla_TextArea.CurrentPosition = 21;
+			m_rScintilla_TextArea.AppendText("\nhttp://www.izurnal.cz");
 			string sDebug_FistLine = m_rScintilla_TextArea.Lines[1].Text;
 			//m_rScintilla_TextArea.AddText("\r\nhttp://www.izurnal.cz");
 			// Define an indicator for marking URLs and apply it to a range.
@@ -156,6 +157,16 @@ namespace ScintillaNET.Demo
 			m_rScintilla_TextArea.Indicators[1].ForeColor = Color.Blue;
 			m_rScintilla_TextArea.IndicatorCurrent = 1;
 			m_rScintilla_TextArea.IndicatorFillRange(0, 21); // Use your own logic
+
+
+			// Indicator 10 - out of Lexer indicators - Filip
+			m_rScintilla_TextArea.Indicators[10].Style = IndicatorStyle.TextFore;
+			m_rScintilla_TextArea.Indicators[10].ForeColor = Color.LightBlue;
+			m_rScintilla_TextArea.IndicatorCurrent = 10;
+			string sDemoTextRange = m_rScintilla_TextArea.GetTextRange(25, 30);
+			int nText_Length = m_rScintilla_TextArea.Text.Length;
+			int nTextLength = m_rScintilla_TextArea.TextLength; // before updating Cache - old size - https://github.com/jacobslusser/ScintillaNET/issues/223
+			m_rScintilla_TextArea.IndicatorFillRange(25,30);
 
 			// BONUS: Configure call tips for the Dwell events
 			m_rScintilla_TextArea.MouseDwellTime = 400;
