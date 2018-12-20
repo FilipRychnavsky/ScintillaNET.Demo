@@ -33,9 +33,14 @@ namespace ScintillaNET.Demo {
 			// INITIAL VIEW CONFIG
 			m_rScintilla_TextArea.WrapMode = WrapMode.None;
 			m_rScintilla_TextArea.IndentationGuides = IndentView.LookBoth;
-//TODO_FR 199 Implement ToolTip between DwellStart und DwellEnd events
-//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
-//https://github.com/jacobslusser/ScintillaNET/issues/111
+			//TODO_FR 199 Implement ToolTip between DwellStart und DwellEnd events
+			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
+			//https://github.com/jacobslusser/ScintillaNET/issues/111
+			m_rScintilla_TextArea.MouseDwellTime = 400;
+			m_rScintilla_TextArea.Styles[Style.CallTip].SizeF = 8.25F;
+			m_rScintilla_TextArea.Styles[Style.CallTip].ForeColor = SystemColors.InfoText;
+			m_rScintilla_TextArea.Styles[Style.CallTip].BackColor = SystemColors.Info;
+
 
 			// STYLING
 			InitColors();
@@ -60,6 +65,45 @@ namespace ScintillaNET.Demo {
 			InitHotkeys();
 
 		}
+
+
+private string GetUrlAtPosition(int position)
+{
+    // Determine whether the specified position is on our 'URL indicator'
+    // and if so whether it is a valid URL.
+
+    var urlIndicator = m_rScintilla_TextArea.Indicators[0];
+    var bitmapFlag = (1 << urlIndicator.Index);
+    var bitmap = m_rScintilla_TextArea.IndicatorAllOnFor(position);
+    var hasUrlIndicator = ((bitmapFlag & bitmap) == bitmapFlag);
+
+    if (hasUrlIndicator)
+    {
+        var startPos = urlIndicator.Start(position);
+        var endPos = urlIndicator.End(position);
+
+        var text = m_rScintilla_TextArea.GetTextRange(startPos, endPos - startPos).Trim();
+        if (Uri.IsWellFormedUriString(text, UriKind.Absolute))
+            return text;
+    }
+
+    return null;
+}
+
+private void m_rScintilla_TextArea_DwellStart(object sender, DwellEventArgs e)
+{
+    var url = GetUrlAtPosition(e.Position);
+    if (url != null)
+    {
+        var callTip = string.Format("{0}\nCTRL + click to follow link", url);
+        m_rScintilla_TextArea.CallTipShow(e.Position, callTip);
+    }
+}
+
+private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
+{
+    m_rScintilla_TextArea.CallTipCancel();
+}
 
 		private void InitColors() {
 
