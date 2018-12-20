@@ -41,7 +41,7 @@ namespace ScintillaNET.Demo
 			// STYLING
 			InitColors();
 			InitSyntaxColoring();
-
+*/
 			// NUMBER MARGIN
 			InitNumberMargin();
 
@@ -54,6 +54,7 @@ namespace ScintillaNET.Demo
 			// DRAG DROP
 			InitDragDropFile();
 
+/*
 			// DEFAULT FILE
 			//LoadDataFromFile("../../MainForm.cs");
 			LoadDataFromFile("d:/Projekte/Scintilla/Adressen.Adressen.Lokale CSharp Aktionen.cs");
@@ -138,7 +139,9 @@ namespace ScintillaNET.Demo
 			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
 			//https://github.com/jacobslusser/ScintillaNET/issues/111
 			m_rScintilla_TextArea.Text = "http://www.google.com";
-			string sDebug_FistLine = m_rScintilla_TextArea.Lines[0].Text;
+			m_rScintilla_TextArea.CurrentPosition = 21;
+			string sDebug_FistLine = m_rScintilla_TextArea.Lines[1].Text;
+			//m_rScintilla_TextArea.AddText("\r\nhttp://www.izurnal.cz");
 			// Define an indicator for marking URLs and apply it to a range.
 			// How you determine a particular range is a URL and how often
 			// you want to scan the text for them is up to you.
