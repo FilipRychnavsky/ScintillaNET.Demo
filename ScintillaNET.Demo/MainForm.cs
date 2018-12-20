@@ -36,6 +36,23 @@ namespace ScintillaNET.Demo {
 			//TODO_FR 199 Implement ToolTip between DwellStart und DwellEnd events
 			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
 			//https://github.com/jacobslusser/ScintillaNET/issues/111
+			m_rScintilla_TextArea.Text = "http://www.google.com";
+			// Define an indicator for marking URLs and apply it to a range.
+			// How you determine a particular range is a URL and how often
+			// you want to scan the text for them is up to you.
+			m_rScintilla_TextArea.Indicators[0].Style = IndicatorStyle.Plain;
+			m_rScintilla_TextArea.Indicators[0].ForeColor = Color.Blue;
+			m_rScintilla_TextArea.IndicatorCurrent = 0;
+			m_rScintilla_TextArea.IndicatorFillRange(0, 21); // Use your own logic
+
+			// An indicator can only change the appearance of text in one way. So
+			// to get underlining AND a different foreground color we have to use two indicators.
+			m_rScintilla_TextArea.Indicators[1].Style = IndicatorStyle.TextFore;
+			m_rScintilla_TextArea.Indicators[1].ForeColor = Color.Blue;
+			m_rScintilla_TextArea.IndicatorCurrent = 1;
+			m_rScintilla_TextArea.IndicatorFillRange(0, 21); // Use your own logic
+
+			// BONUS: Configure call tips for the Dwell events
 			m_rScintilla_TextArea.MouseDwellTime = 400;
 			m_rScintilla_TextArea.Styles[Style.CallTip].SizeF = 8.25F;
 			m_rScintilla_TextArea.Styles[Style.CallTip].ForeColor = SystemColors.InfoText;
