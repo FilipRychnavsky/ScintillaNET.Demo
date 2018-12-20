@@ -163,30 +163,6 @@ namespace ScintillaNET.Demo
 			//FRs Anmeldung von Dwell
 			m_rScintilla_TextArea.DwellStart	+= m_rScintilla_TextArea_DwellStart;
 			m_rScintilla_TextArea.DwellEnd		+= m_rScintilla_TextArea_DwellEnd;
-
-
-			// STYLING
-			InitColors();
-			InitSyntaxColoring();
-
-			// NUMBER MARGIN
-			InitNumberMargin();
-
-			// BOOKMARK MARGIN
-			InitBookmarkMargin();
-
-			// CODE FOLDING MARGIN
-			InitCodeFolding();
-
-			// DRAG DROP
-			InitDragDropFile();
-
-			// DEFAULT FILE
-			//LoadDataFromFile("../../MainForm.cs");
-			LoadDataFromFile("c:/Users/FRychnavsky/source/repos/Filip/Scintilla/Adressen.Adressen.Lokale CSharp Aktionen.cs");
-			// INIT HOTKEYS
-			InitHotkeys();
-
 		}
 
 		private void InitSyntaxColoring()
