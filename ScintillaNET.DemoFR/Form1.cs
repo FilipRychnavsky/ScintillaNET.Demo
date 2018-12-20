@@ -63,8 +63,6 @@ namespace ScintillaNET.DemoFR
 			int nTextLength = m_rScintilla_TextArea.TextLength; // before updating Cache - old size - https://github.com/jacobslusser/ScintillaNET/issues/223
 			m_rScintilla_TextArea.IndicatorFillRange(25,30);
 */
-			// BONUS: Configure call tips for the Dwell events
-			m_rScintilla_TextArea.MouseDwellTime = 400;
 			m_rScintilla_TextArea.Styles[Style.CallTip].SizeF = 8.25F;
 			m_rScintilla_TextArea.Styles[Style.CallTip].ForeColor = SystemColors.InfoText;
 			m_rScintilla_TextArea.Styles[Style.CallTip].BackColor = SystemColors.Info;
