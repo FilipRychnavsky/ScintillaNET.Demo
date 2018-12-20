@@ -23,12 +23,51 @@ namespace ScintillaNET.DemoFR
 			m_rPanel.Controls.Add(m_rScintilla_TextArea);
 			InitText();
 			InitDwelling();
+			SetIndicatorForURL();
 			m_rScintilla_TextArea.CharAdded += OnCharAdded;
 			m_rScintilla_TextArea.AutoCSelection += OnScintilla_AutoCSelection;
 //m_rScintilla_TextArea.AutoCCurrent
 			m_rScintilla_TextArea.AutoCIgnoreCase = true;
 			m_rScintilla_TextArea.AutoCCompleted += OnScintilla_AutoCCompleted;
 //m_rScintilla_TextArea.autoc
+		}
+
+		private void SetIndicatorForURL()
+		{
+			//TODO_FR 199 Implement ToolTip between DwellStart und DwellEnd events
+			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
+			//https://github.com/jacobslusser/ScintillaNET/issues/111
+			// Define an indicator for marking URLs and apply it to a range.
+			// How you determine a particular range is a URL and how often
+			// you want to scan the text for them is up to you.
+			m_rScintilla_TextArea.Indicators[0].Style = IndicatorStyle.Plain;
+			m_rScintilla_TextArea.Indicators[0].ForeColor = Color.Blue;
+			m_rScintilla_TextArea.IndicatorCurrent = 0;
+			m_rScintilla_TextArea.IndicatorFillRange(0, 21); // Use your own logic
+
+			// An indicator can only change the appearance of text in one way. So
+			// to get underlining AND a different foreground color we have to use two indicators.
+			m_rScintilla_TextArea.Indicators[1].Style = IndicatorStyle.TextFore;
+			m_rScintilla_TextArea.Indicators[1].ForeColor = Color.Blue;
+			m_rScintilla_TextArea.IndicatorCurrent = 1;
+			m_rScintilla_TextArea.IndicatorFillRange(0, 21); // Use your own logic
+
+
+/*
+			// Indicator 10 - out of Lexer indicators - Filip
+			m_rScintilla_TextArea.Indicators[10].Style = IndicatorStyle.TextFore;
+			m_rScintilla_TextArea.Indicators[10].ForeColor = Color.LightBlue;
+			m_rScintilla_TextArea.IndicatorCurrent = 10;
+			string sDemoTextRange = m_rScintilla_TextArea.GetTextRange(25, 30);
+			int nText_Length = m_rScintilla_TextArea.Text.Length;
+			int nTextLength = m_rScintilla_TextArea.TextLength; // before updating Cache - old size - https://github.com/jacobslusser/ScintillaNET/issues/223
+			m_rScintilla_TextArea.IndicatorFillRange(25,30);
+*/
+			// BONUS: Configure call tips for the Dwell events
+			m_rScintilla_TextArea.MouseDwellTime = 400;
+			m_rScintilla_TextArea.Styles[Style.CallTip].SizeF = 8.25F;
+			m_rScintilla_TextArea.Styles[Style.CallTip].ForeColor = SystemColors.InfoText;
+			m_rScintilla_TextArea.Styles[Style.CallTip].BackColor = SystemColors.Info;
 		}
 
 		private void OnScintilla_AutoCCompleted(object sender, AutoCSelectionEventArgs e)
@@ -74,14 +113,36 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.DwellEnd		+= m_rScintilla_TextArea_DwellEnd;
 		}
 
-		//TODO_FR #CodeEditor OnCharAdded
-
-		private void m_rScintilla_TextArea_DwellStart(object sender, DwellEventArgs rDwellEventArgs)
+		private string GetUrlAtPosition(int position)
 		{
-			//TODO_FR #CodeEditor react an Dwelling on Autocompletion List Items
-			int nPosition = rDwellEventArgs.Position;
-			var callTip = string.Format("Tooltip for Position {0}", nPosition);
-			m_rScintilla_TextArea.CallTipShow(rDwellEventArgs.Position, callTip);
+			// Determine whether the specified position is on our 'URL indicator'
+			// and if so whether it is a valid URL.
+
+			var urlIndicator = m_rScintilla_TextArea.Indicators[0];
+			var bitmapFlag = (1 << urlIndicator.Index);
+			var bitmap = m_rScintilla_TextArea.IndicatorAllOnFor(position);
+			var hasUrlIndicator = ((bitmapFlag & bitmap) == bitmapFlag);
+
+			if (hasUrlIndicator) {
+				var startPos = urlIndicator.Start(position);
+				var endPos = urlIndicator.End(position);
+
+				var text = m_rScintilla_TextArea.GetTextRange(startPos, endPos - startPos).Trim();
+				if (Uri.IsWellFormedUriString(text, UriKind.Absolute))
+					return text;
+			}
+
+			return null;
+		}
+
+
+		private void m_rScintilla_TextArea_DwellStart(object sender, DwellEventArgs e)
+		{
+			var url = GetUrlAtPosition(e.Position);
+			if (url != null) {
+				var callTip = string.Format("{0}\nCTRL + click to follow link", url);
+				m_rScintilla_TextArea.CallTipShow(e.Position, callTip);
+			}
 		}
 
 		private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
@@ -92,10 +153,18 @@ namespace ScintillaNET.DemoFR
 
 		private void InitText()
 		{
+			// InitText
+			m_rScintilla_TextArea.Text = "http://www.google.com";
+			m_rScintilla_TextArea.CurrentPosition = 21;
+			m_rScintilla_TextArea.AppendText("\nhttp://www.izurnal.cz");
+			string sDebug_FistLine = m_rScintilla_TextArea.Lines[1].Text;
+			//m_rScintilla_TextArea.AddText("\r\nhttp://www.izurnal.cz");
+/*
 			m_rScintilla_TextArea.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
  			m_rScintilla_TextArea.AddText("\nTheView");
 			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
+*/
 		}
 
 	}
