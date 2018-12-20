@@ -52,8 +52,7 @@ namespace ScintillaNET.Demo {
 
 			// DEFAULT FILE
 			//LoadDataFromFile("../../MainForm.cs");
-			LoadDataFromFile("d:/Projekte/Scintilla/Adressen.Adressen.Lokale CSharp Aktionen.cs");
-
+			LoadDataFromFile("c:/Users/FRychnavsky/source/repos/Filip/Scintilla/Adressen.Adressen.Lokale CSharp Aktionen.cs");
 			// INIT HOTKEYS
 			InitHotkeys();
 
