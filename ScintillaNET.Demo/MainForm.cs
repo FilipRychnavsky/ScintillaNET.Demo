@@ -33,6 +33,9 @@ namespace ScintillaNET.Demo {
 			// INITIAL VIEW CONFIG
 			m_rScintilla_TextArea.WrapMode = WrapMode.None;
 			m_rScintilla_TextArea.IndentationGuides = IndentView.LookBoth;
+//TODO_FR 199 Implement ToolTip between DwellStart und DwellEnd events
+//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
+//https://github.com/jacobslusser/ScintillaNET/issues/111
 
 			// STYLING
 			InitColors();
