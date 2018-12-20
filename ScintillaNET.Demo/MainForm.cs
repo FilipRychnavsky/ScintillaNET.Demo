@@ -33,15 +33,15 @@ namespace ScintillaNET.Demo
 			// BASIC CONFIG
 			m_rScintilla_TextArea.Dock = System.Windows.Forms.DockStyle.Fill;
 			m_rScintilla_TextArea.TextChanged += (this.OnTextChanged);
-/*
-			// INITIAL VIEW CONFIG
-			m_rScintilla_TextArea.WrapMode = WrapMode.None;
-			m_rScintilla_TextArea.IndentationGuides = IndentView.LookBoth;
+			/*
+						// INITIAL VIEW CONFIG
+						m_rScintilla_TextArea.WrapMode = WrapMode.None;
+						m_rScintilla_TextArea.IndentationGuides = IndentView.LookBoth;
 
-			// STYLING
-			InitColors();
-			InitSyntaxColoring();
-*/
+						// STYLING
+						InitColors();
+						InitSyntaxColoring();
+			*/
 			// NUMBER MARGIN
 			InitNumberMargin();
 
@@ -54,18 +54,29 @@ namespace ScintillaNET.Demo
 			// DRAG DROP
 			InitDragDropFile();
 
-/*
-			// DEFAULT FILE
-			//LoadDataFromFile("../../MainForm.cs");
-			LoadDataFromFile("d:/Projekte/Scintilla/Adressen.Adressen.Lokale CSharp Aktionen.cs");
-*/
+			/*
+						// DEFAULT FILE
+						//LoadDataFromFile("../../MainForm.cs");
+						LoadDataFromFile("d:/Projekte/Scintilla/Adressen.Adressen.Lokale CSharp Aktionen.cs");
+			*/
+			InitText();
+
+
 			// INIT HOTKEYS
 			InitHotkeys();
 
 			InitDwelling();
 		}
 
-
+		private void InitText()
+		{
+			// InitText
+			m_rScintilla_TextArea.Text = "http://www.google.com";
+			m_rScintilla_TextArea.CurrentPosition = 21;
+			m_rScintilla_TextArea.AppendText("\nhttp://www.izurnal.cz");
+			string sDebug_FistLine = m_rScintilla_TextArea.Lines[1].Text;
+			//m_rScintilla_TextArea.AddText("\r\nhttp://www.izurnal.cz");
+		}
 
 		private void InitColors()
 		{
@@ -135,45 +146,6 @@ namespace ScintillaNET.Demo
 
 		private void InitDwelling()
 		{
-			//TODO_FR 199 Implement ToolTip between DwellStart und DwellEnd events
-			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
-			//https://github.com/jacobslusser/ScintillaNET/issues/111
-			m_rScintilla_TextArea.Text = "http://www.google.com";
-			m_rScintilla_TextArea.CurrentPosition = 21;
-			m_rScintilla_TextArea.AppendText("\nhttp://www.izurnal.cz");
-			string sDebug_FistLine = m_rScintilla_TextArea.Lines[1].Text;
-			//m_rScintilla_TextArea.AddText("\r\nhttp://www.izurnal.cz");
-			// Define an indicator for marking URLs and apply it to a range.
-			// How you determine a particular range is a URL and how often
-			// you want to scan the text for them is up to you.
-			m_rScintilla_TextArea.Indicators[0].Style = IndicatorStyle.Plain;
-			m_rScintilla_TextArea.Indicators[0].ForeColor = Color.Blue;
-			m_rScintilla_TextArea.IndicatorCurrent = 0;
-			m_rScintilla_TextArea.IndicatorFillRange(0, 21); // Use your own logic
-
-			// An indicator can only change the appearance of text in one way. So
-			// to get underlining AND a different foreground color we have to use two indicators.
-			m_rScintilla_TextArea.Indicators[1].Style = IndicatorStyle.TextFore;
-			m_rScintilla_TextArea.Indicators[1].ForeColor = Color.Blue;
-			m_rScintilla_TextArea.IndicatorCurrent = 1;
-			m_rScintilla_TextArea.IndicatorFillRange(0, 21); // Use your own logic
-
-
-			// Indicator 10 - out of Lexer indicators - Filip
-			m_rScintilla_TextArea.Indicators[10].Style = IndicatorStyle.TextFore;
-			m_rScintilla_TextArea.Indicators[10].ForeColor = Color.LightBlue;
-			m_rScintilla_TextArea.IndicatorCurrent = 10;
-			string sDemoTextRange = m_rScintilla_TextArea.GetTextRange(25, 30);
-			int nText_Length = m_rScintilla_TextArea.Text.Length;
-			int nTextLength = m_rScintilla_TextArea.TextLength; // before updating Cache - old size - https://github.com/jacobslusser/ScintillaNET/issues/223
-			m_rScintilla_TextArea.IndicatorFillRange(25,30);
-
-			// BONUS: Configure call tips for the Dwell events
-			m_rScintilla_TextArea.MouseDwellTime = 400;
-			m_rScintilla_TextArea.Styles[Style.CallTip].SizeF = 8.25F;
-			m_rScintilla_TextArea.Styles[Style.CallTip].ForeColor = SystemColors.InfoText;
-			m_rScintilla_TextArea.Styles[Style.CallTip].BackColor = SystemColors.Info;
-
 			//FRs Anmeldung von Dwell
 			m_rScintilla_TextArea.DwellStart	+= m_rScintilla_TextArea_DwellStart;
 			m_rScintilla_TextArea.DwellEnd		+= m_rScintilla_TextArea_DwellEnd;
@@ -691,10 +663,47 @@ namespace ScintillaNET.Demo
 			}
 		}
 
+
+
+
 		#endregion
 
+		private void m_rButton_Indicator_for_URL_Click(object sender, EventArgs e)
+		{
+			//TODO_FR 199 Implement ToolTip between DwellStart und DwellEnd events
+			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
+			//https://github.com/jacobslusser/ScintillaNET/issues/111
+			// Define an indicator for marking URLs and apply it to a range.
+			// How you determine a particular range is a URL and how often
+			// you want to scan the text for them is up to you.
+			m_rScintilla_TextArea.Indicators[0].Style = IndicatorStyle.Plain;
+			m_rScintilla_TextArea.Indicators[0].ForeColor = Color.Blue;
+			m_rScintilla_TextArea.IndicatorCurrent = 0;
+			m_rScintilla_TextArea.IndicatorFillRange(0, 21); // Use your own logic
+
+			// An indicator can only change the appearance of text in one way. So
+			// to get underlining AND a different foreground color we have to use two indicators.
+			m_rScintilla_TextArea.Indicators[1].Style = IndicatorStyle.TextFore;
+			m_rScintilla_TextArea.Indicators[1].ForeColor = Color.Blue;
+			m_rScintilla_TextArea.IndicatorCurrent = 1;
+			m_rScintilla_TextArea.IndicatorFillRange(0, 21); // Use your own logic
 
 
+			// Indicator 10 - out of Lexer indicators - Filip
+			m_rScintilla_TextArea.Indicators[10].Style = IndicatorStyle.TextFore;
+			m_rScintilla_TextArea.Indicators[10].ForeColor = Color.LightBlue;
+			m_rScintilla_TextArea.IndicatorCurrent = 10;
+			string sDemoTextRange = m_rScintilla_TextArea.GetTextRange(25, 30);
+			int nText_Length = m_rScintilla_TextArea.Text.Length;
+			int nTextLength = m_rScintilla_TextArea.TextLength; // before updating Cache - old size - https://github.com/jacobslusser/ScintillaNET/issues/223
+			m_rScintilla_TextArea.IndicatorFillRange(25,30);
 
+			// BONUS: Configure call tips for the Dwell events
+			m_rScintilla_TextArea.MouseDwellTime = 400;
+			m_rScintilla_TextArea.Styles[Style.CallTip].SizeF = 8.25F;
+			m_rScintilla_TextArea.Styles[Style.CallTip].ForeColor = SystemColors.InfoText;
+			m_rScintilla_TextArea.Styles[Style.CallTip].BackColor = SystemColors.Info;
+
+		}
 	}
 }
