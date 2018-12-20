@@ -27,19 +27,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.m_rPanel = new System.Windows.Forms.Panel();
 			this.SuspendLayout();
 			// 
-			// contextMenuStrip1
-			// 
-			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-			// 
 			// m_rPanel
 			// 
-			this.m_rPanel.BackColor = System.Drawing.Color.LightSkyBlue;
+			this.m_rPanel.BackColor = System.Drawing.Color.Linen;
 			this.m_rPanel.Location = new System.Drawing.Point(24, 125);
 			this.m_rPanel.Name = "m_rPanel";
 			this.m_rPanel.Size = new System.Drawing.Size(251, 261);
@@ -58,8 +51,6 @@
 		}
 
 		#endregion
-
-		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.Panel m_rPanel;
 	}
 }
