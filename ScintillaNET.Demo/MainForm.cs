@@ -58,6 +58,10 @@ namespace ScintillaNET.Demo {
 			m_rScintilla_TextArea.Styles[Style.CallTip].ForeColor = SystemColors.InfoText;
 			m_rScintilla_TextArea.Styles[Style.CallTip].BackColor = SystemColors.Info;
 
+			//FRs Anmeldung von Dwell
+			m_rScintilla_TextArea.DwellStart	+= m_rScintilla_TextArea_DwellStart;
+			m_rScintilla_TextArea.DwellEnd		+= m_rScintilla_TextArea_DwellEnd;
+
 
 			// STYLING
 			InitColors();
@@ -83,8 +87,7 @@ namespace ScintillaNET.Demo {
 
 		}
 
-
-private string GetUrlAtPosition(int position)
+		private string GetUrlAtPosition(int position)
 {
     // Determine whether the specified position is on our 'URL indicator'
     // and if so whether it is a valid URL.
