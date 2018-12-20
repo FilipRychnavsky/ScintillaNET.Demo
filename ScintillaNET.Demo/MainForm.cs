@@ -33,7 +33,7 @@ namespace ScintillaNET.Demo
 			// BASIC CONFIG
 			m_rScintilla_TextArea.Dock = System.Windows.Forms.DockStyle.Fill;
 			m_rScintilla_TextArea.TextChanged += (this.OnTextChanged);
-
+/*
 			// INITIAL VIEW CONFIG
 			m_rScintilla_TextArea.WrapMode = WrapMode.None;
 			m_rScintilla_TextArea.IndentationGuides = IndentView.LookBoth;
@@ -57,7 +57,7 @@ namespace ScintillaNET.Demo
 			// DEFAULT FILE
 			//LoadDataFromFile("../../MainForm.cs");
 			LoadDataFromFile("d:/Projekte/Scintilla/Adressen.Adressen.Lokale CSharp Aktionen.cs");
-
+*/
 			// INIT HOTKEYS
 			InitHotkeys();
 
