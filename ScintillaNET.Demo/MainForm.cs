@@ -12,15 +12,19 @@ using System.IO;
 using ScintillaNET;
 using ScintillaNET.Demo.Utils;
 
-namespace ScintillaNET.Demo {
-	public partial class MainForm : Form {
-		public MainForm() {
+namespace ScintillaNET.Demo
+{
+	public partial class MainForm : Form
+	{
+		public MainForm()
+		{
 			InitializeComponent();
 		}
 
 		ScintillaNET.Scintilla m_rScintilla_TextArea;
 
-		private void MainForm_Load(object sender, EventArgs e) {
+		private void MainForm_Load(object sender, EventArgs e)
+		{
 
 			// CREATE CONTROL
 			m_rScintilla_TextArea = new ScintillaNET.Scintilla();
@@ -33,10 +37,108 @@ namespace ScintillaNET.Demo {
 			// INITIAL VIEW CONFIG
 			m_rScintilla_TextArea.WrapMode = WrapMode.None;
 			m_rScintilla_TextArea.IndentationGuides = IndentView.LookBoth;
+
+			// STYLING
+			InitColors();
+			InitSyntaxColoring();
+
+			// NUMBER MARGIN
+			InitNumberMargin();
+
+			// BOOKMARK MARGIN
+			InitBookmarkMargin();
+
+			// CODE FOLDING MARGIN
+			InitCodeFolding();
+
+			// DRAG DROP
+			InitDragDropFile();
+
+			// DEFAULT FILE
+			//LoadDataFromFile("../../MainForm.cs");
+			LoadDataFromFile("d:/Projekte/Scintilla/Adressen.Adressen.Lokale CSharp Aktionen.cs");
+
+			// INIT HOTKEYS
+			InitHotkeys();
+
+			InitDwelling();
+		}
+
+
+
+		private void InitColors()
+		{
+
+			m_rScintilla_TextArea.SetSelectionBackColor(true, IntToColor(0x114D9C));
+
+		}
+
+		private void InitHotkeys()
+		{
+
+			// register the hotkeys with the form
+			HotKeyManager.AddHotKey(this, OpenSearch, Keys.F, true);
+			HotKeyManager.AddHotKey(this, OpenFindDialog, Keys.F, true, false, true);
+			HotKeyManager.AddHotKey(this, OpenReplaceDialog, Keys.R, true);
+			HotKeyManager.AddHotKey(this, OpenReplaceDialog, Keys.H, true);
+			HotKeyManager.AddHotKey(this, Uppercase, Keys.U, true);
+			HotKeyManager.AddHotKey(this, Lowercase, Keys.L, true);
+			HotKeyManager.AddHotKey(this, ZoomIn, Keys.Oemplus, true);
+			HotKeyManager.AddHotKey(this, ZoomOut, Keys.OemMinus, true);
+			HotKeyManager.AddHotKey(this, ZoomDefault, Keys.D0, true);
+			HotKeyManager.AddHotKey(this, CloseSearch, Keys.Escape);
+
+			// remove conflicting hotkeys from scintilla
+			m_rScintilla_TextArea.ClearCmdKey(Keys.Control | Keys.F);
+			m_rScintilla_TextArea.ClearCmdKey(Keys.Control | Keys.R);
+			m_rScintilla_TextArea.ClearCmdKey(Keys.Control | Keys.H);
+			m_rScintilla_TextArea.ClearCmdKey(Keys.Control | Keys.L);
+			m_rScintilla_TextArea.ClearCmdKey(Keys.Control | Keys.U);
+
+		}
+		private string GetUrlAtPosition(int position)
+		{
+			// Determine whether the specified position is on our 'URL indicator'
+			// and if so whether it is a valid URL.
+
+			var urlIndicator = m_rScintilla_TextArea.Indicators[0];
+			var bitmapFlag = (1 << urlIndicator.Index);
+			var bitmap = m_rScintilla_TextArea.IndicatorAllOnFor(position);
+			var hasUrlIndicator = ((bitmapFlag & bitmap) == bitmapFlag);
+
+			if (hasUrlIndicator) {
+				var startPos = urlIndicator.Start(position);
+				var endPos = urlIndicator.End(position);
+
+				var text = m_rScintilla_TextArea.GetTextRange(startPos, endPos - startPos).Trim();
+				if (Uri.IsWellFormedUriString(text, UriKind.Absolute))
+					return text;
+			}
+
+			return null;
+		}
+
+		private void m_rScintilla_TextArea_DwellStart(object sender, DwellEventArgs e)
+		{
+			var url = GetUrlAtPosition(e.Position);
+			if (url != null) {
+				var callTip = string.Format("{0}\nCTRL + click to follow link", url);
+				m_rScintilla_TextArea.CallTipShow(e.Position, callTip);
+			}
+		}
+
+		private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
+		{
+			m_rScintilla_TextArea.CallTipCancel();
+		}
+
+		private void InitDwelling()
+		{
 			//TODO_FR 199 Implement ToolTip between DwellStart und DwellEnd events
 			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
 			//https://github.com/jacobslusser/ScintillaNET/issues/111
 			m_rScintilla_TextArea.Text = "http://www.google.com";
+			string sDebug_FistLine = m_rScintilla_TextArea.Lines[0].Text;
 			// Define an indicator for marking URLs and apply it to a range.
 			// How you determine a particular range is a URL and how often
 			// you want to scan the text for them is up to you.
@@ -87,74 +189,8 @@ namespace ScintillaNET.Demo {
 
 		}
 
-		private string GetUrlAtPosition(int position)
-{
-    // Determine whether the specified position is on our 'URL indicator'
-    // and if so whether it is a valid URL.
-
-    var urlIndicator = m_rScintilla_TextArea.Indicators[0];
-    var bitmapFlag = (1 << urlIndicator.Index);
-    var bitmap = m_rScintilla_TextArea.IndicatorAllOnFor(position);
-    var hasUrlIndicator = ((bitmapFlag & bitmap) == bitmapFlag);
-
-    if (hasUrlIndicator)
-    {
-        var startPos = urlIndicator.Start(position);
-        var endPos = urlIndicator.End(position);
-
-        var text = m_rScintilla_TextArea.GetTextRange(startPos, endPos - startPos).Trim();
-        if (Uri.IsWellFormedUriString(text, UriKind.Absolute))
-            return text;
-    }
-
-    return null;
-}
-
-private void m_rScintilla_TextArea_DwellStart(object sender, DwellEventArgs e)
-{
-    var url = GetUrlAtPosition(e.Position);
-    if (url != null)
-    {
-        var callTip = string.Format("{0}\nCTRL + click to follow link", url);
-        m_rScintilla_TextArea.CallTipShow(e.Position, callTip);
-    }
-}
-
-private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
-{
-    m_rScintilla_TextArea.CallTipCancel();
-}
-
-		private void InitColors() {
-
-			m_rScintilla_TextArea.SetSelectionBackColor(true, IntToColor(0x114D9C));
-
-		}
-
-		private void InitHotkeys() {
-
-			// register the hotkeys with the form
-			HotKeyManager.AddHotKey(this, OpenSearch, Keys.F, true);
-			HotKeyManager.AddHotKey(this, OpenFindDialog, Keys.F, true, false, true);
-			HotKeyManager.AddHotKey(this, OpenReplaceDialog, Keys.R, true);
-			HotKeyManager.AddHotKey(this, OpenReplaceDialog, Keys.H, true);
-			HotKeyManager.AddHotKey(this, Uppercase, Keys.U, true);
-			HotKeyManager.AddHotKey(this, Lowercase, Keys.L, true);
-			HotKeyManager.AddHotKey(this, ZoomIn, Keys.Oemplus, true);
-			HotKeyManager.AddHotKey(this, ZoomOut, Keys.OemMinus, true);
-			HotKeyManager.AddHotKey(this, ZoomDefault, Keys.D0, true);
-			HotKeyManager.AddHotKey(this, CloseSearch, Keys.Escape);
-
-			// remove conflicting hotkeys from scintilla
-			m_rScintilla_TextArea.ClearCmdKey(Keys.Control | Keys.F);
-			m_rScintilla_TextArea.ClearCmdKey(Keys.Control | Keys.R);
-			m_rScintilla_TextArea.ClearCmdKey(Keys.Control | Keys.H);
-			m_rScintilla_TextArea.ClearCmdKey(Keys.Control | Keys.L);
-			m_rScintilla_TextArea.ClearCmdKey(Keys.Control | Keys.U);
-
-		}
-
-		private void InitSyntaxColoring() {
+		private void InitSyntaxColoring()
+		{
 
 			// Configure the default style
 			m_rScintilla_TextArea.StyleResetDefault();
@@ -189,10 +225,11 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		}
 
-		private void OnTextChanged(object sender, EventArgs e) {
-
+		private void OnTextChanged(object sender, EventArgs e)
+		{
+			System.Diagnostics.Debug.WriteLine("OnTextChanged" + sender);
 		}
-		
+
 
 		#region Numbers, Bookmarks, Code Folding
 
@@ -227,7 +264,8 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 		/// </summary>
 		private const bool CODEFOLDING_CIRCULAR = true;
 
-		private void InitNumberMargin() {
+		private void InitNumberMargin()
+		{
 
 			m_rScintilla_TextArea.Styles[Style.LineNumber].BackColor = IntToColor(BACK_COLOR);
 			m_rScintilla_TextArea.Styles[Style.LineNumber].ForeColor = IntToColor(FORE_COLOR);
@@ -243,7 +281,8 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 			m_rScintilla_TextArea.MarginClick += TextArea_MarginClick;
 		}
 
-		private void InitBookmarkMargin() {
+		private void InitBookmarkMargin()
+		{
 
 			//m_rScintilla_TextArea.SetFoldMarginColor(true, IntToColor(BACK_COLOR));
 
@@ -262,7 +301,8 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		}
 
-		private void InitCodeFolding() {
+		private void InitCodeFolding()
+		{
 
 			m_rScintilla_TextArea.SetFoldMarginColor(true, IntToColor(BACK_COLOR));
 			m_rScintilla_TextArea.SetFoldMarginHighlightColor(true, IntToColor(BACK_COLOR));
@@ -297,7 +337,8 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		}
 
-		private void TextArea_MarginClick(object sender, MarginClickEventArgs e) {
+		private void TextArea_MarginClick(object sender, MarginClickEventArgs e)
+		{
 			if (e.Margin == BOOKMARK_MARGIN) {
 				// Do we have a marker for this line?
 				const uint mask = (1 << BOOKMARK_MARKER);
@@ -316,16 +357,19 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		#region Drag & Drop File
 
-		public void InitDragDropFile() {
+		public void InitDragDropFile()
+		{
 
 			m_rScintilla_TextArea.AllowDrop = true;
-			m_rScintilla_TextArea.DragEnter += delegate(object sender, DragEventArgs e) {
+			m_rScintilla_TextArea.DragEnter += delegate (object sender, DragEventArgs e)
+			{
 				if (e.Data.GetDataPresent(DataFormats.FileDrop))
 					e.Effect = DragDropEffects.Copy;
 				else
 					e.Effect = DragDropEffects.None;
 			};
-			m_rScintilla_TextArea.DragDrop += delegate(object sender, DragEventArgs e) {
+			m_rScintilla_TextArea.DragDrop += delegate (object sender, DragEventArgs e)
+			{
 
 				// get file drop
 				if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
@@ -343,7 +387,8 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		}
 
-		private void LoadDataFromFile(string path) {
+		private void LoadDataFromFile(string path)
+		{
 			if (File.Exists(path)) {
 				FileName.Text = Path.GetFileName(path);
 				m_rScintilla_TextArea.Text = File.ReadAllText(path);
@@ -354,112 +399,135 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		#region Main Menu Commands
 
-		private void openToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			if (openFileDialog.ShowDialog() == DialogResult.OK) {
 				LoadDataFromFile(openFileDialog.FileName);
 			}
 		}
 
-		private void findToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void findToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			OpenSearch();
 		}
 
-		private void findDialogToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void findDialogToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			OpenFindDialog();
 		}
 
-		private void findAndReplaceToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void findAndReplaceToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			OpenReplaceDialog();
 		}
 
-		private void cutToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			m_rScintilla_TextArea.Cut();
 		}
 
-		private void copyToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			m_rScintilla_TextArea.Copy();
 		}
 
-		private void pasteToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			m_rScintilla_TextArea.Paste();
 		}
 
-		private void selectAllToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			m_rScintilla_TextArea.SelectAll();
 		}
 
-		private void selectLineToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void selectLineToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			Line line = m_rScintilla_TextArea.Lines[m_rScintilla_TextArea.CurrentLine];
 			m_rScintilla_TextArea.SetSelection(line.Position + line.Length, line.Position);
 		}
 
-		private void clearSelectionToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void clearSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			m_rScintilla_TextArea.SetEmptySelection(0);
 		}
 
-		private void indentSelectionToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void indentSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			Indent();
 		}
 
-		private void outdentSelectionToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void outdentSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			Outdent();
 		}
 
-		private void uppercaseSelectionToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void uppercaseSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			Uppercase();
 		}
 
-		private void lowercaseSelectionToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void lowercaseSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			Lowercase();
 		}
 
-		private void wordWrapToolStripMenuItem1_Click(object sender, EventArgs e) {
+		private void wordWrapToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
 
 			// toggle word wrap
 			wordWrapItem.Checked = !wordWrapItem.Checked;
 			m_rScintilla_TextArea.WrapMode = wordWrapItem.Checked ? WrapMode.Word : WrapMode.None;
 		}
-		
-		private void indentGuidesToolStripMenuItem_Click(object sender, EventArgs e) {
+
+		private void indentGuidesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 
 			// toggle indent guides
 			indentGuidesItem.Checked = !indentGuidesItem.Checked;
 			m_rScintilla_TextArea.IndentationGuides = indentGuidesItem.Checked ? IndentView.LookBoth : IndentView.None;
 		}
 
-		private void hiddenCharactersToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void hiddenCharactersToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 
 			// toggle view whitespace
 			hiddenCharactersItem.Checked = !hiddenCharactersItem.Checked;
 			m_rScintilla_TextArea.ViewWhitespace = hiddenCharactersItem.Checked ? WhitespaceMode.VisibleAlways : WhitespaceMode.Invisible;
 		}
 
-		private void zoomInToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			ZoomIn();
 		}
 
-		private void zoomOutToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void zoomOutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			ZoomOut();
 		}
 
-		private void zoom100ToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void zoom100ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			ZoomDefault();
 		}
 
-		private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			m_rScintilla_TextArea.FoldAll(FoldAction.Contract);
 		}
 
-		private void expandAllToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			m_rScintilla_TextArea.FoldAll(FoldAction.Expand);
 		}
-		
+
 
 		#endregion
 
 		#region Uppercase / Lowercase
 
-		private void Lowercase() {
+		private void Lowercase()
+		{
 
 			// save the selection
 			int start = m_rScintilla_TextArea.SelectionStart;
@@ -472,7 +540,8 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 			m_rScintilla_TextArea.SetSelection(start, end);
 		}
 
-		private void Uppercase() {
+		private void Uppercase()
+		{
 
 			// save the selection
 			int start = m_rScintilla_TextArea.SelectionStart;
@@ -489,19 +558,22 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		#region Indent / Outdent
 
-		private void Indent() {
+		private void Indent()
+		{
 			// we use this hack to send "Shift+Tab" to scintilla, since there is no known API to indent,
 			// although the indentation function exists. Pressing TAB with the editor focused confirms this.
 			GenerateKeystrokes("{TAB}");
 		}
 
-		private void Outdent() {
+		private void Outdent()
+		{
 			// we use this hack to send "Shift+Tab" to scintilla, since there is no known API to outdent,
 			// although the indentation function exists. Pressing Shift+Tab with the editor focused confirms this.
 			GenerateKeystrokes("+{TAB}");
 		}
 
-		private void GenerateKeystrokes(string keys) {
+		private void GenerateKeystrokes(string keys)
+		{
 			HotKeyManager.Enable = false;
 			m_rScintilla_TextArea.Focus();
 			SendKeys.Send(keys);
@@ -512,15 +584,18 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		#region Zoom
 
-		private void ZoomIn() {
+		private void ZoomIn()
+		{
 			m_rScintilla_TextArea.ZoomIn();
 		}
 
-		private void ZoomOut() {
+		private void ZoomOut()
+		{
 			m_rScintilla_TextArea.ZoomOut();
 		}
 
-		private void ZoomDefault() {
+		private void ZoomDefault()
+		{
 			m_rScintilla_TextArea.Zoom = 0;
 		}
 
@@ -531,51 +606,61 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		bool SearchIsOpen = false;
 
-		private void OpenSearch() {
+		private void OpenSearch()
+		{
 
 			SearchManager.SearchBox = TxtSearch;
 			SearchManager.TextArea = m_rScintilla_TextArea;
 
 			if (!SearchIsOpen) {
 				SearchIsOpen = true;
-				InvokeIfNeeded(delegate() {
+				InvokeIfNeeded(delegate ()
+				{
 					PanelSearch.Visible = true;
 					TxtSearch.Text = SearchManager.LastSearch;
 					TxtSearch.Focus();
 					TxtSearch.SelectAll();
 				});
 			} else {
-				InvokeIfNeeded(delegate() {
+				InvokeIfNeeded(delegate ()
+				{
 					TxtSearch.Focus();
 					TxtSearch.SelectAll();
 				});
 			}
 		}
-		private void CloseSearch() {
+		private void CloseSearch()
+		{
 			if (SearchIsOpen) {
 				SearchIsOpen = false;
-				InvokeIfNeeded(delegate() {
+				InvokeIfNeeded(delegate ()
+				{
 					PanelSearch.Visible = false;
 					//CurBrowser.GetBrowser().StopFinding(true);
 				});
 			}
 		}
 
-		private void BtnClearSearch_Click(object sender, EventArgs e) {
+		private void BtnClearSearch_Click(object sender, EventArgs e)
+		{
 			CloseSearch();
 		}
 
-		private void BtnPrevSearch_Click(object sender, EventArgs e) {
+		private void BtnPrevSearch_Click(object sender, EventArgs e)
+		{
 			SearchManager.Find(false, false);
 		}
-		private void BtnNextSearch_Click(object sender, EventArgs e) {
+		private void BtnNextSearch_Click(object sender, EventArgs e)
+		{
 			SearchManager.Find(true, false);
 		}
-		private void TxtSearch_TextChanged(object sender, EventArgs e) {
+		private void TxtSearch_TextChanged(object sender, EventArgs e)
+		{
 			SearchManager.Find(true, true);
 		}
 
-		private void TxtSearch_KeyDown(object sender, KeyEventArgs e) {
+		private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
+		{
 			if (HotKeyManager.IsHotkey(e, Keys.Enter)) {
 				SearchManager.Find(true, false);
 			}
@@ -588,10 +673,12 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		#region Find & Replace Dialog
 
-		private void OpenFindDialog() {
+		private void OpenFindDialog()
+		{
 
 		}
-		private void OpenReplaceDialog() {
+		private void OpenReplaceDialog()
+		{
 
 
 		}
@@ -600,11 +687,13 @@ private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
 
 		#region Utils
 
-		public static Color IntToColor(int rgb) {
+		public static Color IntToColor(int rgb)
+		{
 			return Color.FromArgb(255, (byte)(rgb >> 16), (byte)(rgb >> 8), (byte)rgb);
 		}
 
-		public void InvokeIfNeeded(Action action) {
+		public void InvokeIfNeeded(Action action)
+		{
 			if (this.InvokeRequired) {
 				this.BeginInvoke(action);
 			} else {
