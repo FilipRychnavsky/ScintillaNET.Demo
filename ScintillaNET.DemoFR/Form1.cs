@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ScintillaNET;
+using System.Diagnostics;
 
 namespace ScintillaNET.DemoFR
 {
@@ -50,7 +51,9 @@ namespace ScintillaNET.DemoFR
 
 		private void OnScintilla_AutoCSelection(object sender, AutoCSelectionEventArgs rAutoCSelectionEventArgs)
 		{
-			string sDebug = rAutoCSelectionEventArgs.Text;
+			string sDebug = System.String.Format("selected Text: {0}; position: {1}", rAutoCSelectionEventArgs.Text, rAutoCSelectionEventArgs.Position);
+			sDebug += System.String.Format("\tnew lentgh: {0}", m_rScintilla_TextArea.TextLength);
+			Debug.WriteLine(sDebug);
 		}
 
 		private void InitDwelling()
@@ -80,7 +83,9 @@ namespace ScintillaNET.DemoFR
 
 		private void InitText()
 		{
-			m_rScintilla_TextArea.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. \nabc";
+			m_rScintilla_TextArea.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.TextLength);
+ 			m_rScintilla_TextArea.AddText("\nTheView");
 			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.TextLength);
 		}
 
