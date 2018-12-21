@@ -24,6 +24,9 @@ namespace ScintillaNET.DemoFR
 			InitDwelling();
 			m_rScintilla_TextArea.CharAdded += OnCharAdded;
 			m_rScintilla_TextArea.AutoCSelection += OnScintilla_AutoCSelection;
+//m_rScintilla_TextArea.AutoCCurrent
+			m_rScintilla_TextArea.AutoCIgnoreCase = true;
+//m_rScintilla_TextArea.autoc
 		}
 
 		private void OnCharAdded(object sender, CharAddedEventArgs e)
@@ -78,6 +81,7 @@ namespace ScintillaNET.DemoFR
 		private void InitText()
 		{
 			m_rScintilla_TextArea.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. \nabc";
+			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.TextLength);
 		}
 
 	}
