@@ -23,6 +23,7 @@ namespace ScintillaNET.DemoFR
 			InitText();
 			InitDwelling();
 			m_rScintilla_TextArea.CharAdded += OnCharAdded;
+			m_rScintilla_TextArea.AutoCSelection += OnScintilla_AutoCSelection;
 		}
 
 		private void OnCharAdded(object sender, CharAddedEventArgs e)
@@ -42,6 +43,11 @@ namespace ScintillaNET.DemoFR
 			int nLengthEntered = nCurrentPosition - nWordStartPosition;
 			string sAutoCompletionList = "aaa bbb ccc dddd eee";			
 			m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
+		}
+
+		private void OnScintilla_AutoCSelection(object sender, AutoCSelectionEventArgs rAutoCSelectionEventArgs)
+		{
+			string sDebug = rAutoCSelectionEventArgs.Text;
 		}
 
 		private void InitDwelling()
