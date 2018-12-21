@@ -32,6 +32,7 @@ namespace ScintillaNET.DemoFR
 
 		private void OnCharAdded(object sender, CharAddedEventArgs e)
 		{
+			Debug.WriteLine("Length of Text after OnCharAdded: {0}", m_rScintilla_TextArea.Text.Length);
 			if (e.Char == '.') {
 				ShowAutoCompletion();
 			}
@@ -51,8 +52,11 @@ namespace ScintillaNET.DemoFR
 
 		private void OnScintilla_AutoCSelection(object sender, AutoCSelectionEventArgs rAutoCSelectionEventArgs)
 		{
-			string sDebug = System.String.Format("selected Text: {0}; position: {1}", rAutoCSelectionEventArgs.Text, rAutoCSelectionEventArgs.Position);
-			sDebug += System.String.Format("\tnew lentgh: {0}", m_rScintilla_TextArea.TextLength);
+			string sDebug = System.String.Format("after selection:\nselected Text: {0}; position: {1}", rAutoCSelectionEventArgs.Text, rAutoCSelectionEventArgs.Position);
+			sDebug += System.String.Format("\nnew lentgh: {0}", m_rScintilla_TextArea.Text.Length);
+			sDebug += System.String.Format("\nWordFromPosition: {0}", m_rScintilla_TextArea.GetWordFromPosition(rAutoCSelectionEventArgs.Position));
+			// Minus 1 wegen dem Punkt
+			sDebug += System.String.Format("\nWordFromPosition - 1: {0}", m_rScintilla_TextArea.GetWordFromPosition(rAutoCSelectionEventArgs.Position - 1));
 			Debug.WriteLine(sDebug);
 		}
 
@@ -84,9 +88,9 @@ namespace ScintillaNET.DemoFR
 		private void InitText()
 		{
 			m_rScintilla_TextArea.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.TextLength);
+			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
  			m_rScintilla_TextArea.AddText("\nTheView");
-			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.TextLength);
+			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
 		}
 
 	}
