@@ -23,6 +23,26 @@ namespace ScintillaNET.DemoFR
 			InitText();
 			InitDwelling();
 			SetIndicatorForURL();
+			m_rScintilla_TextArea.CharAdded += OnCharAdded;
+		}
+
+		private void OnCharAdded(object sender, CharAddedEventArgs e)
+		{
+			if (e.Char == '.') {
+				ShowAutoCompletion();
+			}
+		}
+
+		private void ShowAutoCompletion()
+		{
+			//TODO_FR #CodeEditor ? AutoCActive
+			// Find the word start
+			int nCurrentPosition = m_rScintilla_TextArea.CurrentPosition;
+			int nWordStartPosition = m_rScintilla_TextArea.WordStartPosition(nCurrentPosition, true);
+			// Display the autocompletion list
+			int nLengthEntered = nCurrentPosition - nWordStartPosition;
+			string sAutoCompletionList = "aaa bbb ccc dddd eee";			
+			m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
 		}
 
 		private void SetIndicatorForURL()
@@ -71,36 +91,14 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.DwellEnd		+= m_rScintilla_TextArea_DwellEnd;
 		}
 
-		private string GetUrlAtPosition(int position)
-		{
-			// Determine whether the specified position is on our 'URL indicator'
-			// and if so whether it is a valid URL.
-
-			var urlIndicator = m_rScintilla_TextArea.Indicators[0];
-			var bitmapFlag = (1 << urlIndicator.Index);
-			var bitmap = m_rScintilla_TextArea.IndicatorAllOnFor(position);
-			var hasUrlIndicator = ((bitmapFlag & bitmap) == bitmapFlag);
-
-			if (hasUrlIndicator) {
-				var startPos = urlIndicator.Start(position);
-				var endPos = urlIndicator.End(position);
-
-				var text = m_rScintilla_TextArea.GetTextRange(startPos, endPos - startPos).Trim();
-				if (Uri.IsWellFormedUriString(text, UriKind.Absolute))
-					return text;
-			}
-
-			return null;
-		}
-
+		//TODO_FR #CodeEditor OnCharAdded
 
 		private void m_rScintilla_TextArea_DwellStart(object sender, DwellEventArgs e)
 		{
-			var url = GetUrlAtPosition(e.Position);
-			if (url != null) {
-				var callTip = string.Format("{0}\nCTRL + click to follow link", url);
-				m_rScintilla_TextArea.CallTipShow(e.Position, callTip);
-			}
+//TODO_FR #CodeEditor ShowAutoCompletion
+			//ShowAutoCompletion();
+			var callTip = string.Format("nIntellisense");
+			m_rScintilla_TextArea.CallTipShow(e.Position, callTip);
 		}
 
 		private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
