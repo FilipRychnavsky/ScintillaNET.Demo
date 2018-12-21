@@ -1,3 +1,5 @@
+#ScintillaNET.DemoFR
+- experimente mit ToolTip und Intellisense
 # ScintillaNET.Demo
 This is an easy to understand C# app demonstrating all the features of the powerful ScintillaNET text editor component. ScintillaNET is a .NET wrapper for Scintilla, which is used as the primary code editor in numerous IDEs. Even the venerable Notepad++ uses Scintilla!
 
