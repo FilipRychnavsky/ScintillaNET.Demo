@@ -55,12 +55,12 @@ namespace ScintillaNET.DemoFR
 
 		//TODO_FR #CodeEditor OnCharAdded
 
-		private void m_rScintilla_TextArea_DwellStart(object sender, DwellEventArgs e)
+		private void m_rScintilla_TextArea_DwellStart(object sender, DwellEventArgs rDwellEventArgs)
 		{
-//TODO_FR #CodeEditor ShowAutoCompletion
-			//ShowAutoCompletion();
-			var callTip = string.Format("nIntellisense");
-			m_rScintilla_TextArea.CallTipShow(e.Position, callTip);
+			//TODO_FR #CodeEditor react an Dwelling on Autocompletion List Items
+			int nPosition = rDwellEventArgs.Position;
+			var callTip = string.Format("Tooltip for Position {0}", nPosition);
+			m_rScintilla_TextArea.CallTipShow(rDwellEventArgs.Position, callTip);
 		}
 
 		private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
