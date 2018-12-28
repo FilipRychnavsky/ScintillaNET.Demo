@@ -27,7 +27,12 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AutoCSelection += OnScintilla_AutoCSelection;
 //m_rScintilla_TextArea.AutoCCurrent
 			m_rScintilla_TextArea.AutoCIgnoreCase = true;
+			m_rScintilla_TextArea.AutoCCompleted += OnScintilla_AutoCCompleted;
 //m_rScintilla_TextArea.autoc
+		}
+
+		private void OnScintilla_AutoCCompleted(object sender, AutoCSelectionEventArgs e)
+		{
 		}
 
 		private void OnCharAdded(object sender, CharAddedEventArgs e)
