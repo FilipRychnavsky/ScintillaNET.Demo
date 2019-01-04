@@ -670,7 +670,6 @@ namespace ScintillaNET.Demo
 
 		private void m_rButton_Indicator_for_URL_Click(object sender, EventArgs e)
 		{
-			//TODO_FR 199 Implement ToolTip between DwellStart und DwellEnd events
 			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
 			//https://github.com/jacobslusser/ScintillaNET/issues/111
 			// Define an indicator for marking URLs and apply it to a range.
