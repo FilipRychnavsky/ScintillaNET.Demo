@@ -138,11 +138,18 @@ namespace ScintillaNET.DemoFR
 			var url = GetUrlAtPosition(e.Position);
 			if (url != null) {
 				var callTip = string.Format("{0}\nCTRL + click to follow link", url);
-//TODO_FR 199 Teste Linebreaks in dem ToolTip
-//Demoerweiterung des Tooltips
 				callTip += "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+				callTip = WrapMessageForToolTip(callTip);
 				m_rScintilla_TextArea.CallTipShow(e.Position, callTip);
 			}
+		}
+
+		private string WrapMessageForToolTip(string callTip)
+		{
+			//TODO_FR 199 Teste Linebreaks in dem ToolTip
+			//Implement
+			string sResult = callTip;
+			return sResult;
 		}
 
 		private void m_rScintilla_TextArea_DwellEnd(object sender, DwellEventArgs e)
