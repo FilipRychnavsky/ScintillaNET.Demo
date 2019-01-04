@@ -34,7 +34,6 @@ namespace ScintillaNET.DemoFR
 
 		private void SetIndicatorForURL()
 		{
-			//TODO_FR 199 Implement ToolTip between DwellStart und DwellEnd events
 			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
 			//https://github.com/jacobslusser/ScintillaNET/issues/111
 			// Define an indicator for marking URLs and apply it to a range.
@@ -139,6 +138,8 @@ namespace ScintillaNET.DemoFR
 			var url = GetUrlAtPosition(e.Position);
 			if (url != null) {
 				var callTip = string.Format("{0}\nCTRL + click to follow link", url);
+//TODO_FR 199 Teste Linebreaks in dem ToolTip
+
 				m_rScintilla_TextArea.CallTipShow(e.Position, callTip);
 			}
 		}
