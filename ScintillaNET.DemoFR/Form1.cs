@@ -146,9 +146,10 @@ namespace ScintillaNET.DemoFR
 
 		private string WrapMessageForToolTip(string callTip)
 		{
-			//TODO_FR 199 Teste Linebreaks in dem ToolTip
-			//Implement
+// https://stackoverflow.com/questions/22368434/best-way-to-split-string-into-lines-with-maximum-length-without-breaking-words
 			string sResult = callTip;
+			int nMaximumLineLength = 80;
+			sResult = System.Text.RegularExpressions.Regex.Replace(callTip, @"(.{1," + nMaximumLineLength + @"})(?:\s|$)", "$1\n");
 			return sResult;
 		}
 
