@@ -150,6 +150,7 @@ namespace ScintillaNET.DemoFR
 			string sResult = callTip;
 			int nMaximumLineLength = 80;
 			sResult = System.Text.RegularExpressions.Regex.Replace(callTip, @"(.{1," + nMaximumLineLength + @"})(?:\s|$)", "$1\n");
+			sResult = sResult.TrimEnd('\n');
 			return sResult;
 		}
 
