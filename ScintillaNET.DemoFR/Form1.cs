@@ -176,5 +176,20 @@ namespace ScintillaNET.DemoFR
 */
 		}
 
+		private void m_rButtonSearch_Click(object sender, EventArgs e)
+		{
+			//http wird zwischen 0 und 3 nicht gefunden
+			string sSearchFor = "http";
+			m_rScintilla_TextArea.TargetStart = 0;
+			m_rScintilla_TextArea.TargetEnd = 3;
+			int nPositionFound = m_rScintilla_TextArea.SearchInTarget(sSearchFor);
+			Debug.WriteLine(System.String.Format("nPositionFound: {0}_", nPositionFound));
+			m_rScintilla_TextArea.TargetEnd = 4;
+			nPositionFound = m_rScintilla_TextArea.SearchInTarget(sSearchFor);
+			Debug.WriteLine(System.String.Format("TargetEnd 4: nPositionFound: {0}", nPositionFound));
+			m_rScintilla_TextArea.TargetEnd = 100;
+			nPositionFound = m_rScintilla_TextArea.SearchInTarget(sSearchFor);
+			Debug.WriteLine(System.String.Format("TargetEnd 100: nPositionFound: {0}; m_rScintilla_TextArea.TargetEnd aktualisiert: {1}", nPositionFound, m_rScintilla_TextArea.TargetEnd));
+		}
 	}
 }

@@ -28,6 +28,7 @@
 		private void InitializeComponent()
 		{
 			this.m_rPanel = new System.Windows.Forms.Panel();
+			this.m_rButtonSearch = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// m_rPanel
@@ -38,11 +39,22 @@
 			this.m_rPanel.Size = new System.Drawing.Size(251, 261);
 			this.m_rPanel.TabIndex = 1;
 			// 
+			// m_rButtonSearch
+			// 
+			this.m_rButtonSearch.Location = new System.Drawing.Point(391, 28);
+			this.m_rButtonSearch.Name = "m_rButtonSearch";
+			this.m_rButtonSearch.Size = new System.Drawing.Size(115, 37);
+			this.m_rButtonSearch.TabIndex = 2;
+			this.m_rButtonSearch.Text = "Search";
+			this.m_rButtonSearch.UseVisualStyleBackColor = true;
+			this.m_rButtonSearch.Click += new System.EventHandler(this.m_rButtonSearch_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.Controls.Add(this.m_rButtonSearch);
 			this.Controls.Add(this.m_rPanel);
 			this.Name = "Form1";
 			this.Text = "Form1";
@@ -52,6 +64,7 @@
 
 		#endregion
 		private System.Windows.Forms.Panel m_rPanel;
+		private System.Windows.Forms.Button m_rButtonSearch;
 	}
 }
 
