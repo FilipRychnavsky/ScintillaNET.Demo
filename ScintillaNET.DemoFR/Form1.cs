@@ -29,7 +29,8 @@ namespace ScintillaNET.DemoFR
 //m_rScintilla_TextArea.AutoCCurrent
 			m_rScintilla_TextArea.AutoCIgnoreCase = true;
 			m_rScintilla_TextArea.AutoCCompleted += OnScintilla_AutoCCompleted;
-//m_rScintilla_TextArea.autoc
+//use tab and not as three spaces
+			m_rScintilla_TextArea.UseTabs = true;
 		}
 
 		private void SetIndicatorForURL()
