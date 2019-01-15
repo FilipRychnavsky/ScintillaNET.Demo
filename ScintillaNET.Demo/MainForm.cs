@@ -33,15 +33,14 @@ namespace ScintillaNET.Demo
 			// BASIC CONFIG
 			m_rScintilla_TextArea.Dock = System.Windows.Forms.DockStyle.Fill;
 			m_rScintilla_TextArea.TextChanged += (this.OnTextChanged);
-			/*
-						// INITIAL VIEW CONFIG
-						m_rScintilla_TextArea.WrapMode = WrapMode.None;
-						m_rScintilla_TextArea.IndentationGuides = IndentView.LookBoth;
+			// INITIAL VIEW CONFIG
+			m_rScintilla_TextArea.WrapMode = WrapMode.None;
+			m_rScintilla_TextArea.IndentationGuides = IndentView.LookBoth;
 
-						// STYLING
-						InitColors();
-						InitSyntaxColoring();
-			*/
+			// STYLING
+			InitColors();
+			InitSyntaxColoring();
+		
 			// NUMBER MARGIN
 			InitNumberMargin();
 
@@ -54,12 +53,10 @@ namespace ScintillaNET.Demo
 			// DRAG DROP
 			InitDragDropFile();
 
-			/*
-						// DEFAULT FILE
-						//LoadDataFromFile("../../MainForm.cs");
-						LoadDataFromFile("d:/Projekte/Scintilla/Adressen.Adressen.Lokale CSharp Aktionen.cs");
-			*/
-			InitText();
+			// DEFAULT FILE
+			//LoadDataFromFile("../../MainForm.cs");
+			LoadDataFromFile(@"c:\Users\FRychnavsky\source\repos\Filip\Scintilla\demo_code.cs");
+//			InitText();
 
 
 			// INIT HOTKEYS
