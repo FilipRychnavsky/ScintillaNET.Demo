@@ -25,6 +25,8 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.BeginUndoAction();
 			InitText();
 			m_rScintilla_TextArea.EndUndoAction();
+// EmptyUndoBuffer - Grenze, bis wohin UNDO etwas zurücknehmen kann.
+			m_rScintilla_TextArea.EmptyUndoBuffer();
 			InitDwelling();
 			SetIndicatorForURL();
 			m_rScintilla_TextArea.CharAdded += OnCharAdded;
