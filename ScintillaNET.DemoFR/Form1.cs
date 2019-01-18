@@ -189,9 +189,12 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AppendText("\n\trem Global.MsgBox(\"Hello world!\")");
 			m_rScintilla_TextArea.AppendText("\n\tremGlobal.MsgBox(\"Hello world!\")");
 			m_rScintilla_TextArea.AppendText("\nEnd Sub");
-m_rScintilla_TextArea.ReadOnly = true;
+			m_rScintilla_TextArea.ReadOnly = true;
 			m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf true gesetzt habe - AppendText");
-
+			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
+			m_rScintilla_TextArea.ReadOnly = false;
+			m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf FALSE gesetzt habe - AppendText");
+			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
 		}
 
 		private void m_rButtonSearch_Click(object sender, EventArgs e)
