@@ -21,6 +21,7 @@ namespace ScintillaNET.DemoFR
 			InitializeComponent();
 			m_rScintilla_TextArea = new ScintillaNET.Scintilla();
 			m_rPanel.Controls.Add(m_rScintilla_TextArea);
+			m_rScintilla_TextArea.Size = m_rPanel.Size;
 			//BeginUndoAction und EndUndoAction- beeinflusst nur den Umfang von "a single undo action"
 			m_rScintilla_TextArea.BeginUndoAction();
 			InitText();
