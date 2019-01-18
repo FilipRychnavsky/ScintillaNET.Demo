@@ -180,6 +180,13 @@ namespace ScintillaNET.DemoFR
  			m_rScintilla_TextArea.AddText("\nTheView");
 			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
 */
+	
+			m_rScintilla_TextArea.AppendText("\nSub ButtonFR_KlickAktion()");
+			m_rScintilla_TextArea.AppendText("\nDim This : Set This = ButtonFR");
+			m_rScintilla_TextArea.AppendText("\n\tGlobal.MsgBox(\"Hello world!\")");
+			m_rScintilla_TextArea.AppendText("\n\trem Global.MsgBox(\"Hello world!\")");
+			m_rScintilla_TextArea.AppendText("\n\tremGlobal.MsgBox(\"Hello world!\")");
+			m_rScintilla_TextArea.AppendText("\nEnd Sub");
 		}
 
 		private void m_rButtonSearch_Click(object sender, EventArgs e)
