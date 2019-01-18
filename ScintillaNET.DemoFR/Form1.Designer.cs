@@ -36,7 +36,7 @@
 			this.m_rPanel.BackColor = System.Drawing.Color.Linen;
 			this.m_rPanel.Location = new System.Drawing.Point(24, 125);
 			this.m_rPanel.Name = "m_rPanel";
-			this.m_rPanel.Size = new System.Drawing.Size(251, 261);
+			this.m_rPanel.Size = new System.Drawing.Size(677, 261);
 			this.m_rPanel.TabIndex = 1;
 			// 
 			// m_rButtonSearch
