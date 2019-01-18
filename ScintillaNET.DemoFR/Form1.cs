@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ScintillaNET;
 using System.Diagnostics;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ScintillaNET.DemoFR
 {
@@ -25,18 +18,26 @@ namespace ScintillaNET.DemoFR
 			//BeginUndoAction und EndUndoAction- beeinflusst nur den Umfang von "a single undo action"
 			m_rScintilla_TextArea.BeginUndoAction();
 			InitText();
+			SelectSomeText();
 			m_rScintilla_TextArea.EndUndoAction();
-// EmptyUndoBuffer - Grenze, bis wohin UNDO etwas zurücknehmen kann.
+			// EmptyUndoBuffer - Grenze, bis wohin UNDO etwas zurücknehmen kann.
 			m_rScintilla_TextArea.EmptyUndoBuffer();
 			InitDwelling();
 			SetIndicatorForURL();
 			m_rScintilla_TextArea.CharAdded += OnCharAdded;
 			m_rScintilla_TextArea.AutoCSelection += OnScintilla_AutoCSelection;
-//m_rScintilla_TextArea.AutoCCurrent
+			//m_rScintilla_TextArea.AutoCCurrent
 			m_rScintilla_TextArea.AutoCIgnoreCase = true;
 			m_rScintilla_TextArea.AutoCCompleted += OnScintilla_AutoCCompleted;
-//use tab and not as three spaces
+			//use tab and not as three spaces
 			m_rScintilla_TextArea.UseTabs = true;
+		}
+
+		private void SelectSomeText()
+		{
+			//TODO_FR #CodeEditor select some text
+			m_rScintilla_TextArea.SelectionStart = 50;
+			m_rScintilla_TextArea.SelectionEnd = 55;
 		}
 
 		private void SetIndicatorForURL()
