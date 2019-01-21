@@ -228,8 +228,13 @@ namespace ScintillaNET.DemoFR
 				oColorBackground = System.Drawing.Color.LightGreen;
 
 			//Styles durchiterieren und BackColor setzen
-			foreach (Style rStyle in m_rScintilla_TextArea.Styles)
+			foreach (Style rStyle in m_rScintilla_TextArea.Styles) {
 				rStyle.BackColor = oColorBackground;
+			}
+			if (!bSetReadOnly) {
+				m_rScintilla_TextArea.Styles[Style.CallTip].ForeColor = SystemColors.InfoText;
+				m_rScintilla_TextArea.Styles[Style.CallTip].BackColor = SystemColors.Info;
+			}
 
 			UpdateCheckBoxReadOnly();
 		}
