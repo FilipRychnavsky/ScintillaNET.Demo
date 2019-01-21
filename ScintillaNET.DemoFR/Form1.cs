@@ -228,6 +228,7 @@ namespace ScintillaNET.DemoFR
 				oColorBackground = System.Drawing.Color.LightGreen;
 
 			//Styles durchiterieren und BackColor setzen
+			// Why is BackColor not supported?  https://github.com/jacobslusser/ScintillaNET/issues/63
 			foreach (Style rStyle in m_rScintilla_TextArea.Styles) {
 				rStyle.BackColor = oColorBackground;
 			}
