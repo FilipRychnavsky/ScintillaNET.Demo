@@ -212,5 +212,15 @@ namespace ScintillaNET.DemoFR
 			nPositionFound = m_rScintilla_TextArea.SearchInTarget(sSearchFor);
 			Debug.WriteLine(System.String.Format("TargetEnd 100: nPositionFound: {0}; m_rScintilla_TextArea.TargetEnd aktualisiert: {1}", nPositionFound, m_rScintilla_TextArea.TargetEnd));
 		}
+
+		private void m_rButtonSetReadOnly_Click(object sender, EventArgs e)
+		{
+			m_rScintilla_TextArea.ReadOnly = true;
+		}
+
+		private void m_rButtonSetReadWrite_Click(object sender, EventArgs e)
+		{
+			m_rScintilla_TextArea.ReadOnly = false;
+		}
 	}
 }
