@@ -217,6 +217,7 @@ namespace ScintillaNET.DemoFR
 		private void m_rButtonSetReadOnly_Click(object sender, EventArgs e)
 		{
 			m_rScintilla_TextArea.ReadOnly = true;
+			m_rScintilla_TextArea.Styles[Style.Default].BackColor = System.Drawing.Color.LightGreen;
 			UpdateCheckBoxReadOnly();
 		}
 
