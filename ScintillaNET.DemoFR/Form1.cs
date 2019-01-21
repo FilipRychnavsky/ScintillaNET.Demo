@@ -218,6 +218,7 @@ namespace ScintillaNET.DemoFR
 		{
 			m_rScintilla_TextArea.ReadOnly = true;
 			m_rScintilla_TextArea.Styles[Style.Default].BackColor = System.Drawing.Color.LightGreen;
+//TODO_FR #CodeEditor Styles durchiterieren und BackColor setzen
 			UpdateCheckBoxReadOnly();
 		}
 
