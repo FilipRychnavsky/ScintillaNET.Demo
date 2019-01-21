@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Design;
 
 namespace ScintillaNET.DemoFR
 {
@@ -222,8 +223,14 @@ namespace ScintillaNET.DemoFR
 		private void SetScintillaReadOnly(bool bSetReadOnly)
 		{
 			m_rScintilla_TextArea.ReadOnly = bSetReadOnly;
-			m_rScintilla_TextArea.Styles[Style.Default].BackColor = System.Drawing.Color.LightGreen;
-			//TODO_FR #CodeEditor Styles durchiterieren und BackColor setzen
+			Color oColorBackground = System.Drawing.Color.White;
+			if (bSetReadOnly)
+				oColorBackground = System.Drawing.Color.LightGreen;
+
+			//Styles durchiterieren und BackColor setzen
+			foreach (Style rStyle in m_rScintilla_TextArea.Styles)
+				rStyle.BackColor = oColorBackground;
+
 			UpdateCheckBoxReadOnly();
 		}
 
