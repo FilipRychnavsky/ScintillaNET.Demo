@@ -190,10 +190,10 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AppendText("\n\trem Global.MsgBox(\"Hello world!\")");
 			m_rScintilla_TextArea.AppendText("\n\tremGlobal.MsgBox(\"Hello world!\")");
 			m_rScintilla_TextArea.AppendText("\nEnd Sub");
-			m_rScintilla_TextArea.ReadOnly = true;
+			SetScintillaReadOnly(true);
 			m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf true gesetzt habe - AppendText");
 			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
-			m_rScintilla_TextArea.ReadOnly = false;
+			SetScintillaReadOnly(false);
 			m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf FALSE gesetzt habe - AppendText");
 			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
 		}
@@ -216,9 +216,14 @@ namespace ScintillaNET.DemoFR
 
 		private void m_rButtonSetReadOnly_Click(object sender, EventArgs e)
 		{
-			m_rScintilla_TextArea.ReadOnly = true;
+			SetScintillaReadOnly(true);
+		}
+
+		private void SetScintillaReadOnly(bool bSetReadOnly)
+		{
+			m_rScintilla_TextArea.ReadOnly = bSetReadOnly;
 			m_rScintilla_TextArea.Styles[Style.Default].BackColor = System.Drawing.Color.LightGreen;
-//TODO_FR #CodeEditor Styles durchiterieren und BackColor setzen
+			//TODO_FR #CodeEditor Styles durchiterieren und BackColor setzen
 			UpdateCheckBoxReadOnly();
 		}
 
@@ -229,8 +234,7 @@ namespace ScintillaNET.DemoFR
 
 		private void m_rButtonSetReadWrite_Click(object sender, EventArgs e)
 		{
-			m_rScintilla_TextArea.ReadOnly = false;
-			UpdateCheckBoxReadOnly();
+			SetScintillaReadOnly(false);
 		}
 	}
 }
