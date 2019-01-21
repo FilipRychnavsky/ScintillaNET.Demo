@@ -31,6 +31,7 @@
 			this.m_rButtonSearch = new System.Windows.Forms.Button();
 			this.m_rButtonSetReadOnly = new System.Windows.Forms.Button();
 			this.m_rButtonSetReadWrite = new System.Windows.Forms.Button();
+			this.m_rCheckBoxReadOnly = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// m_rPanel
@@ -73,11 +74,22 @@
 			this.m_rButtonSetReadWrite.UseVisualStyleBackColor = false;
 			this.m_rButtonSetReadWrite.Click += new System.EventHandler(this.m_rButtonSetReadWrite_Click);
 			// 
+			// m_rCheckBoxReadOnly
+			// 
+			this.m_rCheckBoxReadOnly.AutoSize = true;
+			this.m_rCheckBoxReadOnly.Location = new System.Drawing.Point(540, 112);
+			this.m_rCheckBoxReadOnly.Name = "m_rCheckBoxReadOnly";
+			this.m_rCheckBoxReadOnly.Size = new System.Drawing.Size(90, 17);
+			this.m_rCheckBoxReadOnly.TabIndex = 5;
+			this.m_rCheckBoxReadOnly.Text = "set ReadOnly";
+			this.m_rCheckBoxReadOnly.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(834, 507);
+			this.Controls.Add(this.m_rCheckBoxReadOnly);
 			this.Controls.Add(this.m_rButtonSetReadWrite);
 			this.Controls.Add(this.m_rButtonSetReadOnly);
 			this.Controls.Add(this.m_rButtonSearch);
@@ -85,6 +97,7 @@
 			this.Name = "Form1";
 			this.Text = "Form1";
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -93,6 +106,7 @@
 		private System.Windows.Forms.Button m_rButtonSearch;
 		private System.Windows.Forms.Button m_rButtonSetReadOnly;
 		private System.Windows.Forms.Button m_rButtonSetReadWrite;
+		private System.Windows.Forms.CheckBox m_rCheckBoxReadOnly;
 	}
 }
 

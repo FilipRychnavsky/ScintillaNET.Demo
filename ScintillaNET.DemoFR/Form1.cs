@@ -31,6 +31,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AutoCCompleted += OnScintilla_AutoCCompleted;
 			//use tab and not as three spaces
 			m_rScintilla_TextArea.UseTabs = true;
+			UpdateCheckBoxReadOnly();
 		}
 
 		private void SelectSomeText()
@@ -216,11 +217,18 @@ namespace ScintillaNET.DemoFR
 		private void m_rButtonSetReadOnly_Click(object sender, EventArgs e)
 		{
 			m_rScintilla_TextArea.ReadOnly = true;
+			UpdateCheckBoxReadOnly();
+		}
+
+		private void UpdateCheckBoxReadOnly()
+		{
+			m_rCheckBoxReadOnly.Checked = m_rScintilla_TextArea.ReadOnly;
 		}
 
 		private void m_rButtonSetReadWrite_Click(object sender, EventArgs e)
 		{
 			m_rScintilla_TextArea.ReadOnly = false;
+			UpdateCheckBoxReadOnly();
 		}
 	}
 }
