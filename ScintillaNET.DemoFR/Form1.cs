@@ -88,13 +88,13 @@ namespace ScintillaNET.DemoFR
 		private void OnInsertCheck(object sender, InsertCheckEventArgs e)
 		{
 			if ((e.Text.EndsWith("" + "\r") || e.Text.EndsWith("" + "\n"))) {
-				int startPos = m_rScintilla_TextArea.Lines[m_rScintilla_TextArea.LineFromPosition(m_rScintilla_TextArea.CurrentPosition)].Position;
-				int endPos = e.Position;
-				string curLineText = m_rScintilla_TextArea.GetTextRange(startPos, (endPos - startPos)); //Text until the caret so that the whitespace is always equal in every line.
+				int nStartPos = m_rScintilla_TextArea.Lines[m_rScintilla_TextArea.LineFromPosition(m_rScintilla_TextArea.CurrentPosition)].Position;
+				int nEndPos = e.Position;
+				string sCurLineText = m_rScintilla_TextArea.GetTextRange(nStartPos, (nEndPos - nStartPos)); //Text until the caret so that the whitespace is always equal in every line.
 
-				Match indent = Regex.Match(curLineText, "^[ \\t]*");
+				Match indent = Regex.Match(sCurLineText, "^[ \\t]*");
 				e.Text = (e.Text + indent.Value);
-				if (Regex.IsMatch(curLineText, "{\\s*$")) {
+				if (Regex.IsMatch(sCurLineText, "{\\s*$")) {
 					e.Text = (e.Text + "\t");
 				}
 			}
@@ -126,10 +126,10 @@ namespace ScintillaNET.DemoFR
 			}
 			//The '}' char.
 			if (e.Char == 125) {
-				int curLine = m_rScintilla_TextArea.LineFromPosition(m_rScintilla_TextArea.CurrentPosition);
+				int nCurLine = m_rScintilla_TextArea.LineFromPosition(m_rScintilla_TextArea.CurrentPosition);
 		
-				if (m_rScintilla_TextArea.Lines[curLine].Text.Trim() == "}") { //Check whether the bracket is the only thing on the line.. For cases like "if() { }".
-					SetIndent(m_rScintilla_TextArea, curLine, GetIndent(m_rScintilla_TextArea, curLine) - 4);
+				if (m_rScintilla_TextArea.Lines[nCurLine].Text.Trim() == "}") { //Check whether the bracket is the only thing on the line.. For cases like "if() { }".
+					SetIndent(m_rScintilla_TextArea, nCurLine, GetIndent(m_rScintilla_TextArea, nCurLine) - 4);
 				}
 			}
 		}
