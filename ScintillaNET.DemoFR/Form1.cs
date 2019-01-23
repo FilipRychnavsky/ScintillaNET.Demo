@@ -84,9 +84,9 @@ namespace ScintillaNET.DemoFR
 		{
 		}
 
+// https://gist.github.com/Ahmad45123/f2910192987a73a52ab4
 		private void OnInsertCheck(object sender, InsertCheckEventArgs e)
 		{
-// https://gist.github.com/Ahmad45123/f2910192987a73a52ab4
 			if ((e.Text.EndsWith("" + "\r") || e.Text.EndsWith("" + "\n"))) {
 				int startPos = m_rScintilla_TextArea.Lines[m_rScintilla_TextArea.LineFromPosition(m_rScintilla_TextArea.CurrentPosition)].Position;
 				int endPos = e.Position;
@@ -100,11 +100,37 @@ namespace ScintillaNET.DemoFR
 			}
 		}
 
+		//Codes for the handling the Indention of the lines.
+		//They are manually added here until they get officially added to the Scintilla control.
+		#region "CodeIndent Handlers"
+			const int SCI_SETLINEINDENTATION = 2126;
+			const int SCI_GETLINEINDENTATION = 2127;
+			private void SetIndent(ScintillaNET.Scintilla scin, int line, int indent)
+			{
+				scin.DirectMessage(SCI_SETLINEINDENTATION, new IntPtr(line), new IntPtr(indent));
+			}
+			private int GetIndent(ScintillaNET.Scintilla scin, int line)
+			{
+				int nResult = 0;
+				IntPtr rIntPtrIndent = scin.DirectMessage(SCI_GETLINEINDENTATION, new IntPtr(line), IntPtr.Zero);
+				nResult = rIntPtrIndent.ToInt32();
+				return nResult;
+			}
+		#endregion
+
 		private void OnCharAdded(object sender, CharAddedEventArgs e)
 		{
 			Debug.WriteLine("Length of Text after OnCharAdded: {0}", m_rScintilla_TextArea.Text.Length);
 			if (e.Char == '.') {
 				ShowAutoCompletion();
+			}
+			//The '}' char.
+			if (e.Char == 125) {
+				int curLine = m_rScintilla_TextArea.LineFromPosition(m_rScintilla_TextArea.CurrentPosition);
+		
+				if (m_rScintilla_TextArea.Lines[curLine].Text.Trim() == "}") { //Check whether the bracket is the only thing on the line.. For cases like "if() { }".
+					SetIndent(m_rScintilla_TextArea, curLine, GetIndent(m_rScintilla_TextArea, curLine) - 4);
+				}
 			}
 		}
 
