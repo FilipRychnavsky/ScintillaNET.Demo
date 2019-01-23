@@ -225,7 +225,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.ReadOnly = bSetReadOnly;
 			Color oColorBackground = System.Drawing.Color.White;
 			if (bSetReadOnly)
-				oColorBackground = System.Drawing.Color.LightGreen;
+				oColorBackground = System.Drawing.SystemColors.Control;
 
 			//Styles durchiterieren und BackColor setzen
 			// Why is BackColor not supported?  https://github.com/jacobslusser/ScintillaNET/issues/63
