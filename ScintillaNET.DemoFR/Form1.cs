@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Design;
+using System.Text.RegularExpressions;
 
 namespace ScintillaNET.DemoFR
 {
@@ -85,7 +86,18 @@ namespace ScintillaNET.DemoFR
 
 		private void OnInsertCheck(object sender, InsertCheckEventArgs e)
 		{
-			throw new NotImplementedException();
+// https://gist.github.com/Ahmad45123/f2910192987a73a52ab4
+			if ((e.Text.EndsWith("" + "\r") || e.Text.EndsWith("" + "\n"))) {
+				int startPos = m_rScintilla_TextArea.Lines[m_rScintilla_TextArea.LineFromPosition(m_rScintilla_TextArea.CurrentPosition)].Position;
+				int endPos = e.Position;
+				string curLineText = m_rScintilla_TextArea.GetTextRange(startPos, (endPos - startPos)); //Text until the caret so that the whitespace is always equal in every line.
+
+				Match indent = Regex.Match(curLineText, "^[ \\t]*");
+				e.Text = (e.Text + indent.Value);
+				if (Regex.IsMatch(curLineText, "{\\s*$")) {
+					e.Text = (e.Text + "\t");
+				}
+			}
 		}
 
 		private void OnCharAdded(object sender, CharAddedEventArgs e)
