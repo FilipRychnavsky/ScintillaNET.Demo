@@ -26,6 +26,7 @@ namespace ScintillaNET.DemoFR
 			InitDwelling();
 			SetIndicatorForURL();
 			m_rScintilla_TextArea.CharAdded += OnCharAdded;
+			m_rScintilla_TextArea.InsertCheck += OnInsertCheck;
 			m_rScintilla_TextArea.AutoCSelection += OnScintilla_AutoCSelection;
 			//m_rScintilla_TextArea.AutoCCurrent
 			m_rScintilla_TextArea.AutoCIgnoreCase = true;
@@ -34,6 +35,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.UseTabs = true;
 			UpdateCheckBoxReadOnly();
 		}
+
 
 		private void SelectSomeText()
 		{
@@ -79,6 +81,11 @@ namespace ScintillaNET.DemoFR
 
 		private void OnScintilla_AutoCCompleted(object sender, AutoCSelectionEventArgs e)
 		{
+		}
+
+		private void OnInsertCheck(object sender, InsertCheckEventArgs e)
+		{
+			throw new NotImplementedException();
 		}
 
 		private void OnCharAdded(object sender, CharAddedEventArgs e)
