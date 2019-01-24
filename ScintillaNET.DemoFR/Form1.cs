@@ -399,7 +399,7 @@ namespace ScintillaNET.DemoFR
 			}
 			if (iData.GetDataPresent(DataFormats.Rtf)) {
 					// Yes it is, so display it in a text box.
-					sFoundClipboardText = (String)iData.GetData(DataFormats.Text);
+					sFoundClipboardText = (String)iData.GetData(DataFormats.Rtf);
 					bool bContainsRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
 					sFoundClipboardText = System.String.Format("contains TextDataFormat.Rtf: {0}\n{1}", bContainsRtf, sFoundClipboardText);
 				} 
@@ -408,9 +408,7 @@ namespace ScintillaNET.DemoFR
 
 		private void m_rButtonCopyRTF_Click(object sender, EventArgs e)
 		{
-			//TODO_FR #CodeEditor 
-			//Clipboard.SetDataObject("test");
-      Clipboard.SetText("test", TextDataFormat.Rtf);
+			m_rScintilla_TextArea.Copy(CopyFormat.Rtf);
 		}
 	}
 }
