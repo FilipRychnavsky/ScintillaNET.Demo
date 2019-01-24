@@ -395,6 +395,8 @@ namespace ScintillaNET.DemoFR
 			if(iData.GetDataPresent(DataFormats.Text)) {
 				 // Yes it is, so display it in a text box.
 				 sFoundClipboardText = (String)iData.GetData(DataFormats.Text); 
+				 bool bContainsRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
+				 sFoundClipboardText = System.String.Format("contains TextDataFormat.Rtf: {0}\n{1}", bContainsRtf, sFoundClipboardText);
 			}
 			else {
 				 // No it is not.
