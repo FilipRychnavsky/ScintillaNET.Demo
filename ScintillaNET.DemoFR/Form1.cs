@@ -372,5 +372,35 @@ namespace ScintillaNET.DemoFR
 		{
 			SetScintillaReadOnly(false);
 		}
+
+		
+		private void m_rCheckBoxReadOnly_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void m_rButtonCopyIntoClipboard_Click(object sender, EventArgs e)
+		{
+       Clipboard.SetDataObject("test");
+		}
+
+		private void m_rButtonReadFromClipboard_Click(object sender, EventArgs e)
+		{
+			string sFoundClipboardText = "";
+			// Declares an IDataObject to hold the data returned from the clipboard.
+			// Retrieves the data from the clipboard.
+			IDataObject iData = Clipboard.GetDataObject();
+ 
+			// Determines whether the data is in a format you can use.
+			if(iData.GetDataPresent(DataFormats.Text)) {
+				 // Yes it is, so display it in a text box.
+				 sFoundClipboardText = (String)iData.GetData(DataFormats.Text); 
+			}
+			else {
+				 // No it is not.
+				 sFoundClipboardText = "Could not retrieve data off the clipboard.";
+			}
+			System.Windows.Forms.MessageBox.Show(sFoundClipboardText);
+		}
 	}
 }

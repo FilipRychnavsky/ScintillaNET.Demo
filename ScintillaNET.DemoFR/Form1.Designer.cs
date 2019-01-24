@@ -32,6 +32,8 @@
 			this.m_rButtonSetReadOnly = new System.Windows.Forms.Button();
 			this.m_rButtonSetReadWrite = new System.Windows.Forms.Button();
 			this.m_rCheckBoxReadOnly = new System.Windows.Forms.CheckBox();
+			this.m_rButtonCopyIntoClipboard = new System.Windows.Forms.Button();
+			this.m_rButtonReadFromClipboard = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// m_rPanel
@@ -44,9 +46,9 @@
 			// 
 			// m_rButtonSearch
 			// 
-			this.m_rButtonSearch.Location = new System.Drawing.Point(391, 28);
+			this.m_rButtonSearch.Location = new System.Drawing.Point(12, 28);
 			this.m_rButtonSearch.Name = "m_rButtonSearch";
-			this.m_rButtonSearch.Size = new System.Drawing.Size(115, 37);
+			this.m_rButtonSearch.Size = new System.Drawing.Size(100, 37);
 			this.m_rButtonSearch.TabIndex = 2;
 			this.m_rButtonSearch.Text = "Search";
 			this.m_rButtonSearch.UseVisualStyleBackColor = true;
@@ -55,9 +57,9 @@
 			// m_rButtonSetReadOnly
 			// 
 			this.m_rButtonSetReadOnly.BackColor = System.Drawing.Color.LightCoral;
-			this.m_rButtonSetReadOnly.Location = new System.Drawing.Point(540, 31);
+			this.m_rButtonSetReadOnly.Location = new System.Drawing.Point(161, 31);
 			this.m_rButtonSetReadOnly.Name = "m_rButtonSetReadOnly";
-			this.m_rButtonSetReadOnly.Size = new System.Drawing.Size(111, 34);
+			this.m_rButtonSetReadOnly.Size = new System.Drawing.Size(96, 34);
 			this.m_rButtonSetReadOnly.TabIndex = 3;
 			this.m_rButtonSetReadOnly.Text = "Set ReadOnly";
 			this.m_rButtonSetReadOnly.UseVisualStyleBackColor = false;
@@ -66,9 +68,9 @@
 			// m_rButtonSetReadWrite
 			// 
 			this.m_rButtonSetReadWrite.BackColor = System.Drawing.Color.LightGreen;
-			this.m_rButtonSetReadWrite.Location = new System.Drawing.Point(540, 71);
+			this.m_rButtonSetReadWrite.Location = new System.Drawing.Point(161, 71);
 			this.m_rButtonSetReadWrite.Name = "m_rButtonSetReadWrite";
-			this.m_rButtonSetReadWrite.Size = new System.Drawing.Size(111, 34);
+			this.m_rButtonSetReadWrite.Size = new System.Drawing.Size(96, 34);
 			this.m_rButtonSetReadWrite.TabIndex = 4;
 			this.m_rButtonSetReadWrite.Text = "Set ReadWrite";
 			this.m_rButtonSetReadWrite.UseVisualStyleBackColor = false;
@@ -77,18 +79,41 @@
 			// m_rCheckBoxReadOnly
 			// 
 			this.m_rCheckBoxReadOnly.AutoSize = true;
-			this.m_rCheckBoxReadOnly.Location = new System.Drawing.Point(540, 112);
+			this.m_rCheckBoxReadOnly.Location = new System.Drawing.Point(161, 112);
 			this.m_rCheckBoxReadOnly.Name = "m_rCheckBoxReadOnly";
 			this.m_rCheckBoxReadOnly.Size = new System.Drawing.Size(90, 17);
 			this.m_rCheckBoxReadOnly.TabIndex = 5;
 			this.m_rCheckBoxReadOnly.Text = "set ReadOnly";
 			this.m_rCheckBoxReadOnly.UseVisualStyleBackColor = true;
+			this.m_rCheckBoxReadOnly.CheckedChanged += new System.EventHandler(this.m_rCheckBoxReadOnly_CheckedChanged);
+			// 
+			// m_rButtonCopyIntoClipboard
+			// 
+			this.m_rButtonCopyIntoClipboard.Location = new System.Drawing.Point(276, 32);
+			this.m_rButtonCopyIntoClipboard.Name = "m_rButtonCopyIntoClipboard";
+			this.m_rButtonCopyIntoClipboard.Size = new System.Drawing.Size(115, 32);
+			this.m_rButtonCopyIntoClipboard.TabIndex = 6;
+			this.m_rButtonCopyIntoClipboard.Text = "Copy into Clipboard";
+			this.m_rButtonCopyIntoClipboard.UseVisualStyleBackColor = true;
+			this.m_rButtonCopyIntoClipboard.Click += new System.EventHandler(this.m_rButtonCopyIntoClipboard_Click);
+			// 
+			// m_rButtonReadFromClipboard
+			// 
+			this.m_rButtonReadFromClipboard.Location = new System.Drawing.Point(276, 70);
+			this.m_rButtonReadFromClipboard.Name = "m_rButtonReadFromClipboard";
+			this.m_rButtonReadFromClipboard.Size = new System.Drawing.Size(115, 32);
+			this.m_rButtonReadFromClipboard.TabIndex = 7;
+			this.m_rButtonReadFromClipboard.Text = "Read Clipboard";
+			this.m_rButtonReadFromClipboard.UseVisualStyleBackColor = true;
+			this.m_rButtonReadFromClipboard.Click += new System.EventHandler(this.m_rButtonReadFromClipboard_Click);
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(834, 507);
+			this.Controls.Add(this.m_rButtonReadFromClipboard);
+			this.Controls.Add(this.m_rButtonCopyIntoClipboard);
 			this.Controls.Add(this.m_rCheckBoxReadOnly);
 			this.Controls.Add(this.m_rButtonSetReadWrite);
 			this.Controls.Add(this.m_rButtonSetReadOnly);
@@ -107,6 +132,8 @@
 		private System.Windows.Forms.Button m_rButtonSetReadOnly;
 		private System.Windows.Forms.Button m_rButtonSetReadWrite;
 		private System.Windows.Forms.CheckBox m_rCheckBoxReadOnly;
+		private System.Windows.Forms.Button m_rButtonCopyIntoClipboard;
+		private System.Windows.Forms.Button m_rButtonReadFromClipboard;
 	}
 }
 
