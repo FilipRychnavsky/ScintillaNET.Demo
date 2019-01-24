@@ -386,28 +386,31 @@ namespace ScintillaNET.DemoFR
 
 		private void m_rButtonReadFromClipboard_Click(object sender, EventArgs e)
 		{
-			string sFoundClipboardText = "";
+			string sFoundClipboardText = "Could not retrieve data off the clipboard.";
 			// Declares an IDataObject to hold the data returned from the clipboard.
 			// Retrieves the data from the clipboard.
 			IDataObject iData = Clipboard.GetDataObject();
- 
-			// Determines whether the data is in a format you can use.
+			 // Determines whether the data is in a format you can use.
 			if(iData.GetDataPresent(DataFormats.Text)) {
 				 // Yes it is, so display it in a text box.
 				 sFoundClipboardText = (String)iData.GetData(DataFormats.Text); 
 				 bool bContainsRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
 				 sFoundClipboardText = System.String.Format("contains TextDataFormat.Rtf: {0}\n{1}", bContainsRtf, sFoundClipboardText);
 			}
-			else {
-				 // No it is not.
-				 sFoundClipboardText = "Could not retrieve data off the clipboard.";
-			}
+			if (iData.GetDataPresent(DataFormats.Rtf)) {
+					// Yes it is, so display it in a text box.
+					sFoundClipboardText = (String)iData.GetData(DataFormats.Text);
+					bool bContainsRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
+					sFoundClipboardText = System.String.Format("contains TextDataFormat.Rtf: {0}\n{1}", bContainsRtf, sFoundClipboardText);
+				} 
 			System.Windows.Forms.MessageBox.Show(sFoundClipboardText);
 		}
 
 		private void m_rButtonCopyRTF_Click(object sender, EventArgs e)
 		{
 			//TODO_FR #CodeEditor 
+			//Clipboard.SetDataObject("test");
+      Clipboard.SetText("test", TextDataFormat.Rtf);
 		}
 	}
 }
