@@ -34,6 +34,7 @@
 			this.m_rCheckBoxReadOnly = new System.Windows.Forms.CheckBox();
 			this.m_rButtonCopyIntoClipboard = new System.Windows.Forms.Button();
 			this.m_rButtonReadFromClipboard = new System.Windows.Forms.Button();
+			this.m_rButtonCopyRTF = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// m_rPanel
@@ -107,11 +108,22 @@
 			this.m_rButtonReadFromClipboard.UseVisualStyleBackColor = true;
 			this.m_rButtonReadFromClipboard.Click += new System.EventHandler(this.m_rButtonReadFromClipboard_Click);
 			// 
+			// m_rButtonCopyRTF
+			// 
+			this.m_rButtonCopyRTF.Location = new System.Drawing.Point(397, 31);
+			this.m_rButtonCopyRTF.Name = "m_rButtonCopyRTF";
+			this.m_rButtonCopyRTF.Size = new System.Drawing.Size(115, 32);
+			this.m_rButtonCopyRTF.TabIndex = 8;
+			this.m_rButtonCopyRTF.Text = "Copy RTF";
+			this.m_rButtonCopyRTF.UseVisualStyleBackColor = true;
+			this.m_rButtonCopyRTF.Click += new System.EventHandler(this.m_rButtonCopyRTF_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(834, 507);
+			this.Controls.Add(this.m_rButtonCopyRTF);
 			this.Controls.Add(this.m_rButtonReadFromClipboard);
 			this.Controls.Add(this.m_rButtonCopyIntoClipboard);
 			this.Controls.Add(this.m_rCheckBoxReadOnly);
@@ -134,6 +146,7 @@
 		private System.Windows.Forms.CheckBox m_rCheckBoxReadOnly;
 		private System.Windows.Forms.Button m_rButtonCopyIntoClipboard;
 		private System.Windows.Forms.Button m_rButtonReadFromClipboard;
+		private System.Windows.Forms.Button m_rButtonCopyRTF;
 	}
 }
 

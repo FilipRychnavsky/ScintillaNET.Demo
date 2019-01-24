@@ -404,5 +404,10 @@ namespace ScintillaNET.DemoFR
 			}
 			System.Windows.Forms.MessageBox.Show(sFoundClipboardText);
 		}
+
+		private void m_rButtonCopyRTF_Click(object sender, EventArgs e)
+		{
+			//TODO_FR #CodeEditor 
+		}
 	}
 }
