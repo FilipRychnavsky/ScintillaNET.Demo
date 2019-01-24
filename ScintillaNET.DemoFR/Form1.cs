@@ -26,6 +26,11 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.EmptyUndoBuffer();
 			InitDwelling();
 			SetIndicatorForURL();
+			InitStyles();
+			//SetCSharpKeyWords();
+			SetVbKeywords();
+			Colorize();
+
 			m_rScintilla_TextArea.CharAdded += OnCharAdded;
 			m_rScintilla_TextArea.InsertCheck += OnInsertCheck;
 			m_rScintilla_TextArea.AutoCSelection += OnScintilla_AutoCSelection;
@@ -35,6 +40,70 @@ namespace ScintillaNET.DemoFR
 			//use tab and not as three spaces
 			m_rScintilla_TextArea.UseTabs = true;
 			UpdateCheckBoxReadOnly();
+		}
+
+		private void Colorize()
+		{
+			m_rScintilla_TextArea.Lexer = Lexer.VbScript;
+			m_rScintilla_TextArea.Colorize(20, m_rScintilla_TextArea.Text.Length);
+		}
+
+		private void InitStyles()
+		{
+			m_rScintilla_TextArea.Styles[1].ForeColor = Color.Green; //Comment Also /* */ mehrzeilig in C#
+			m_rScintilla_TextArea.Styles[2].ForeColor = Color.Green; //Comment Line  Also // in C# | ' und rem in VB
+			m_rScintilla_TextArea.Styles[3].ForeColor = Color.Green; //Comment Block (VB Keywords 0) Also /* */ einzeilig in C#
+			m_rScintilla_TextArea.Styles[4].ForeColor = Color.Magenta; //Zahlen
+			m_rScintilla_TextArea.Styles[5].ForeColor = Color.Blue; //KeywordSet 0
+			m_rScintilla_TextArea.Styles[6].ForeColor = Color.Magenta; //Strings
+			m_rScintilla_TextArea.Styles[7].ForeColor = Color.Magenta; //Character (VB Default)
+																																 //FR 20190115 14:49:42 SI366246 Style für verbatim string literals
+			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.Verbatim].ForeColor = Color.Magenta;
+			m_rScintilla_TextArea.Styles[9].ForeColor = Color.Yellow; //StyleName Preprocessor
+			m_rScintilla_TextArea.Styles[10].ForeColor = Color.Black; // Operator (VB Keywords 1)
+			m_rScintilla_TextArea.Styles[11].ForeColor = Color.Black; // Identifier (VB Keywords 2)
+			m_rScintilla_TextArea.Styles[16].ForeColor = Color.Blue; //Keywordset 1
+			m_rScintilla_TextArea.Styles[17].ForeColor = Color.Blue; //Keywordset 1
+			m_rScintilla_TextArea.Styles[18].ForeColor = Color.Blue; //Keywordset 1
+			m_rScintilla_TextArea.Styles[19].ForeColor = Color.LightSeaGreen; //Keywordset 3
+		}
+
+		private static string CreateStringWithGlobalKeywords()
+		{
+			return "Global TheView APEMail APWord APExcel APSupportInfos APTermine Dialog GlobalObject PDFDriver Query StdWaehrungsKuerzel TheFrame ";
+		}
+
+		private string CreateStringWithDotNetKeywords()
+		{
+			return "Control ";
+		}
+
+/// <summary>
+/// Intro into Automatic Syntax Highlighting https://github.com/jacobslusser/ScintillaNET/wiki/Automatic-Syntax-Highlighting ;
+/// Übersicht der Keyword sets: string sKeywordSets = m_rScintilla_TextArea.DescribeKeywordSets();
+/// </summary>
+		private void SetCSharpKeyWords()
+		{
+			// Primary keywords and identifiers
+			m_rScintilla_TextArea.SetKeywords(0,
+				"abstract as base break case catch checked continue default delegate do else event explicit extern false finally fixed for foreach goto if implicit in interface internal is lock namespace new null object operator out override params private protected public readonly ref return sealed sizeof stackalloc switch this throw true try typeof unchecked unsafe using virtual while");
+			// Secondary keywords and identifiers
+			m_rScintilla_TextArea.SetKeywords(1,
+				"control bool byte char class const decimal double enum float int long partial sbyte short static string struct uint ulong ushort void");
+			// Global classes and typedefs
+			//FR20181023 15:58:04 SI 352281 LE 23.10.2018 14:16:10
+			m_rScintilla_TextArea.SetKeywords(3, System.String.Concat(CreateStringWithDotNetKeywords() + CreateStringWithGlobalKeywords()));
+		}
+
+		private void SetVbKeywords()
+		{
+			m_rScintilla_TextArea.SetKeywords(0,
+				"addhandler addressof alias and andalso as by byref byval call case catch class const continue declare default delegate dim directcast do each else elseif end endif erase error exit false finally for friend function get gettype global gosub goto handles if implements imports in inherits interface is isnot let lib like loop me mod module mustinherit mustoverride mybase myclass namespace narrowing new next not nothing notinheritable notoverridable of on operator option optional or orelse out overloads overridable overrides paramarray partial private property protected public raiseevent readonly redim rem removehandler resume return select set shadows shared static step stop strict structure sub synclock then throw to true try trycast typeof using variant wend when while widening with withevents writeonly xor attribute begin currency implement load lset rset type unload aggregate ansi assembly async auto await binary compare custom distinct equals explicit from group into isfalse istrue iterator join key mid off order preserve skip take text unicode until where yield");
+			m_rScintilla_TextArea.SetKeywords(1,
+				"boolean byte cbool cbyte cchar cdate cdbl cdec char cint clng cobj csbyte cshort csng cstr ctype cuint culng cushort date decimal double enum event integer long object sbyte short string uinteger ulong ushort");
+			//FR20181023 15:58:04 SI 352281 LE 23.10.2018 14:16:10
+			m_rScintilla_TextArea.SetKeywords(3,
+				System.String.Concat(CreateStringWithDotNetKeywords().ToLower() + CreateStringWithGlobalKeywords().ToLower()));
 		}
 
 
@@ -47,7 +116,7 @@ namespace ScintillaNET.DemoFR
 
 		private void SetIndicatorForURL()
 		{
-			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_CodeEditor.AutoCShow(nLengthEntered, sAutoCompletionList);
+			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
 			//https://github.com/jacobslusser/ScintillaNET/issues/111
 			// Define an indicator for marking URLs and apply it to a range.
 			// How you determine a particular range is a URL and how often
