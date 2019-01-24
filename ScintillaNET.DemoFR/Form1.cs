@@ -28,6 +28,7 @@ namespace ScintillaNET.DemoFR
 			SetIndicatorForURL();
 			InitStyles();
 			//SetCSharpKeyWords();
+			SetDotNetKeywords();
 			SetVbKeywords();
 			Colorize();
 
@@ -40,6 +41,11 @@ namespace ScintillaNET.DemoFR
 			//use tab and not as three spaces
 			m_rScintilla_TextArea.UseTabs = true;
 			UpdateCheckBoxReadOnly();
+		}
+
+		private void SetDotNetKeywords()
+		{
+			m_rScintilla_TextArea.SetKeywords(2, "Control ");
 		}
 
 		private void Colorize()
