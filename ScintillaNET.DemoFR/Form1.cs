@@ -40,7 +40,13 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AutoCCompleted += OnScintilla_AutoCCompleted;
 			//use tab and not as three spaces
 			m_rScintilla_TextArea.UseTabs = true;
+			m_rScintilla_TextArea.UpdateUI += OnScintilla_UpdateUI;
 			UpdateCheckBoxReadOnly();
+		}
+
+		private void OnScintilla_UpdateUI(object sender, UpdateUIEventArgs e)
+		{
+			System.Diagnostics.Debug.WriteLine(System.String.Format("on UpdateUI: {0}", e.ToString()));
 		}
 
 		private void SetDotNetKeywords()
