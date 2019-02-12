@@ -299,10 +299,12 @@ namespace ScintillaNET.DemoFR
 		private void InitText()
 		{
 			// InitText
+/*
 			m_rScintilla_TextArea.Text = "http://www.google.com";
 			m_rScintilla_TextArea.CurrentPosition = 21;
 			m_rScintilla_TextArea.AppendText("\nhttp://www.izurnal.cz");
 			string sDebug_FistLine = m_rScintilla_TextArea.Lines[1].Text;
+*/
 			//m_rScintilla_TextArea.AddText("\r\nhttp://www.izurnal.cz");
 /*
 			m_rScintilla_TextArea.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -310,7 +312,7 @@ namespace ScintillaNET.DemoFR
  			m_rScintilla_TextArea.AddText("\nTheView");
 			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
 */
-	
+	/*
 			m_rScintilla_TextArea.AppendText("\nSub ButtonFR_KlickAktion()");
 			m_rScintilla_TextArea.AppendText("\nDim This : Set This = ButtonFR");
 			m_rScintilla_TextArea.AppendText("\n\tGlobal.MsgBox(\"Hello world!\")");
@@ -326,6 +328,8 @@ namespace ScintillaNET.DemoFR
 			SetScintillaReadOnly(false);
 			m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf FALSE gesetzt habe - AppendText");
 			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
+*/
+			m_rScintilla_TextArea.Text ="public void ButtonFR_KlickAktion() {\r\tGlobal.MsgBox(\"Hello world!\");\r\t// abc\r\t// efg\r}";
 		}
 
 		private void m_rButtonSearch_Click(object sender, EventArgs e)
