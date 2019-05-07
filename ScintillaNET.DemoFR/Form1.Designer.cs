@@ -35,6 +35,7 @@
 			this.m_rButtonCopyIntoClipboard = new System.Windows.Forms.Button();
 			this.m_rButtonReadFromClipboard = new System.Windows.Forms.Button();
 			this.m_rButtonCopyRTF = new System.Windows.Forms.Button();
+			this.m_rButton_GoToLine = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// m_rPanel
@@ -118,11 +119,22 @@
 			this.m_rButtonCopyRTF.UseVisualStyleBackColor = true;
 			this.m_rButtonCopyRTF.Click += new System.EventHandler(this.m_rButtonCopyRTF_Click);
 			// 
+			// m_rButton_GoToLine
+			// 
+			this.m_rButton_GoToLine.Location = new System.Drawing.Point(397, 71);
+			this.m_rButton_GoToLine.Name = "m_rButton_GoToLine";
+			this.m_rButton_GoToLine.Size = new System.Drawing.Size(75, 23);
+			this.m_rButton_GoToLine.TabIndex = 9;
+			this.m_rButton_GoToLine.Text = "GoTo line";
+			this.m_rButton_GoToLine.UseVisualStyleBackColor = true;
+			this.m_rButton_GoToLine.Click += new System.EventHandler(this.m_rButton_GoToLine_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(834, 507);
+			this.Controls.Add(this.m_rButton_GoToLine);
 			this.Controls.Add(this.m_rButtonCopyRTF);
 			this.Controls.Add(this.m_rButtonReadFromClipboard);
 			this.Controls.Add(this.m_rButtonCopyIntoClipboard);
@@ -147,6 +159,7 @@
 		private System.Windows.Forms.Button m_rButtonCopyIntoClipboard;
 		private System.Windows.Forms.Button m_rButtonReadFromClipboard;
 		private System.Windows.Forms.Button m_rButtonCopyRTF;
+		private System.Windows.Forms.Button m_rButton_GoToLine;
 	}
 }
 

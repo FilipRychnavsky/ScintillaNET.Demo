@@ -416,5 +416,12 @@ namespace ScintillaNET.DemoFR
 		{
 			m_rScintilla_TextArea.Copy(CopyFormat.Rtf);
 		}
+
+		private void m_rButton_GoToLine_Click(object sender, EventArgs e)
+		{
+			Debug.WriteLine("Going to line 3");
+			m_rScintilla_TextArea.Lines[3 - 1].Goto();
+			m_rScintilla_TextArea.Focus();
+		}
 	}
 }
