@@ -42,6 +42,10 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.UseTabs = true;
 			m_rScintilla_TextArea.UpdateUI += OnScintilla_UpdateUI;
 			UpdateCheckBoxReadOnly();
+// Display whitespace in orange
+m_rScintilla_TextArea.WhitespaceSize = 2;
+m_rScintilla_TextArea.ViewWhitespace = WhitespaceMode.VisibleAlways;
+m_rScintilla_TextArea.SetWhitespaceForeColor(true, Color.Orange);
 		}
 
 		private void OnScintilla_UpdateUI(object sender, UpdateUIEventArgs e)
