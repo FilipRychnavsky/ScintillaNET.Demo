@@ -56,8 +56,7 @@ namespace ScintillaNET.DemoFR
 
 		private void Colorize()
 		{
-			//m_rScintilla_TextArea.Lexer = Lexer.VbScript;
-			m_rScintilla_TextArea.Lexer = Lexer.Css;
+			m_rScintilla_TextArea.Lexer = Lexer.VbScript;
 			m_rScintilla_TextArea.Colorize(20, m_rScintilla_TextArea.Text.Length);
 		}
 
@@ -300,7 +299,6 @@ namespace ScintillaNET.DemoFR
 		private void InitText()
 		{
 			// InitText
-#if false			
 			m_rScintilla_TextArea.Text = "http://www.google.com";
 			m_rScintilla_TextArea.CurrentPosition = 21;
 			m_rScintilla_TextArea.AppendText("\nhttp://www.izurnal.cz");
@@ -312,7 +310,6 @@ namespace ScintillaNET.DemoFR
  			m_rScintilla_TextArea.AddText("\nTheView");
 			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
 */
-
 	
 			m_rScintilla_TextArea.AppendText("\nSub ButtonFR_KlickAktion()");
 			m_rScintilla_TextArea.AppendText("\nDim This : Set This = ButtonFR");
@@ -329,14 +326,7 @@ namespace ScintillaNET.DemoFR
 			SetScintillaReadOnly(false);
 			m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf FALSE gesetzt habe - AppendText");
 			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
-#endif
-#if true
-			m_rScintilla_TextArea.Text = "public void Button18_Aktion_bei_der_Initialisierung() {\n";
-			m_rScintilla_TextArea.AppendText("\tint n;\n");
-			m_rScintilla_TextArea.AppendText("}");
-#endif
 		}
-
 
 		private void m_rButtonSearch_Click(object sender, EventArgs e)
 		{
