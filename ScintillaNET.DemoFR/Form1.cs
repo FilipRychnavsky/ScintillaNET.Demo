@@ -20,16 +20,16 @@ namespace ScintillaNET.DemoFR
 			//BeginUndoAction und EndUndoAction- beeinflusst nur den Umfang von "a single undo action"
 			m_rScintilla_TextArea.BeginUndoAction();
 			InitText();
-			//SelectSomeText();
+			SelectSomeText();
 			m_rScintilla_TextArea.EndUndoAction();
 			// EmptyUndoBuffer - Grenze, bis wohin UNDO etwas zurücknehmen kann.
 			m_rScintilla_TextArea.EmptyUndoBuffer();
 			InitDwelling();
-			//SetIndicatorForURL();
+			SetIndicatorForURL();
 			InitStyles();
-			SetCSharpKeyWords();
+			//SetCSharpKeyWords();
 			SetDotNetKeywords();
-			//SetVbKeywords();
+			SetVbKeywords();
 			Colorize();
 
 			m_rScintilla_TextArea.CharAdded += OnCharAdded;
@@ -56,13 +56,13 @@ namespace ScintillaNET.DemoFR
 
 		private void Colorize()
 		{
-			m_rScintilla_TextArea.Lexer = Lexer.Cpp;
-			m_rScintilla_TextArea.Colorize(0, m_rScintilla_TextArea.Text.Length);
+			//m_rScintilla_TextArea.Lexer = Lexer.VbScript;
+			m_rScintilla_TextArea.Lexer = Lexer.Css;
+			m_rScintilla_TextArea.Colorize(20, m_rScintilla_TextArea.Text.Length);
 		}
 
 		private void InitStyles()
 		{
-			// https://github.com/jacobslusser/ScintillaNET/wiki/Automatic-Syntax-Highlighting#defining-styles
 			m_rScintilla_TextArea.Styles[1].ForeColor = Color.Green; //Comment Also /* */ mehrzeilig in C#
 			m_rScintilla_TextArea.Styles[2].ForeColor = Color.Green; //Comment Line  Also // in C# | ' und rem in VB
 			m_rScintilla_TextArea.Styles[3].ForeColor = Color.Green; //Comment Block (VB Keywords 0) Also /* */ einzeilig in C#
@@ -329,11 +329,10 @@ namespace ScintillaNET.DemoFR
 			SetScintillaReadOnly(false);
 			m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf FALSE gesetzt habe - AppendText");
 			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
-#else
-			m_rScintilla_TextArea.Text = "public void Button18_Aktion_bei_der_Initialisierung() {";
-			m_rScintilla_TextArea.AppendText("\n\tint n = 0;");
-			m_rScintilla_TextArea.AppendText("\n\tstring sMyString = \"Hello World.\";");
-			m_rScintilla_TextArea.AppendText("\n\t//my comment\n");
+#endif
+#if true
+			m_rScintilla_TextArea.Text = "public void Button18_Aktion_bei_der_Initialisierung() {\n";
+			m_rScintilla_TextArea.AppendText("\tint n;\n");
 			m_rScintilla_TextArea.AppendText("}");
 #endif
 		}
