@@ -224,6 +224,8 @@ namespace ScintillaNET.DemoFR
 			// Display the autocompletion list
 			int nLengthEntered = nCurrentPosition - nWordStartPosition;
 			string sAutoCompletionList = "aaa bbb ccc dddd eee";			
+//TODO_FR #CodeEditor SI383424 Setzte die Eingabetaste und "(" als FillUps. Sie dienen der Übernahme der Auswahl aus einer Autocompletion.
+			m_rScintilla_TextArea.AutoCSetFillUps("\n(");
 			m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
 		}
 
