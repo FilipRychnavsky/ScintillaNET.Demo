@@ -221,12 +221,14 @@ namespace ScintillaNET.DemoFR
 		{
 			string sResult = "";
 			//find all words of the text
+			// Einen Dictionary kann man verwenden, um Duplizitäten zu vermeiden
+			var mWords = new System.Collections.Generic.Dictionary<string, string>();
 			foreach (Match m in Regex.Matches(m_rScintilla_TextArea.Text, @"\b\w+\b")) {
-				if (!sResult.Contains(m.ToString())) {
-					sResult += string.Format(" {0}", m.ToString());
-				}
+				mWords[m.Value] = m.Value;
 			}
-			sResult = sResult.Trim();
+      foreach(var word in mWords.Keys)
+				sResult += string.Format(" {0}", word.ToString());
+			sResult = sResult.Trim();	
 			return sResult;
 		}
 
