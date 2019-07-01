@@ -25,7 +25,7 @@ namespace ScintillaNET.DemoFR
 			// EmptyUndoBuffer - Grenze, bis wohin UNDO etwas zurücknehmen kann.
 			m_rScintilla_TextArea.EmptyUndoBuffer();
 			InitDwelling();
-			SetIndicatorForURL();
+			//SetIndicatorForURL();
 			InitStyles();
 			//SetCSharpKeyWords();
 			SetDotNetKeywords();
@@ -90,10 +90,10 @@ namespace ScintillaNET.DemoFR
 			return "Control ";
 		}
 
-/// <summary>
-/// Intro into Automatic Syntax Highlighting https://github.com/jacobslusser/ScintillaNET/wiki/Automatic-Syntax-Highlighting ;
-/// Übersicht der Keyword sets: string sKeywordSets = m_rScintilla_TextArea.DescribeKeywordSets();
-/// </summary>
+		/// <summary>
+		/// Intro into Automatic Syntax Highlighting https://github.com/jacobslusser/ScintillaNET/wiki/Automatic-Syntax-Highlighting ;
+		/// Übersicht der Keyword sets: string sKeywordSets = m_rScintilla_TextArea.DescribeKeywordSets();
+		/// </summary>
 		private void SetCSharpKeyWords()
 		{
 			// Primary keywords and identifiers
@@ -145,16 +145,16 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.IndicatorFillRange(0, 21); // Use your own logic
 
 
-/*
-			// Indicator 10 - out of Lexer indicators - Filip
-			m_rScintilla_TextArea.Indicators[10].Style = IndicatorStyle.TextFore;
-			m_rScintilla_TextArea.Indicators[10].ForeColor = Color.LightBlue;
-			m_rScintilla_TextArea.IndicatorCurrent = 10;
-			string sDemoTextRange = m_rScintilla_TextArea.GetTextRange(25, 30);
-			int nText_Length = m_rScintilla_TextArea.Text.Length;
-			int nTextLength = m_rScintilla_TextArea.TextLength; // before updating Cache - old size - https://github.com/jacobslusser/ScintillaNET/issues/223
-			m_rScintilla_TextArea.IndicatorFillRange(25,30);
-*/
+			/*
+						// Indicator 10 - out of Lexer indicators - Filip
+						m_rScintilla_TextArea.Indicators[10].Style = IndicatorStyle.TextFore;
+						m_rScintilla_TextArea.Indicators[10].ForeColor = Color.LightBlue;
+						m_rScintilla_TextArea.IndicatorCurrent = 10;
+						string sDemoTextRange = m_rScintilla_TextArea.GetTextRange(25, 30);
+						int nText_Length = m_rScintilla_TextArea.Text.Length;
+						int nTextLength = m_rScintilla_TextArea.TextLength; // before updating Cache - old size - https://github.com/jacobslusser/ScintillaNET/issues/223
+						m_rScintilla_TextArea.IndicatorFillRange(25,30);
+			*/
 			m_rScintilla_TextArea.Styles[Style.CallTip].SizeF = 8.25F;
 			m_rScintilla_TextArea.Styles[Style.CallTip].ForeColor = SystemColors.InfoText;
 			m_rScintilla_TextArea.Styles[Style.CallTip].BackColor = SystemColors.Info;
@@ -164,7 +164,7 @@ namespace ScintillaNET.DemoFR
 		{
 		}
 
-// https://gist.github.com/Ahmad45123/f2910192987a73a52ab4
+		// https://gist.github.com/Ahmad45123/f2910192987a73a52ab4
 		private void OnInsertCheck(object sender, InsertCheckEventArgs e)
 		{
 			if ((e.Text.EndsWith("" + "\r") || e.Text.EndsWith("" + "\n"))) {
@@ -183,35 +183,51 @@ namespace ScintillaNET.DemoFR
 		//Codes for the handling the Indention of the lines.
 		//They are manually added here until they get officially added to the Scintilla control.
 		#region "CodeIndent Handlers"
-			const int SCI_SETLINEINDENTATION = 2126;
-			const int SCI_GETLINEINDENTATION = 2127;
-			private void SetIndent(ScintillaNET.Scintilla scin, int line, int indent)
-			{
-				scin.DirectMessage(SCI_SETLINEINDENTATION, new IntPtr(line), new IntPtr(indent));
-			}
-			private int GetIndent(ScintillaNET.Scintilla scin, int line)
-			{
-				int nResult = 0;
-				IntPtr rIntPtrIndent = scin.DirectMessage(SCI_GETLINEINDENTATION, new IntPtr(line), IntPtr.Zero);
-				nResult = rIntPtrIndent.ToInt32();
-				return nResult;
-			}
+		const int SCI_SETLINEINDENTATION = 2126;
+		const int SCI_GETLINEINDENTATION = 2127;
+		private void SetIndent(ScintillaNET.Scintilla scin, int line, int indent)
+		{
+			scin.DirectMessage(SCI_SETLINEINDENTATION, new IntPtr(line), new IntPtr(indent));
+		}
+		private int GetIndent(ScintillaNET.Scintilla scin, int line)
+		{
+			int nResult = 0;
+			IntPtr rIntPtrIndent = scin.DirectMessage(SCI_GETLINEINDENTATION, new IntPtr(line), IntPtr.Zero);
+			nResult = rIntPtrIndent.ToInt32();
+			return nResult;
+		}
 		#endregion
 
 		private void OnCharAdded(object sender, CharAddedEventArgs e)
 		{
 			Debug.WriteLine("Length of Text after OnCharAdded: {0}", m_rScintilla_TextArea.Text.Length);
+			if (e.Char == ' ' && ((ModifierKeys & Keys.Control) == Keys.Control)) {
+				ShowAutoCompletion();
+			}
 			if (e.Char == '.') {
 				ShowAutoCompletion();
 			}
 			//The '}' char.
 			if (e.Char == 125) {
 				int nCurLine = m_rScintilla_TextArea.LineFromPosition(m_rScintilla_TextArea.CurrentPosition);
-		
+
 				if (m_rScintilla_TextArea.Lines[nCurLine].Text.Trim() == "}") { //Check whether the bracket is the only thing on the line.. For cases like "if() { }".
 					SetIndent(m_rScintilla_TextArea, nCurLine, GetIndent(m_rScintilla_TextArea, nCurLine) - 4);
 				}
 			}
+		}
+
+		string GetAutocompletionListFromParsedText()
+		{
+			string sResult = "";
+			//find all words of the text
+			foreach (Match m in Regex.Matches(m_rScintilla_TextArea.Text, @"\b\w+\b")) {
+				if (!sResult.Contains(m.ToString())) {
+					sResult += string.Format(" {0}", m.ToString());
+				}
+			}
+			sResult = sResult.Trim();
+			return sResult;
 		}
 
 		private void ShowAutoCompletion()
@@ -221,10 +237,12 @@ namespace ScintillaNET.DemoFR
 			int nWordStartPosition = m_rScintilla_TextArea.WordStartPosition(nCurrentPosition, true);
 			// Display the autocompletion list
 			int nLengthEntered = nCurrentPosition - nWordStartPosition;
-			string sAutoCompletionList = "aaa bbb ccc dddd eee";			
+			//string sAutoCompletionList = "aaa bbb ccc dddd eee";
+			string sAutoCompletionList = GetAutocompletionListFromParsedText();
 			// #CodeEditor SI383424 Setzte die Eingabetaste und "(" als FillUps. Sie dienen der Übernahme der Auswahl aus einer Autocompletion. 
 			// https://www.scintilla.org/ScintillaDoc.html#Autocompletion
 			m_rScintilla_TextArea.AutoCSetFillUps("\n(");
+			//TODO_FR #try to parse list of autocompletion  https://github.com/jacobslusser/ScintillaNET/wiki/Custom-Autocompletion
 			m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
 		}
 
@@ -243,8 +261,8 @@ namespace ScintillaNET.DemoFR
 			//FRs Anmeldung von Dwell
 			// BONUS: Configure call tips for the Dwell events
 			m_rScintilla_TextArea.MouseDwellTime = 400;
-			m_rScintilla_TextArea.DwellStart	+= m_rScintilla_TextArea_DwellStart;
-			m_rScintilla_TextArea.DwellEnd		+= m_rScintilla_TextArea_DwellEnd;
+			m_rScintilla_TextArea.DwellStart += m_rScintilla_TextArea_DwellStart;
+			m_rScintilla_TextArea.DwellEnd += m_rScintilla_TextArea_DwellEnd;
 		}
 
 		private string GetUrlAtPosition(int position)
@@ -283,7 +301,7 @@ namespace ScintillaNET.DemoFR
 
 		private string WrapMessageForToolTip(string callTip)
 		{
-// https://stackoverflow.com/questions/22368434/best-way-to-split-string-into-lines-with-maximum-length-without-breaking-words
+			// https://stackoverflow.com/questions/22368434/best-way-to-split-string-into-lines-with-maximum-length-without-breaking-words
 			string sResult = callTip;
 			int nMaximumLineLength = 80;
 			sResult = System.Text.RegularExpressions.Regex.Replace(callTip, @"(.{1," + nMaximumLineLength + @"})(?:\s|$)", "$1\n");
@@ -300,33 +318,39 @@ namespace ScintillaNET.DemoFR
 		private void InitText()
 		{
 			// InitText
-			m_rScintilla_TextArea.Text = "http://www.google.com";
-			m_rScintilla_TextArea.CurrentPosition = 21;
-			m_rScintilla_TextArea.AppendText("\nhttp://www.izurnal.cz");
-			string sDebug_FistLine = m_rScintilla_TextArea.Lines[1].Text;
+			/*
+						m_rScintilla_TextArea.Text = "http://www.google.com";
+						m_rScintilla_TextArea.CurrentPosition = 21;
+						m_rScintilla_TextArea.AppendText("\nhttp://www.izurnal.cz");
+						string sDebug_FistLine = m_rScintilla_TextArea.Lines[1].Text;
+			*/
 			//m_rScintilla_TextArea.AddText("\r\nhttp://www.izurnal.cz");
-/*
-			m_rScintilla_TextArea.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
- 			m_rScintilla_TextArea.AddText("\nTheView");
-			m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
-*/
-	
-			m_rScintilla_TextArea.AppendText("\nSub ButtonFR_KlickAktion()");
-			m_rScintilla_TextArea.AppendText("\nDim This : Set This = ButtonFR");
-			m_rScintilla_TextArea.AppendText("\n\tGlobal.MsgBox(\"Hello world!\")");
-			m_rScintilla_TextArea.AppendText("\n\trem Global.MsgBox(\"Hello world!\")");
-			m_rScintilla_TextArea.AppendText("\n\tremGlobal.MsgBox(\"Hello world!\")");
-			m_rScintilla_TextArea.AppendText("{");
-			m_rScintilla_TextArea.AppendText("\naaa");
-			m_rScintilla_TextArea.AppendText("\nbbb}sofort_C");
-			m_rScintilla_TextArea.AppendText("\nEnd Sub");
-			SetScintillaReadOnly(true);
-			m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf true gesetzt habe - AppendText");
-			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
-			SetScintillaReadOnly(false);
-			m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf FALSE gesetzt habe - AppendText");
-			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
+			/*
+						m_rScintilla_TextArea.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+						m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
+						m_rScintilla_TextArea.AddText("\nTheView");
+						m_rScintilla_TextArea.GotoPosition(m_rScintilla_TextArea.Text.Length);
+			*/
+			/*
+					m_rScintilla_TextArea.AppendText("\nSub ButtonFR_KlickAktion()");
+					m_rScintilla_TextArea.AppendText("\nDim This : Set This = ButtonFR");
+					m_rScintilla_TextArea.AppendText("\n\tGlobal.MsgBox(\"Hello world!\")");
+					m_rScintilla_TextArea.AppendText("\n\trem Global.MsgBox(\"Hello world!\")");
+					m_rScintilla_TextArea.AppendText("\n\tremGlobal.MsgBox(\"Hello world!\")");
+					m_rScintilla_TextArea.AppendText("{");
+					m_rScintilla_TextArea.AppendText("\naaa");
+					m_rScintilla_TextArea.AppendText("\nbbb}sofort_C");
+					m_rScintilla_TextArea.AppendText("\nEnd Sub");
+					SetScintillaReadOnly(true);
+					m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf true gesetzt habe - AppendText");
+					m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
+					SetScintillaReadOnly(false);
+					m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf FALSE gesetzt habe - AppendText");
+					m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
+		*/
+			m_rScintilla_TextArea.AppendText("\n\tint n;");
+			m_rScintilla_TextArea.AppendText("\n\tstring sMyString;");
+			m_rScintilla_TextArea.AppendText("\n\tsMyString = \"hello world\"");
 		}
 
 		private void m_rButtonSearch_Click(object sender, EventArgs e)
@@ -380,7 +404,7 @@ namespace ScintillaNET.DemoFR
 			SetScintillaReadOnly(false);
 		}
 
-		
+
 		private void m_rCheckBoxReadOnly_CheckedChanged(object sender, EventArgs e)
 		{
 
@@ -388,7 +412,7 @@ namespace ScintillaNET.DemoFR
 
 		private void m_rButtonCopyIntoClipboard_Click(object sender, EventArgs e)
 		{
-       Clipboard.SetDataObject("test");
+			Clipboard.SetDataObject("test");
 		}
 
 		private void m_rButtonReadFromClipboard_Click(object sender, EventArgs e)
@@ -397,19 +421,19 @@ namespace ScintillaNET.DemoFR
 			// Declares an IDataObject to hold the data returned from the clipboard.
 			// Retrieves the data from the clipboard.
 			IDataObject iData = Clipboard.GetDataObject();
-			 // Determines whether the data is in a format you can use.
-			if(iData.GetDataPresent(DataFormats.Text)) {
-				 // Yes it is, so display it in a text box.
-				 sFoundClipboardText = (String)iData.GetData(DataFormats.Text); 
-				 bool bContainsRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
-				 sFoundClipboardText = System.String.Format("contains TextDataFormat.Rtf: {0}\n{1}", bContainsRtf, sFoundClipboardText);
+			// Determines whether the data is in a format you can use.
+			if (iData.GetDataPresent(DataFormats.Text)) {
+				// Yes it is, so display it in a text box.
+				sFoundClipboardText = (String)iData.GetData(DataFormats.Text);
+				bool bContainsRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
+				sFoundClipboardText = System.String.Format("contains TextDataFormat.Rtf: {0}\n{1}", bContainsRtf, sFoundClipboardText);
 			}
 			if (iData.GetDataPresent(DataFormats.Rtf)) {
-					// Yes it is, so display it in a text box.
-					sFoundClipboardText = (String)iData.GetData(DataFormats.Rtf);
-					bool bContainsRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
-					sFoundClipboardText = System.String.Format("contains TextDataFormat.Rtf: {0}\n{1}", bContainsRtf, sFoundClipboardText);
-				} 
+				// Yes it is, so display it in a text box.
+				sFoundClipboardText = (String)iData.GetData(DataFormats.Rtf);
+				bool bContainsRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
+				sFoundClipboardText = System.String.Format("contains TextDataFormat.Rtf: {0}\n{1}", bContainsRtf, sFoundClipboardText);
+			}
 			System.Windows.Forms.MessageBox.Show(sFoundClipboardText);
 		}
 
