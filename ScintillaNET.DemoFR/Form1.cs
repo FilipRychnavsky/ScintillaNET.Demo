@@ -121,14 +121,13 @@ namespace ScintillaNET.DemoFR
 
 		private void SelectSomeText()
 		{
-			//TODO_FR #CodeEditor select some text
 			m_rScintilla_TextArea.SelectionStart = 50;
 			m_rScintilla_TextArea.SelectionEnd = 55;
 		}
 
 		private void SetIndicatorForURL()
 		{
-			//TODO_FR 299 ToolTip in AutoCompletion m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
+			//ToolTip in AutoCompletion m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
 			//https://github.com/jacobslusser/ScintillaNET/issues/111
 			// Define an indicator for marking URLs and apply it to a range.
 			// How you determine a particular range is a URL and how often
@@ -217,14 +216,14 @@ namespace ScintillaNET.DemoFR
 
 		private void ShowAutoCompletion()
 		{
-			//TODO_FR #CodeEditor ? AutoCActive
 			// Find the word start
 			int nCurrentPosition = m_rScintilla_TextArea.CurrentPosition;
 			int nWordStartPosition = m_rScintilla_TextArea.WordStartPosition(nCurrentPosition, true);
 			// Display the autocompletion list
 			int nLengthEntered = nCurrentPosition - nWordStartPosition;
 			string sAutoCompletionList = "aaa bbb ccc dddd eee";			
-			// #CodeEditor SI383424 Setzte die Eingabetaste und "(" als FillUps. Sie dienen der Übernahme der Auswahl aus einer Autocompletion.
+			// #CodeEditor SI383424 Setzte die Eingabetaste und "(" als FillUps. Sie dienen der Übernahme der Auswahl aus einer Autocompletion. 
+			// https://www.scintilla.org/ScintillaDoc.html#Autocompletion
 			m_rScintilla_TextArea.AutoCSetFillUps("\n(");
 			m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
 		}
