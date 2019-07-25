@@ -246,6 +246,8 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AutoCSetFillUps("\n(");
 			//TODO_FR #try to parse list of autocompletion  https://github.com/jacobslusser/ScintillaNET/wiki/Custom-Autocompletion
 			m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
+			//TODO_FR SI342389 Autocompletion in unterschiedlichen Farben ; 
+			//TODO_FR SI342389 900 Autocompletion mit images SCI_REGISTERIMAGE?
 		}
 
 		private void OnScintilla_AutoCSelection(object sender, AutoCSelectionEventArgs rAutoCSelectionEventArgs)
