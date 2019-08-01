@@ -245,7 +245,7 @@ namespace ScintillaNET.DemoFR
 			// https://www.scintilla.org/ScintillaDoc.html#Autocompletion
 			m_rScintilla_TextArea.AutoCSetFillUps("\n(");
 			//TODO_FR #try to parse list of autocompletion  https://github.com/jacobslusser/ScintillaNET/wiki/Custom-Autocompletion
-			//TODO_FR #CodeEditor 342389 Autocompletion - Gruppieren. Wie kann man die Sortierung in Scintilla überschreiben?
+			m_rScintilla_TextArea.AutoCOrder = Order.Presorted;
 			m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
 		}
 
