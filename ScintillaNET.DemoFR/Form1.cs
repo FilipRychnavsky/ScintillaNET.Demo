@@ -228,6 +228,8 @@ namespace ScintillaNET.DemoFR
 			}
       foreach(var word in mWords.Keys)
 				sResult += string.Format(" {0}", word.ToString());
+			//SI 392112 Underscore debug values for Autocompletion
+			sResult += " S_KopfLagerUmplanung?2 S_KopfLagerZubuchung?2 S_KopfLagerZubuchungExtra?2 S_PositionenLagerAbbuchung?2 S_PositionenLagerAbbuchungSchwund?2 S_PositionenLagerUmplanung?2 S_ProduktionenLagerRefresh?2 SetKopfArtikelEP?2 SetKopfLagerID?2 SetPositionenLagerID?2";
 			sResult = sResult.Trim();	
 			return sResult;
 		}
