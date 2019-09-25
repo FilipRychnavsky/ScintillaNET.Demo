@@ -228,9 +228,6 @@ namespace ScintillaNET.DemoFR
 			}
       foreach(var word in mWords.Keys)
 				sResult += string.Format(" {0}", word.ToString());
-			//SI 392112 Underscore debug values for Autocompletion
-			sResult += " S_KopfLagerUmplanung?2 S_KopfLagerZubuchung?2 S_KopfLagerZubuchungExtra?2 S_PositionenLagerAbbuchung?2 S_PositionenLagerAbbuchungSchwund?2 S_PositionenLagerUmplanung?2 S_ProduktionenLagerRefresh?2 SetKopfArtikelEP?2 SetKopfLagerID?2 SetPositionenLagerID?2";
-			sResult = sResult.Trim();	
 			return sResult;
 		}
 
@@ -243,6 +240,11 @@ namespace ScintillaNET.DemoFR
 			int nLengthEntered = nCurrentPosition - nWordStartPosition;
 			//string sAutoCompletionList = "aaa bbb ccc dddd eee";
 			string sAutoCompletionList = GetAutocompletionListFromParsedText();
+			//SI 392112 Underscore debug values for Autocompletion
+			sAutoCompletionList += " S_KopfLagerUmplanung?2 S_KopfLagerZubuchung?2 S_KopfLagerZubuchungExtra?2 S_PositionenLagerAbbuchung?2 S_PositionenLagerAbbuchungSchwund?2 S_PositionenLagerUmplanung?2 S_ProduktionenLagerRefresh?2 SetKopfArtikelEP?2 SetKopfLagerID?2 SetPositionenLagerID?2";
+			sAutoCompletionList += " aaa?2 bbb?2 ddd?2 ccc?2";
+			sAutoCompletionList = sAutoCompletionList.Trim();	
+
 			// #CodeEditor SI383424 Setzte die Eingabetaste und "(" als FillUps. Sie dienen der Übernahme der Auswahl aus einer Autocompletion. 
 			// https://www.scintilla.org/ScintillaDoc.html#Autocompletion
 			m_rScintilla_TextArea.AutoCSetFillUps("\n(");
