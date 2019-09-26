@@ -240,19 +240,22 @@ namespace ScintillaNET.DemoFR
 			int nLengthEntered = nCurrentPosition - nWordStartPosition;
 			//string sAutoCompletionList = "aaa bbb ccc dddd eee";
 			// Idee - wenn das vorherige wort nicht alphabetisch vorher ist, kann autocompletion es nicht finden
-			string sAutoCompletionList = "ab?2 ac?2 ae?2 ad?2 af?2 fff?2 aaa?2 bbb?2 ddd?2 ccc?2 eee?2 fff?2 ggg?2 hhh?2 iii?2 jjj?2 kkk?2 lll?2 mmm?2 nnn?2 ooo?2 ppp?2 qqq?2 rrr?2 sss?2 ttt?2 uuu?2 vvv?2 wwww?2 xxx?2 yyy?2 zzz?2";
+			string sAutoCompletionList = "ab?2 ac?2 a1e?2 a2e?2 ae?2 ad?2 af?2 fff?2 aaa?2 bbb?2 ddd?2 ccc?2 eee?2 fff?2 ggg?2 hhh?2 iii?2 jjj?2 kkk?2 lll?2 mmm?2 nnn?2 ooo?2 ppp?2 qqq?2 rrr?2 sss?2 ttt?2 uuu?2 vvv?2 wwww?2 xxx?2 yyy?2 zzz?2";
 			//string sAutoCompletionList = GetAutocompletionListFromParsedText();
 			//SI 392112 Underscore debug values for Autocompletion
-			//sAutoCompletionList += " S_KopfLagerUmplanung?2 S_KopfLagerZubuchung?2 S_KopfLagerZubuchungExtra?2 S_PositionenLagerAbbuchung?2 S_PositionenLagerAbbuchungSchwund?2 S_PositionenLagerUmplanung?2 S_ProduktionenLagerRefresh?2 SetKopfArtikelEP?2 SetKopfLagerID?2 SetPositionenLagerID?2";
+			sAutoCompletionList += " S_KopfLagerUmplanung?2 S_KopfLagerZubuchung?2 S_KopfLagerZubuchungExtra?2 S_PositionenLagerAbbuchung?2 S_PositionenLagerAbbuchungSchwund?2 S_PositionenLagerUmplanung?2 S_ProduktionenLagerRefresh?2 SetKopfArtikelEP?2 SetKopfLagerID?2 SetPositionenLagerID?2";
 			sAutoCompletionList = sAutoCompletionList.Trim();	
-
 			// #CodeEditor SI383424 Setzte die Eingabetaste und "(" als FillUps. Sie dienen der Übernahme der Auswahl aus einer Autocompletion. 
 			// https://www.scintilla.org/ScintillaDoc.html#Autocompletion
 			m_rScintilla_TextArea.AutoCSetFillUps("\n(");
 			//TODO_FR #try to parse list of autocompletion  https://github.com/jacobslusser/ScintillaNET/wiki/Custom-Autocompletion
-			m_rScintilla_TextArea.AutoCOrder = Order.Presorted;
+			//TODO_FR #CodeEditor Kann AutoCOrder oddities in Autocompletion verursachen, wenn die Items nicht in der alphabetischen Reihenfolge sind?
+			// m_rScintilla_TextArea.AutoCOrder = Order.Presorted;
+			// Wenn man PerformSort ausübt, funktioniert die Navigation mit Anfangsbuchstaben in Autocompletion.
+			//https://stackoverflow.com/questions/18564284/scintillanet-auto-completion-list-issue
+			//Scintilla likes the list in sorted order.	
+			m_rScintilla_TextArea.AutoCOrder = Order.PerformSort;
 			m_rScintilla_TextArea.AutoCShow(nLengthEntered, sAutoCompletionList);
-//TODO_FR ? SCI_AUTOCSTOPS
 		}
 
 		private void OnScintilla_AutoCSelection(object sender, AutoCSelectionEventArgs rAutoCSelectionEventArgs)
