@@ -302,6 +302,8 @@ namespace ScintillaNET.DemoFR
 
 		private void m_rScintilla_TextArea_DwellStart(object sender, DwellEventArgs e)
 		{
+#if false
+			#region MyRegion
 			var url = GetUrlAtPosition(e.Position);
 			if (url != null) {
 				var callTip = string.Format("{0}\nCTRL + click to follow link", url);
@@ -309,6 +311,9 @@ namespace ScintillaNET.DemoFR
 				callTip = WrapMessageForToolTip(callTip);
 				m_rScintilla_TextArea.CallTipShow(e.Position, callTip);
 			}
+			#endregion
+#endif
+			m_rScintilla_TextArea.CallTipShow(e.Position, "Demo ToolTip");
 		}
 
 		private string WrapMessageForToolTip(string callTip)
@@ -363,6 +368,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AppendText("\n\tint n;");
 			m_rScintilla_TextArea.AppendText("\n\tstring sMyString;");
 			m_rScintilla_TextArea.AppendText("\n\tsMyString = \"hello world\"");
+			m_rScintilla_TextArea.AppendText("\n\tGlobal.UIMessageBox( "); // Klammer und ein Leerzeichen
 		}
 
 		private void m_rButtonSearch_Click(object sender, EventArgs e)
