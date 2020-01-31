@@ -27,7 +27,7 @@ namespace ScintillaNET.DemoFR
 			InitDwelling();
 			//SetIndicatorForURL();
 			InitStyles();
-			//SetCSharpKeyWords();
+			SetCSharpKeyWords();
 			SetDotNetKeywords();
 			SetVbKeywords();
 			Colorize();
@@ -56,7 +56,7 @@ namespace ScintillaNET.DemoFR
 
 		private void Colorize()
 		{
-			m_rScintilla_TextArea.Lexer = Lexer.VbScript;
+			m_rScintilla_TextArea.Lexer = Lexer.Cpp;
 			m_rScintilla_TextArea.Colorize(20, m_rScintilla_TextArea.Text.Length);
 		}
 
@@ -75,9 +75,9 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.Styles[10].ForeColor = Color.Black; // Operator (VB Keywords 1)
 			m_rScintilla_TextArea.Styles[11].ForeColor = Color.Black; // Identifier (VB Keywords 2)
 			m_rScintilla_TextArea.Styles[16].ForeColor = Color.Blue; //Keywordset 1
-			m_rScintilla_TextArea.Styles[17].ForeColor = Color.Blue; //Keywordset 1
+			m_rScintilla_TextArea.Styles[17].ForeColor = Color.Red; //Keywordset ?3 Wird gar nicht angelaufen
 			m_rScintilla_TextArea.Styles[18].ForeColor = Color.Blue; //Keywordset 1
-			m_rScintilla_TextArea.Styles[19].ForeColor = Color.LightSeaGreen; //Keywordset 3
+			m_rScintilla_TextArea.Styles[19].ForeColor = Color.FromArgb(128,0,255); //Keywordset 3 (Welche Bedeutung hat Style 19 in cs und cpp lexer?)
 		}
 
 		private static string CreateStringWithGlobalKeywords()
@@ -367,6 +367,7 @@ namespace ScintillaNET.DemoFR
 		*/
 			m_rScintilla_TextArea.AppendText("\n\tint n;");
 			m_rScintilla_TextArea.AppendText("\n\tstring sMyString;");
+			m_rScintilla_TextArea.AppendText("\n\tTheView ;");
 			m_rScintilla_TextArea.AppendText("\n\tsMyString = \"hello world\"");
 			m_rScintilla_TextArea.AppendText("\n\tGlobal.UIMessageBox( "); // Klammer und ein Leerzeichen
 		}
