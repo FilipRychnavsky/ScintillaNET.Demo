@@ -71,7 +71,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.Styles[7].ForeColor = Color.Magenta; //Character (VB Default)
 																																 //FR 20190115 14:49:42 SI366246 Style für verbatim string literals
 			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.Verbatim].ForeColor = Color.Magenta;
-			m_rScintilla_TextArea.Styles[9].ForeColor = Color.Yellow; //StyleName Preprocessor ; // Ziel 128, 64, 0
+			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.Preprocessor].ForeColor = Color.FromArgb(128, 64, 0); //StyleName Preprocessor ; // Ziel 128, 64, 0
 			m_rScintilla_TextArea.Styles[10].ForeColor = Color.Black; // Operator (VB Keywords 1)
 			m_rScintilla_TextArea.Styles[11].ForeColor = Color.Black; // Identifier (VB Keywords 2)
 			m_rScintilla_TextArea.Styles[16].ForeColor = Color.Blue; //Keywordset 1
