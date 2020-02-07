@@ -467,5 +467,10 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.Lines[3 - 1].Goto();
 			m_rScintilla_TextArea.Focus();
 		}
+
+		private void m_rButtonTestDeleteRange_Click(object sender, EventArgs e)
+		{
+			//TODO DeleteRange_Click
+		}
 	}
 }

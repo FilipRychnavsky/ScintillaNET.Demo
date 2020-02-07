@@ -36,6 +36,7 @@
 			this.m_rButtonReadFromClipboard = new System.Windows.Forms.Button();
 			this.m_rButtonCopyRTF = new System.Windows.Forms.Button();
 			this.m_rButton_GoToLine = new System.Windows.Forms.Button();
+			this.m_rButtonTestDeleteRange = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// m_rPanel
@@ -129,11 +130,22 @@
 			this.m_rButton_GoToLine.UseVisualStyleBackColor = true;
 			this.m_rButton_GoToLine.Click += new System.EventHandler(this.m_rButton_GoToLine_Click);
 			// 
+			// m_rButtonTestDeleteRange
+			// 
+			this.m_rButtonTestDeleteRange.Location = new System.Drawing.Point(478, 70);
+			this.m_rButtonTestDeleteRange.Name = "m_rButtonTestDeleteRange";
+			this.m_rButtonTestDeleteRange.Size = new System.Drawing.Size(110, 35);
+			this.m_rButtonTestDeleteRange.TabIndex = 10;
+			this.m_rButtonTestDeleteRange.Text = "TestDeleteRange";
+			this.m_rButtonTestDeleteRange.UseVisualStyleBackColor = true;
+			this.m_rButtonTestDeleteRange.Click += new System.EventHandler(this.m_rButtonTestDeleteRange_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(834, 507);
+			this.Controls.Add(this.m_rButtonTestDeleteRange);
 			this.Controls.Add(this.m_rButton_GoToLine);
 			this.Controls.Add(this.m_rButtonCopyRTF);
 			this.Controls.Add(this.m_rButtonReadFromClipboard);
@@ -160,6 +172,7 @@
 		private System.Windows.Forms.Button m_rButtonReadFromClipboard;
 		private System.Windows.Forms.Button m_rButtonCopyRTF;
 		private System.Windows.Forms.Button m_rButton_GoToLine;
+		private System.Windows.Forms.Button m_rButtonTestDeleteRange;
 	}
 }
 
