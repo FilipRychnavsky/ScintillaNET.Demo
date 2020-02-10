@@ -365,11 +365,19 @@ namespace ScintillaNET.DemoFR
 					m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf FALSE gesetzt habe - AppendText");
 					m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
 		*/
+/*
 			m_rScintilla_TextArea.AppendText("\n\tint n;");
 			m_rScintilla_TextArea.AppendText("\n\tstring sMyString;");
 			m_rScintilla_TextArea.AppendText("\n\tTheView ;");
 			m_rScintilla_TextArea.AppendText("\n\tsMyString = \"hello world\"");
 			m_rScintilla_TextArea.AppendText("\n\tGlobal.UIMessageBox( "); // Klammer und ein Leerzeichen
+*/
+			m_rScintilla_TextArea.AppendText("public void Button_KlickAktion() {");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 1");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 2");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 3");
+			m_rScintilla_TextArea.AppendText("\n}");
+
 		}
 
 		private void m_rButtonSearch_Click(object sender, EventArgs e)
@@ -471,6 +479,8 @@ namespace ScintillaNET.DemoFR
 		private void m_rButtonTestDeleteRange_Click(object sender, EventArgs e)
 		{
 			//TODO DeleteRange_Click
+			const int nLengthToDelete = 102;
+			m_rScintilla_TextArea.DeleteRange(0, nLengthToDelete);
 		}
 	}
 }
