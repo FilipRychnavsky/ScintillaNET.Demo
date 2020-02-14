@@ -70,6 +70,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.Styles[Style.Default].Font = "Consolas";
 			m_rScintilla_TextArea.Styles[Style.Default].Size = 13;
 			m_rScintilla_TextArea.StyleClearAll();
+#if (false)
 			m_rScintilla_TextArea.Styles[1].ForeColor = Color.Green; //Comment Also /* */ mehrzeilig in C#
 			m_rScintilla_TextArea.Styles[2].ForeColor = Color.Green; //Comment Line  Also // in C# | ' und rem in VB
 			m_rScintilla_TextArea.Styles[3].ForeColor = Color.Green; //Comment Block (VB Keywords 0) Also /* */ einzeilig in C#
@@ -86,7 +87,25 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.Styles[16].ForeColor = Color.Blue; //Keywordset 1
 			m_rScintilla_TextArea.Styles[17].ForeColor = Color.Red;
 			m_rScintilla_TextArea.Styles[18].ForeColor = Color.Blue; //Keywordset 1
-			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.GlobalClass].ForeColor = Color.FromArgb(128,0,255);		}
+			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.GlobalClass].ForeColor = Color.FromArgb(128,0,255);
+#else
+			// Beispiel von der Webseite für Syntax Highlighting
+			// Configure the CPP (C#) lexer styles
+			m_rScintilla_TextArea.Styles[Style.Cpp.Default].ForeColor = Color.Silver;
+			m_rScintilla_TextArea.Styles[Style.Cpp.Comment].ForeColor = Color.FromArgb(0, 128, 0); // Green
+			m_rScintilla_TextArea.Styles[Style.Cpp.CommentLine].ForeColor = Color.FromArgb(0, 128, 0); // Green
+			m_rScintilla_TextArea.Styles[Style.Cpp.CommentLineDoc].ForeColor = Color.FromArgb(128, 128, 128); // Gray
+			m_rScintilla_TextArea.Styles[Style.Cpp.Number].ForeColor = Color.Olive;
+			m_rScintilla_TextArea.Styles[Style.Cpp.Word].ForeColor = Color.Blue;
+			m_rScintilla_TextArea.Styles[Style.Cpp.Word2].ForeColor = Color.Blue;
+			m_rScintilla_TextArea.Styles[Style.Cpp.String].ForeColor = Color.FromArgb(163, 21, 21); // Red
+			m_rScintilla_TextArea.Styles[Style.Cpp.Character].ForeColor = Color.FromArgb(163, 21, 21); // Red
+			m_rScintilla_TextArea.Styles[Style.Cpp.Verbatim].ForeColor = Color.FromArgb(163, 21, 21); // Red
+			m_rScintilla_TextArea.Styles[Style.Cpp.StringEol].BackColor = Color.Pink;
+			m_rScintilla_TextArea.Styles[Style.Cpp.Operator].ForeColor = Color.Purple;
+			m_rScintilla_TextArea.Styles[Style.Cpp.Preprocessor].ForeColor = Color.Maroon;
+#endif
+		}
 
 		private static string CreateStringWithGlobalKeywords()
 		{
