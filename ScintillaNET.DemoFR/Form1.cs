@@ -26,7 +26,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.EmptyUndoBuffer();
 			InitDwelling();
 			//SetIndicatorForURL();
-			Console.WriteLine(m_rScintilla_TextArea.DescribeKeywordSets());
+			m_rScintilla_TextArea.Lexer = Lexer.Cpp;
 			InitStyles();
 			SetCSharpKeyWords();
 			SetDotNetKeywords();
@@ -58,10 +58,12 @@ namespace ScintillaNET.DemoFR
 
 		private void Colorize()
 		{
-			m_rScintilla_TextArea.Lexer = Lexer.Cpp;
 			m_rScintilla_TextArea.Colorize(0, m_rScintilla_TextArea.Text.Length);
 		}
 
+/// <summary>
+/// <remark>https://github.com/jacobslusser/ScintillaNET/wiki/Automatic-Syntax-Highlighting</remark>
+/// </summary>
 		private void InitStyles()
 		{
 			m_rScintilla_TextArea.StyleResetDefault();
@@ -72,21 +74,19 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.Styles[2].ForeColor = Color.Green; //Comment Line  Also // in C# | ' und rem in VB
 			m_rScintilla_TextArea.Styles[3].ForeColor = Color.Green; //Comment Block (VB Keywords 0) Also /* */ einzeilig in C#
 			m_rScintilla_TextArea.Styles[4].ForeColor = Color.Magenta; //Zahlen
-			//m_rScintilla_TextArea.Styles[5].ForeColor = Color.Blue; //KeywordSet 0
+			m_rScintilla_TextArea.Styles[5].ForeColor = Color.Blue; //KeywordSet 0
 			m_rScintilla_TextArea.Styles[6].ForeColor = Color.Magenta; //Strings
 			m_rScintilla_TextArea.Styles[7].ForeColor = Color.Magenta; //Character (VB Default)
-																																 //FR 20190115 14:49:42 SI366246 Style für verbatim string literals
+//FR 20190115 14:49:42 SI366246 Style für verbatim string literals
 			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.Verbatim].ForeColor = Color.Magenta;
-			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.Preprocessor].ForeColor = Color.FromArgb(128, 64, 0); //StyleName Preprocessor ; // Ziel 128, 64, 0
-			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.Identifier].ForeColor = Color.Black; // Operator (VB Keywords 1)
-m_rScintilla_TextArea.Styles[Style.Cpp.Operator].ForeColor = Color.Purple;
-			m_rScintilla_TextArea.Styles[11].ForeColor = Color.DarkGreen; // Identifier (VB Keywords 2)
+			//FR 20200131 SI 376537 Farbenanpassungen
+			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.Preprocessor].ForeColor = Color.FromArgb(128, 64, 0);
+			m_rScintilla_TextArea.Styles[10].ForeColor = Color.Black; // Operator (VB Keywords 1)
+			m_rScintilla_TextArea.Styles[11].ForeColor = Color.Black; // Identifier (VB Keywords 2)
 			m_rScintilla_TextArea.Styles[16].ForeColor = Color.Blue; //Keywordset 1
-			m_rScintilla_TextArea.Styles[17].ForeColor = Color.Red; //Keywordset ?3 Wird gar nicht angelaufen
+			m_rScintilla_TextArea.Styles[17].ForeColor = Color.Red;
 			m_rScintilla_TextArea.Styles[18].ForeColor = Color.Blue; //Keywordset 1
-m_rScintilla_TextArea.Styles[Style.Cpp.Word].ForeColor = Color.Blue;;
-			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.GlobalClass].ForeColor = Color.FromArgb(128,0,255); //Keywordset 3 (Welche Bedeutung hat Style 19 in cs und cpp lexer?)
-		}
+			m_rScintilla_TextArea.Styles[ScintillaNET.Style.Cpp.GlobalClass].ForeColor = Color.FromArgb(128,0,255);		}
 
 		private static string CreateStringWithGlobalKeywords()
 		{
@@ -373,17 +373,20 @@ m_rScintilla_TextArea.Styles[Style.Cpp.Word].ForeColor = Color.Blue;;
 					m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf FALSE gesetzt habe - AppendText");
 					m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
 		*/
-
-			m_rScintilla_TextArea.AppendText("\n\tint n;");
+			m_rScintilla_TextArea.AppendText("\nvoid abstract MyFunction()");
+			m_rScintilla_TextArea.AppendText("\n{");
+			m_rScintilla_TextArea.AppendText("\n\tint n = 0;");
+			m_rScintilla_TextArea.AppendText("\n\tGlobal.Query();");
 			m_rScintilla_TextArea.AppendText("\n\tstring sMyString;");
-			m_rScintilla_TextArea.AppendText("\n\tTheView ;");
 			m_rScintilla_TextArea.AppendText("\n\tsMyString = \"hello world\"");
-			m_rScintilla_TextArea.AppendText("\n\tGlobal.Query()");
+			m_rScintilla_TextArea.AppendText("\n\tTheView ;");
 			m_rScintilla_TextArea.AppendText("\n\tQuery()");
 			m_rScintilla_TextArea.AppendText("\n\t// my comment");
 			m_rScintilla_TextArea.AppendText("\n\t <> = - + ");
 			m_rScintilla_TextArea.AppendText("\n\t abstract as base control Control break case catch checked continue default delegate do else event explicit extern fa");
 			m_rScintilla_TextArea.AppendText("\n\tGlobal.UIMessageBox( "); // Klammer und ein Leerzeichen
+			m_rScintilla_TextArea.AppendText("\n}");
+
 
 /*
 			m_rScintilla_TextArea.AppendText("public void Button_KlickAktion() {");
