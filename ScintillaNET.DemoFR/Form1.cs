@@ -526,7 +526,6 @@ namespace ScintillaNET.DemoFR
 		private void m_rButtonSetBackgroundForSomeLines_Click(object sender, EventArgs e)
 		{
 			m_rScintilla_TextArea.Markers[0].Symbol = MarkerSymbol.Background;
-			m_rScintilla_TextArea.Markers[0].SetBackColor(Color.Red);
 			m_rScintilla_TextArea.Markers[0].SetBackColor(System.Drawing.Color.LightGray);
 			// Add to line 1
 			m_rScintilla_TextArea.Lines[1].MarkerAdd(0);
