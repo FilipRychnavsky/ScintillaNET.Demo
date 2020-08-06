@@ -436,6 +436,14 @@ namespace ScintillaNET.DemoFR
 		{
 			SetScintillaReadOnly(true);
 		}
+		private void SetBackgroundColor(Color oColorBackground)
+		{
+			//Styles durchiterieren und BackColor setzen
+			// Why is BackColor not supported?  https://github.com/jacobslusser/ScintillaNET/issues/63
+			foreach (Style rStyle in m_rScintilla_TextArea.Styles) {
+				rStyle.BackColor = oColorBackground;
+			}
+		}
 
 		private void SetScintillaReadOnly(bool bSetReadOnly)
 		{
@@ -444,11 +452,7 @@ namespace ScintillaNET.DemoFR
 			if (bSetReadOnly)
 				oColorBackground = System.Drawing.SystemColors.Control;
 
-			//Styles durchiterieren und BackColor setzen
-			// Why is BackColor not supported?  https://github.com/jacobslusser/ScintillaNET/issues/63
-			foreach (Style rStyle in m_rScintilla_TextArea.Styles) {
-				rStyle.BackColor = oColorBackground;
-			}
+			SetBackgroundColor(oColorBackground);
 			if (!bSetReadOnly) {
 				m_rScintilla_TextArea.Styles[Style.CallTip].ForeColor = SystemColors.InfoText;
 				m_rScintilla_TextArea.Styles[Style.CallTip].BackColor = SystemColors.Info;
@@ -456,6 +460,7 @@ namespace ScintillaNET.DemoFR
 
 			UpdateCheckBoxReadOnly();
 		}
+
 
 		private void UpdateCheckBoxReadOnly()
 		{
