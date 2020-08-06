@@ -529,7 +529,9 @@ namespace ScintillaNET.DemoFR
 			//			foreach (Style rStyle in m_rScintilla_TextArea.Styles)
 								//rStyle.BackColor = oColorBackground;
 			//m_rScintilla_TextArea.Lines[1].styles
-			m_rScintilla_TextArea.Styles[Style.Default].BackColor = System.Drawing.Color.DarkGray;
+			//m_rScintilla_TextArea.Styles[Style.Default].BackColor = System.Drawing.Color.DarkGray;
+			m_rScintilla_TextArea.Markers[1].SetBackColor(System.Drawing.Color.Red);
+			m_rScintilla_TextArea.Lines[1].MarkerAdd(1);
 
 		}
 	}
