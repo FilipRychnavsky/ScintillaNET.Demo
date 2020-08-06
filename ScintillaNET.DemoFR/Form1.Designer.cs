@@ -37,6 +37,7 @@
 			this.m_rButtonCopyRTF = new System.Windows.Forms.Button();
 			this.m_rButton_GoToLine = new System.Windows.Forms.Button();
 			this.m_rButtonTestDeleteRange = new System.Windows.Forms.Button();
+			this.m_rButtonSetBackgroundForSomeLines = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// m_rPanel
@@ -132,7 +133,7 @@
 			// 
 			// m_rButtonTestDeleteRange
 			// 
-			this.m_rButtonTestDeleteRange.Location = new System.Drawing.Point(478, 70);
+			this.m_rButtonTestDeleteRange.Location = new System.Drawing.Point(518, 33);
 			this.m_rButtonTestDeleteRange.Name = "m_rButtonTestDeleteRange";
 			this.m_rButtonTestDeleteRange.Size = new System.Drawing.Size(110, 35);
 			this.m_rButtonTestDeleteRange.TabIndex = 10;
@@ -140,11 +141,22 @@
 			this.m_rButtonTestDeleteRange.UseVisualStyleBackColor = true;
 			this.m_rButtonTestDeleteRange.Click += new System.EventHandler(this.m_rButtonTestDeleteRange_Click);
 			// 
+			// m_rButtonSetBackgroundForSomeLines
+			// 
+			this.m_rButtonSetBackgroundForSomeLines.Location = new System.Drawing.Point(643, 33);
+			this.m_rButtonSetBackgroundForSomeLines.Name = "m_rButtonSetBackgroundForSomeLines";
+			this.m_rButtonSetBackgroundForSomeLines.Size = new System.Drawing.Size(93, 35);
+			this.m_rButtonSetBackgroundForSomeLines.TabIndex = 11;
+			this.m_rButtonSetBackgroundForSomeLines.Text = "Set &Background for some Lines";
+			this.m_rButtonSetBackgroundForSomeLines.UseVisualStyleBackColor = true;
+			this.m_rButtonSetBackgroundForSomeLines.Click += new System.EventHandler(this.m_rButtonSetBackgroundForSomeLines_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(834, 507);
+			this.Controls.Add(this.m_rButtonSetBackgroundForSomeLines);
 			this.Controls.Add(this.m_rButtonTestDeleteRange);
 			this.Controls.Add(this.m_rButton_GoToLine);
 			this.Controls.Add(this.m_rButtonCopyRTF);
@@ -173,6 +185,7 @@
 		private System.Windows.Forms.Button m_rButtonCopyRTF;
 		private System.Windows.Forms.Button m_rButton_GoToLine;
 		private System.Windows.Forms.Button m_rButtonTestDeleteRange;
+		private System.Windows.Forms.Button m_rButtonSetBackgroundForSomeLines;
 	}
 }
 
