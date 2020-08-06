@@ -526,6 +526,11 @@ namespace ScintillaNET.DemoFR
 		private void m_rButtonSetBackgroundForSomeLines_Click(object sender, EventArgs e)
 		{
 			//TODO_FR die zweite Zeile - also Zeile Nr. [1] dunkelgrau hinterlegen
+			//			foreach (Style rStyle in m_rScintilla_TextArea.Styles)
+								//rStyle.BackColor = oColorBackground;
+			//m_rScintilla_TextArea.Lines[1].styles
+			m_rScintilla_TextArea.Styles[Style.Default].BackColor = System.Drawing.Color.DarkGray;
+
 		}
 	}
 }
