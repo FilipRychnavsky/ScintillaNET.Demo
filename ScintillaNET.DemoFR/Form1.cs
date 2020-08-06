@@ -525,21 +525,11 @@ namespace ScintillaNET.DemoFR
 
 		private void m_rButtonSetBackgroundForSomeLines_Click(object sender, EventArgs e)
 		{
-			//TODO_FR die zweite Zeile - also Zeile Nr. [1] dunkelgrau hinterlegen
-			//			foreach (Style rStyle in m_rScintilla_TextArea.Styles)
-			//rStyle.BackColor = oColorBackground;
-			//m_rScintilla_TextArea.Lines[1].styles
-			//m_rScintilla_TextArea.Styles[Style.Default].BackColor = System.Drawing.Color.DarkGray;
-			// Define a "breakpoint" marker (0) and background color marker (1)
-			m_rScintilla_TextArea.Markers[0].Symbol = MarkerSymbol.Circle;
-			m_rScintilla_TextArea.Markers[0].SetForeColor(Color.Red);
+			m_rScintilla_TextArea.Markers[0].Symbol = MarkerSymbol.Background;
 			m_rScintilla_TextArea.Markers[0].SetBackColor(Color.Red);
-			m_rScintilla_TextArea.Markers[1].Symbol = MarkerSymbol.Background;
-			m_rScintilla_TextArea.Markers[1].SetBackColor(Color.Red);
-			m_rScintilla_TextArea.Markers[1].SetBackColor(System.Drawing.Color.LightGray);
+			m_rScintilla_TextArea.Markers[0].SetBackColor(System.Drawing.Color.LightGray);
 			// Add to line 1
 			m_rScintilla_TextArea.Lines[1].MarkerAdd(0);
-			m_rScintilla_TextArea.Lines[1].MarkerAdd(1);
 
 		}
 	}
