@@ -74,7 +74,18 @@ namespace ScintillaNET.DemoFR
 			//use tab and not as three spaces
 			m_rScintilla_TextArea.UseTabs = true;
 			m_rScintilla_TextArea.UpdateUI += OnScintilla_UpdateUI;
+			DefineLineMarkers();
 			UpdateCheckBoxReadOnly();
+		}
+
+		private void DefineLineMarkers()
+		{
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.ReadOnly].Symbol = MarkerSymbol.Background;
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.ReadOnly].SetBackColor(System.Drawing.Color.LightGray);
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Error].Symbol = MarkerSymbol.Arrow;
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Error].SetBackColor(System.Drawing.Color.Red);
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Warning].Symbol = MarkerSymbol.Arrow;
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Warning].SetBackColor(System.Drawing.Color.Yellow);
 		}
 
 		private void OnScintilla_UpdateUI(object sender, UpdateUIEventArgs e)
@@ -492,7 +503,6 @@ namespace ScintillaNET.DemoFR
 			UpdateCheckBoxReadOnly();
 		}
 
-
 		private void UpdateCheckBoxReadOnly()
 		{
 			m_rCheckBoxReadOnly.Checked = m_rScintilla_TextArea.ReadOnly;
@@ -554,16 +564,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.DeleteRange(0, nLengthToDelete);
 		}
 
-		private void DefineLineMarkers()
-		{
-			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.ReadOnly].Symbol = MarkerSymbol.Background;
-			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.ReadOnly].SetBackColor(System.Drawing.Color.LightGray);
-			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Error].Symbol = MarkerSymbol.Arrow;
-			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Error].SetBackColor(System.Drawing.Color.Red);
-			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Warning].Symbol = MarkerSymbol.Arrow;
-			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Warning].SetBackColor(System.Drawing.Color.Yellow);
-		}
-		
+	
 		private void ClearAllLineMarkers()
 		{
 			foreach (var rLine in m_rScintilla_TextArea.Lines) {
@@ -581,14 +582,10 @@ namespace ScintillaNET.DemoFR
 		private void m_rButtonSetBackgroundForSomeLines_Click(object sender, EventArgs e)
 		{
 			ClearAllLineMarkers();
-			DefineLineMarkers();
-			// Add to line 1
 			m_rScintilla_TextArea.Lines[1].MarkerAdd((int)ELineMarkersIDs.ReadOnly);
 			m_rScintilla_TextArea.Lines[2].MarkerAdd((int)ELineMarkersIDs.Error);
 			m_rScintilla_TextArea.Lines[3].MarkerAdd((int)ELineMarkersIDs.Warning);
-
 		}
-
 
 	}
 }
