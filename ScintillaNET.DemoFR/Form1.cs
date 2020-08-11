@@ -7,9 +7,40 @@ using System.Text.RegularExpressions;
 
 namespace ScintillaNET.DemoFR
 {
+
+
 	public partial class Form1 : Form
 	{
 		ScintillaNET.Scintilla m_rScintilla_TextArea;
+
+		/// <summary> 
+		/// Grund für den Hintergrund der Zeilen ; Verwendet in Remarks von Line
+		/// </summary>
+		///<remarks>fr20200811 SI 415057</remarks>
+		private enum ELineMarkersPurpose
+		{
+			ReadOnly = 0,
+			CompilationStatus = 1
+		}
+
+		/// <summary> 
+		/// Benutzt für die Auswahl der Farbe des Hintergrund der Zeilen 
+		/// </summary>
+		/// <remarks>fr20200811 SI 415057</remarks>
+		public enum ECompilationStatus
+		{
+			OK = 0,
+			Warning = 1,
+			Error = 2
+		}
+
+		public enum ELineMarkersIDs
+		{
+			ReadWrite = 0,
+			ReadOnly = 1,
+			Error = 2,
+			Warning = 3
+		}
 
 		public Form1()
 		{
@@ -523,22 +554,25 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.DeleteRange(0, nLengthToDelete);
 		}
 
-		private void m_rButtonSetBackgroundForSomeLines_Click(object sender, EventArgs e)
+		private void DefineLinesMarkers()
 		{
-			m_rScintilla_TextArea.Markers[0].Symbol = MarkerSymbol.Background;
-			m_rScintilla_TextArea.Markers[0].SetBackColor(System.Drawing.Color.LightGray);
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.ReadOnly].Symbol = MarkerSymbol.Background;
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.ReadOnly].SetBackColor(System.Drawing.Color.LightGray);
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Error].Symbol = MarkerSymbol.Arrow;
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Error].SetBackColor(System.Drawing.Color.Red);
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Warning].Symbol = MarkerSymbol.Arrow;
+			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Warning].SetBackColor(System.Drawing.Color.Yellow);
+		}
+private void m_rButtonSetBackgroundForSomeLines_Click(object sender, EventArgs e)
+		{
+			DefineLinesMarkers();
 			// Add to line 1
-			m_rScintilla_TextArea.Lines[1].MarkerAdd(0);
-
-			const int nMarkerIDDreieckError = 1;
-			m_rScintilla_TextArea.Markers[nMarkerIDDreieckError].Symbol = MarkerSymbol.Arrow;
-			m_rScintilla_TextArea.Markers[nMarkerIDDreieckError].SetBackColor(System.Drawing.Color.Red);
-			m_rScintilla_TextArea.Lines[2].MarkerAdd(nMarkerIDDreieckError );
-			const int nMarkerIDDreieckWarning = 2;
-			m_rScintilla_TextArea.Markers[nMarkerIDDreieckWarning].Symbol = MarkerSymbol.Arrow;
-			m_rScintilla_TextArea.Markers[nMarkerIDDreieckWarning].SetBackColor(System.Drawing.Color.Yellow);
-			m_rScintilla_TextArea.Lines[3].MarkerAdd(nMarkerIDDreieckWarning);
+			m_rScintilla_TextArea.Lines[1].MarkerAdd((int)ELineMarkersIDs.ReadOnly);
+			m_rScintilla_TextArea.Lines[2].MarkerAdd((int)ELineMarkersIDs.Error);
+			m_rScintilla_TextArea.Lines[3].MarkerAdd((int)ELineMarkersIDs.Warning);
 
 		}
+
+
 	}
 }
