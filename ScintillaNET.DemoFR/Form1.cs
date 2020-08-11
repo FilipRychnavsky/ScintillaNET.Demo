@@ -554,7 +554,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.DeleteRange(0, nLengthToDelete);
 		}
 
-		private void DefineLinesMarkers()
+		private void DefineLineMarkers()
 		{
 			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.ReadOnly].Symbol = MarkerSymbol.Background;
 			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.ReadOnly].SetBackColor(System.Drawing.Color.LightGray);
@@ -563,9 +563,25 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Warning].Symbol = MarkerSymbol.Arrow;
 			m_rScintilla_TextArea.Markers[(int)ELineMarkersIDs.Warning].SetBackColor(System.Drawing.Color.Yellow);
 		}
-private void m_rButtonSetBackgroundForSomeLines_Click(object sender, EventArgs e)
+		
+		private void ClearAllLineMarkers()
 		{
-			DefineLinesMarkers();
+			foreach (var rLine in m_rScintilla_TextArea.Lines) {
+				if (rLine.MarkerGet() > 0) {
+					// Es gibt was zu löschen ; wir haben bisher 4 Marker
+					for (int nMarkerID = 0; nMarkerID < 4; nMarkerID++) {
+						rLine.MarkerDelete(nMarkerID);
+					}
+				} else {
+					// Do nothing
+				}
+			}
+		}
+
+		private void m_rButtonSetBackgroundForSomeLines_Click(object sender, EventArgs e)
+		{
+			ClearAllLineMarkers();
+			DefineLineMarkers();
 			// Add to line 1
 			m_rScintilla_TextArea.Lines[1].MarkerAdd((int)ELineMarkersIDs.ReadOnly);
 			m_rScintilla_TextArea.Lines[2].MarkerAdd((int)ELineMarkersIDs.Error);
