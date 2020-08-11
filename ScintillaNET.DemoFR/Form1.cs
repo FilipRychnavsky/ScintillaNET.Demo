@@ -530,6 +530,15 @@ namespace ScintillaNET.DemoFR
 			// Add to line 1
 			m_rScintilla_TextArea.Lines[1].MarkerAdd(0);
 
+			const int nMarkerIDDreieckError = 1;
+			m_rScintilla_TextArea.Markers[nMarkerIDDreieckError].Symbol = MarkerSymbol.Arrow;
+			m_rScintilla_TextArea.Markers[nMarkerIDDreieckError].SetBackColor(System.Drawing.Color.Red);
+			m_rScintilla_TextArea.Lines[2].MarkerAdd(nMarkerIDDreieckError );
+			const int nMarkerIDDreieckWarning = 2;
+			m_rScintilla_TextArea.Markers[nMarkerIDDreieckWarning].Symbol = MarkerSymbol.Arrow;
+			m_rScintilla_TextArea.Markers[nMarkerIDDreieckWarning].SetBackColor(System.Drawing.Color.Yellow);
+			m_rScintilla_TextArea.Lines[3].MarkerAdd(nMarkerIDDreieckWarning);
+
 		}
 	}
 }
