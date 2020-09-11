@@ -38,6 +38,8 @@
 			this.m_rButton_GoToLine = new System.Windows.Forms.Button();
 			this.m_rButtonTestDeleteRange = new System.Windows.Forms.Button();
 			this.m_rButtonSetBackgroundForSomeLines = new System.Windows.Forms.Button();
+			this.m_rButtonAutocompletionTest = new System.Windows.Forms.Button();
+			this.m_rButtonBackDoor = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// m_rPanel
@@ -151,11 +153,34 @@
 			this.m_rButtonSetBackgroundForSomeLines.UseVisualStyleBackColor = true;
 			this.m_rButtonSetBackgroundForSomeLines.Click += new System.EventHandler(this.m_rButtonSetBackgroundForSomeLines_Click);
 			// 
+			// m_rButtonAutocompletionTest
+			// 
+			this.m_rButtonAutocompletionTest.Location = new System.Drawing.Point(525, 78);
+			this.m_rButtonAutocompletionTest.Name = "m_rButtonAutocompletionTest";
+			this.m_rButtonAutocompletionTest.Size = new System.Drawing.Size(102, 34);
+			this.m_rButtonAutocompletionTest.TabIndex = 12;
+			this.m_rButtonAutocompletionTest.Text = "&Autocompletion Test";
+			this.m_rButtonAutocompletionTest.UseVisualStyleBackColor = true;
+			this.m_rButtonAutocompletionTest.Click += new System.EventHandler(this.m_rButtonAutocompletionTest_Click);
+			// 
+			// m_rButtonBackDoor
+			// 
+			this.m_rButtonBackDoor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+			this.m_rButtonBackDoor.Location = new System.Drawing.Point(644, 79);
+			this.m_rButtonBackDoor.Name = "m_rButtonBackDoor";
+			this.m_rButtonBackDoor.Size = new System.Drawing.Size(91, 33);
+			this.m_rButtonBackDoor.TabIndex = 13;
+			this.m_rButtonBackDoor.Text = "&Back Door";
+			this.m_rButtonBackDoor.UseVisualStyleBackColor = false;
+			this.m_rButtonBackDoor.Click += new System.EventHandler(this.m_rButtonBackDoor_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(834, 507);
+			this.Controls.Add(this.m_rButtonBackDoor);
+			this.Controls.Add(this.m_rButtonAutocompletionTest);
 			this.Controls.Add(this.m_rButtonSetBackgroundForSomeLines);
 			this.Controls.Add(this.m_rButtonTestDeleteRange);
 			this.Controls.Add(this.m_rButton_GoToLine);
@@ -186,6 +211,8 @@
 		private System.Windows.Forms.Button m_rButton_GoToLine;
 		private System.Windows.Forms.Button m_rButtonTestDeleteRange;
 		private System.Windows.Forms.Button m_rButtonSetBackgroundForSomeLines;
+		private System.Windows.Forms.Button m_rButtonAutocompletionTest;
+		private System.Windows.Forms.Button m_rButtonBackDoor;
 	}
 }
 

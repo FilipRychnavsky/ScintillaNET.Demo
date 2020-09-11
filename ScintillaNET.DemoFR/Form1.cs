@@ -90,7 +90,7 @@ namespace ScintillaNET.DemoFR
 
 		private void OnScintilla_UpdateUI(object sender, UpdateUIEventArgs e)
 		{
-			System.Diagnostics.Debug.WriteLine(System.String.Format("on UpdateUI: {0}", e.ToString()));
+			//System.Diagnostics.Debug.WriteLine(System.String.Format("on UpdateUI: {0}", e.ToString()));
 		}
 
 		private void SetDotNetKeywords()
@@ -103,9 +103,9 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.Colorize(0, m_rScintilla_TextArea.Text.Length);
 		}
 
-/// <summary>
-/// <remark>https://github.com/jacobslusser/ScintillaNET/wiki/Automatic-Syntax-Highlighting</remark>
-/// </summary>
+		/// <summary>
+		/// <remark>https://github.com/jacobslusser/ScintillaNET/wiki/Automatic-Syntax-Highlighting</remark>
+		/// </summary>
 		private void InitStyles()
 		{
 			m_rScintilla_TextArea.StyleResetDefault();
@@ -295,7 +295,7 @@ namespace ScintillaNET.DemoFR
 			foreach (Match m in Regex.Matches(m_rScintilla_TextArea.Text, @"\b\w+\b")) {
 				mWords[m.Value] = m.Value;
 			}
-      foreach(var word in mWords.Keys)
+			foreach (var word in mWords.Keys)
 				sResult += string.Format(" {0}", word.ToString());
 			return sResult;
 		}
@@ -313,7 +313,7 @@ namespace ScintillaNET.DemoFR
 			//string sAutoCompletionList = GetAutocompletionListFromParsedText();
 			//SI 392112 Underscore debug values for Autocompletion
 			sAutoCompletionList += " S_KopfLagerUmplanung?2 S_KopfLagerZubuchung?2 S_KopfLagerZubuchungExtra?2 S_PositionenLagerAbbuchung?2 S_PositionenLagerAbbuchungSchwund?2 S_PositionenLagerUmplanung?2 S_ProduktionenLagerRefresh?2 SetKopfArtikelEP?2 SetKopfLagerID?2 SetPositionenLagerID?2";
-			sAutoCompletionList = sAutoCompletionList.Trim();	
+			sAutoCompletionList = sAutoCompletionList.Trim();
 			// #CodeEditor SI383424 Setzte die Eingabetaste und "(" als FillUps. Sie dienen der Übernahme der Auswahl aus einer Autocompletion. 
 			// https://www.scintilla.org/ScintillaDoc.html#Autocompletion
 			m_rScintilla_TextArea.AutoCSetFillUps("\n(");
@@ -449,13 +449,13 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AppendText("\n}");
 
 
-/*
-			m_rScintilla_TextArea.AppendText("public void Button_KlickAktion() {");
-			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 1");
-			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 2");
-			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 3");
-			m_rScintilla_TextArea.AppendText("\n}");
-*/
+			/*
+						m_rScintilla_TextArea.AppendText("public void Button_KlickAktion() {");
+						m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 1");
+						m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 2");
+						m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 3");
+						m_rScintilla_TextArea.AppendText("\n}");
+			*/
 		}
 
 		private void m_rButtonSearch_Click(object sender, EventArgs e)
@@ -564,7 +564,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.DeleteRange(0, nLengthToDelete);
 		}
 
-	
+
 		private void ClearAllLineMarkers()
 		{
 			foreach (var rLine in m_rScintilla_TextArea.Lines) {
@@ -587,5 +587,107 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.Lines[3].MarkerAdd((int)ELineMarkersIDs.Warning);
 		}
 
+		/// <summary>
+		/// Test aus dem ALPHAPLAN
+		/// </summary>
+		private void GetWordEntered()
+		{
+			string sWordEntered = string.Empty;
+			int nWordStartPosition = m_rScintilla_TextArea.CurrentPosition;
+			// folgende Zeile kann über OnKeyDown angelaufen werden, wenn man Strg + Leerzeichen in der Mitte eines Wortes betätigt
+			if (m_rScintilla_TextArea.GetCharAt(nWordStartPosition - 1) != '.') {
+				nWordStartPosition = m_rScintilla_TextArea.WordStartPosition(m_rScintilla_TextArea.CurrentPosition, true);
+			}
+			/*WordStartPosition wird auch mit dem onlyWordCharacters true Parameter gestartet.
+				Wenn man "if(**." eingibt, dann findet WordStartPosition(nPos, false) die Klammer "(" - Anfang der non-word boundary 
+				(die Suche wurde für "." - non-word gestartet) . 
+				WordStartPosition(nPos, true) findet "." (erstes non-word Zeichen)*/
+			int nWordStartPosition_OnlyWordCharacters = nWordStartPosition;
+			// Suche nach dem Wort vor dem ersten "."
+			while (m_rScintilla_TextArea.GetCharAt(nWordStartPosition - 1) == '.') {
+				nWordStartPosition = m_rScintilla_TextArea.WordStartPosition(nWordStartPosition - 1, false);
+			}
+			//if(m_rScintilla_TextArea.GetCharAt(nWordStartPosition) == '.') {
+			//  sWordEntered = m_rScintilla_TextArea.GetWordFromPosition(nWordStartPosition - 1);
+			//}
+			while (m_rScintilla_TextArea.GetCharAt(nWordStartPosition_OnlyWordCharacters - 1) == '.') {
+				// Der zweite Parameter von WordStartPosition ist onlyWordCharacters - die Suche endet bei erstem Zeichen, das nicht zu einem Wort gehört.
+				// Egal, ob die Suche auf einem nicht-Wort Zeichen - z.B. ein Punkt - gestartet wurde.
+				nWordStartPosition_OnlyWordCharacters = m_rScintilla_TextArea.WordStartPosition(nWordStartPosition_OnlyWordCharacters - 1, true);
+			}
+
+			// IsRangeWord liefert mir false, obwohl das Wort existiert
+			// bool bIsWordEntered_IsRangeWord = m_rScintilla_TextArea.IsRangeWord(nWordStartPosition, m_rScintilla_TextArea.CurrentPosition - nWordStartPosition - 1);
+
+			sWordEntered = m_rScintilla_TextArea.GetTextRange(nWordStartPosition, m_rScintilla_TextArea.CurrentPosition - nWordStartPosition - 1);
+			// Wenn der Punkt nicht der Anfang der non-word boundary ist, dann gibt es vor dem Punkt kein word.
+			bool bIsWordEntered = nWordStartPosition == nWordStartPosition_OnlyWordCharacters;
+			if (!bIsWordEntered)
+				if (sWordEntered == ")") {
+					// #CodeEditor SI 380949 Autocompletion für Klammern nach einer Methode anbieten
+					string rsPatternSymbols = @"\S*[(][\s\S]*?[)]";
+					RegexOptions rRegexOptions = RegexOptions.Multiline;
+					// Nimm die aktuelle Zeile, aber nur bis die aktuelle Position
+					// range: <Start der Zeile - Welche Position, Aktuelle Position>
+					int nStartOfTheLine = m_rScintilla_TextArea.Lines[m_rScintilla_TextArea.LineFromPosition(nWordStartPosition_OnlyWordCharacters)].Position;
+					string sInput = m_rScintilla_TextArea.GetTextRange(nStartOfTheLine, nWordStartPosition_OnlyWordCharacters - nStartOfTheLine + 1);
+					foreach (Match rMatch in Regex.Matches(sInput, rsPatternSymbols, rRegexOptions)) {
+						Console.WriteLine("'{0}' found at index {1}.", rMatch.Value, rMatch.Index);
+						sWordEntered = rMatch.Value;
+					}
+				} else {
+					sWordEntered = "";
+				}
+			// Beispiel System.DateTime.Now.AddDays(1). - System.DateTime Methoden sollen angeboten werden.
+			Debug.WriteLine(string.Format("WordEntered: {0}", sWordEntered));
+		}
+
+		private void DebugWordsAroundCurrentPosition()
+		{
+			var pos = m_rScintilla_TextArea.CurrentPosition;
+
+			var wordStart = m_rScintilla_TextArea.WordStartPosition(pos, true);
+			var wordEnd = m_rScintilla_TextArea.WordEndPosition(pos, true);
+			var word = m_rScintilla_TextArea.GetTextRange(wordStart, wordEnd - wordStart);
+
+			var prevWordStart = m_rScintilla_TextArea.WordStartPosition(wordStart - 1, true);
+			var prevWordEnd = m_rScintilla_TextArea.WordEndPosition(prevWordStart, true);
+			var prevWord = m_rScintilla_TextArea.GetTextRange(prevWordStart, prevWordEnd - prevWordStart);
+
+			var nextWordStart = m_rScintilla_TextArea.WordStartPosition(wordEnd + 1, true);
+			var nextWordEnd = m_rScintilla_TextArea.WordEndPosition(nextWordStart, true);
+			var nextWord = m_rScintilla_TextArea.GetTextRange(nextWordStart, nextWordEnd - nextWordStart);
+			Debug.WriteLine(string.Format("prevWord, word, nextWord: {0}, {1}, {2}", prevWord, word, nextWord));
+			Debug.WriteLine(string.Format("m_rScintilla_TextArea.GetWordFromPosition(pos): {0}", m_rScintilla_TextArea.GetWordFromPosition(pos)));
+			//TODO_FR Debug GetWordEntered Logik von ALPHAPLAN
+		}
+		private void m_rButtonAutocompletionTest_Click(object sender, EventArgs e)
+		{
+			m_rScintilla_TextArea.ClearAll();
+			// Navigate auf die (2).System.DateTime.Now.AddDays(2).
+			m_rScintilla_TextArea.Text = "public void ButtonFR1_KlickAktion() {" + "\r" +
+																		"\tvar This = ButtonFR1;" + "\r" +
+																		"\tvar rAnotherButton = ButtonFR2;" + "\r" +
+																		"\t// Kommentar 1" + "\r" +
+																		"\t// Kommentar 2" + "\r" +
+																		"\t//System.DateTime.Now." + "\r" +
+																		"\tSystem.DateTime.Now.AddDays(2)." + "\r" +
+																		"\tSystem.DateTime.Now.AddDays(2)." + " bla bla System.DateTime.Now.AddDays(1).AddHours(1)" +  "\r" +
+																		"\tSystem.DateTime.Now." + "\r" +
+																		"\tif(**." + "\r" +
+																		"\tDemoFilip();" + "\r" +
+																	"}";
+			// Ermittle das Wort
+			// Autocompletion
+			m_rScintilla_TextArea.CurrentPosition = 182;
+			//ShowAutoCompletion();
+			DebugWordsAroundCurrentPosition();
+		}
+
+		private void m_rButtonBackDoor_Click(object sender, EventArgs e)
+		{
+			//DebugWordsAroundCurrentPosition();
+			GetWordEntered();
+		}
 	}
 }
