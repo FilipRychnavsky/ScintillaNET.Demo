@@ -693,7 +693,6 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.TargetStart = nLineStartingPosition;
 			m_rScintilla_TextArea.TargetEnd = nLineStartingPosition + sComment.Length;
 			if (m_rScintilla_TextArea.SearchInTarget(sComment) != -1)
-				//TODO_FR #Uncomment 411165 199 handle assertion extern\scintillacontrol\scilexer 3.7.2\src\editor.cxx 5988
 				m_rScintilla_TextArea.ReplaceTarget("");
 		}
 
