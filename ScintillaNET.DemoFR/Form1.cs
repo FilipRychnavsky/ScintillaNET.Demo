@@ -692,6 +692,8 @@ namespace ScintillaNET.DemoFR
 			int nLineStartingPosition = 126;
 			m_rScintilla_TextArea.TargetStart = nLineStartingPosition;
 			m_rScintilla_TextArea.TargetEnd = nLineStartingPosition + sComment.Length;
+			// Der Grund für die Assertion ist, dass man einen String // durch einen leeren String ersetzt. 
+			// In der Methode SCI_REPLACETARGET des SciLexer Editor.css Zeile 5989 wird überprüft, ob der Parameter nicht leer ist, was hier der Fall ist.
 			if (m_rScintilla_TextArea.SearchInTarget(sComment) != -1)
 				m_rScintilla_TextArea.ReplaceTarget("");
 		}
