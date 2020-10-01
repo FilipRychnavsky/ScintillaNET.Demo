@@ -684,10 +684,24 @@ namespace ScintillaNET.DemoFR
 			DebugWordsAroundCurrentPosition();
 		}
 
+		///<summary>Deletes Text. It means replace Text with an empty string.</summary>
+		private void DeleteText()
+		{
+			// Postion of comment: 126 and 127
+			string sComment = @"//";
+			int nLineStartingPosition = 126;
+			m_rScintilla_TextArea.TargetStart = nLineStartingPosition;
+			m_rScintilla_TextArea.TargetEnd = nLineStartingPosition + sComment.Length;
+			if (m_rScintilla_TextArea.SearchInTarget(sComment) != -1)
+				//TODO_FR #Uncomment 411165 199 handle assertion extern\scintillacontrol\scilexer 3.7.2\src\editor.cxx 5988
+				m_rScintilla_TextArea.ReplaceTarget("");
+		}
+
 		private void m_rButtonBackDoor_Click(object sender, EventArgs e)
 		{
 			//DebugWordsAroundCurrentPosition();
-			GetWordEntered();
+			//GetWordEntered();
+			DeleteText();
 		}
 	}
 }
