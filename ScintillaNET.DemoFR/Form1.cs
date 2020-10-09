@@ -447,15 +447,12 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AppendText("\n\t abstract as base control Control break case catch checked continue default delegate do else event explicit extern fa");
 			m_rScintilla_TextArea.AppendText("\n\tGlobal.UIMessageBox( "); // Klammer und ein Leerzeichen
 			m_rScintilla_TextArea.AppendText("\n}");
-
-
-			/*
-						m_rScintilla_TextArea.AppendText("public void Button_KlickAktion() {");
-						m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 1");
-						m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 2");
-						m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 3");
-						m_rScintilla_TextArea.AppendText("\n}");
-			*/
+			m_rScintilla_TextArea.AppendText("//Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+			m_rScintilla_TextArea.AppendText("\npublic void Button_KlickAktion() {");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 1");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 2");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 3");
+			m_rScintilla_TextArea.AppendText("\n}");
 		}
 
 		private void m_rButtonSearch_Click(object sender, EventArgs e)
@@ -698,11 +695,23 @@ namespace ScintillaNET.DemoFR
 				m_rScintilla_TextArea.ReplaceTarget("");
 		}
 
+		void ScrollRangeDemo()
+		{
+			//TODO ScrollRangeDemo Scroll to position 267 - nach dem Wort extern, Ln. 12
+			m_rScintilla_TextArea.ScrollRange(267, 268);
+			// Scroll to some high number to get some whitespace down.
+			// It does not work.
+			//m_rScintilla_TextArea.ScrollRange(2000, 3000);
+			
+		}
+
 		private void m_rButtonBackDoor_Click(object sender, EventArgs e)
 		{
 			//DebugWordsAroundCurrentPosition();
 			//GetWordEntered();
-			DeleteText();
+			//DeleteText();
+			ScrollRangeDemo();
+			m_rScintilla_TextArea.Focus();
 		}
 	}
 }
