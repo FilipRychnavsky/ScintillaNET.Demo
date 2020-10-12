@@ -723,8 +723,8 @@ namespace ScintillaNET.DemoFR
 			//m_rScintilla_TextArea.ScrollRange(297, 1317);
 			int nPositionToNavigate = 297;
 			// Ich mache zwei Operationen zugleich. Ganz nach oben zu scrollen und dann zu der Position navigieren.
-			m_rScintilla_TextArea.LineScroll(m_rScintilla_TextArea.Lines.Count, 0);
-			m_rScintilla_TextArea.ScrollRange(nPositionToNavigate, nPositionToNavigate);
+			int nDeltaLinesUpwards = m_rScintilla_TextArea.LineFromPosition(nPositionToNavigate) - m_rScintilla_TextArea.FirstVisibleLine;
+			m_rScintilla_TextArea.LineScroll(nDeltaLinesUpwards, 0);
 		}
 
 		private void m_rButtonBackDoor_Click(object sender, EventArgs e)
