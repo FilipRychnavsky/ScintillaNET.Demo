@@ -712,15 +712,19 @@ namespace ScintillaNET.DemoFR
 				m_rScintilla_TextArea.ReplaceTarget("");
 		}
 
-		void ScrollRangeDemo()
+		void ScrollDemo()
 		{
 			//ScrollRangeDemo Scroll to position 267 - nach dem Wort extern, Ln. 12
 			//m_rScintilla_TextArea.ScrollRange(267, 268);
 			// Scroll to some high number to get some whitespace down.
-			// It does not work.
+			// It does not work. - Bcause of clamping
 			//m_rScintilla_TextArea.ScrollRange(2000, 3000);
-			//Scroll position to the top; f.e. the position  297 vor dem "lorem ipsum"
-			m_rScintilla_TextArea.ScrollRange(297, 1317);
+			//SI416766 Scroll VISIBLE position to the top; f.e. the position  297 vor dem "lorem ipsum" ; SCI_LINESCROLL
+			//m_rScintilla_TextArea.ScrollRange(297, 1317);
+			int nPositionToNavigate = 297;
+			// Ich mache zwei Operationen zugleich. Ganz nach oben zu scrollen und dann zu der Position navigieren.
+			m_rScintilla_TextArea.LineScroll(m_rScintilla_TextArea.Lines.Count, 0);
+			m_rScintilla_TextArea.ScrollRange(nPositionToNavigate, nPositionToNavigate);
 		}
 
 		private void m_rButtonBackDoor_Click(object sender, EventArgs e)
@@ -728,7 +732,7 @@ namespace ScintillaNET.DemoFR
 			//DebugWordsAroundCurrentPosition();
 			//GetWordEntered();
 			//DeleteText();
-			ScrollRangeDemo();
+			ScrollDemo();
 			m_rScintilla_TextArea.Focus();
 		}
 	}
