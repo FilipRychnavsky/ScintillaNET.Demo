@@ -449,9 +449,26 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AppendText("\n}");
 			m_rScintilla_TextArea.AppendText("//Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 			m_rScintilla_TextArea.AppendText("\npublic void Button_KlickAktion() {");
-			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 1");
-			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 2");
-			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 3");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 01");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 02");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 03");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 04");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 05");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 06");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 07");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 08");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 09");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 10");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 11");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 12");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 13");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 14");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 15");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 16");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 17");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 18");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 19");
+			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 20");
 			m_rScintilla_TextArea.AppendText("\n}");
 		}
 
@@ -697,12 +714,13 @@ namespace ScintillaNET.DemoFR
 
 		void ScrollRangeDemo()
 		{
-			//TODO ScrollRangeDemo Scroll to position 267 - nach dem Wort extern, Ln. 12
-			m_rScintilla_TextArea.ScrollRange(267, 268);
+			//ScrollRangeDemo Scroll to position 267 - nach dem Wort extern, Ln. 12
+			//m_rScintilla_TextArea.ScrollRange(267, 268);
 			// Scroll to some high number to get some whitespace down.
 			// It does not work.
 			//m_rScintilla_TextArea.ScrollRange(2000, 3000);
-			
+			//Scroll position to the top; f.e. the position  297 vor dem "lorem ipsum"
+			m_rScintilla_TextArea.ScrollRange(297, 1317);
 		}
 
 		private void m_rButtonBackDoor_Click(object sender, EventArgs e)
