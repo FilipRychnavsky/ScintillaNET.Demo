@@ -74,8 +74,22 @@ namespace ScintillaNET.DemoFR
 			//use tab and not as three spaces
 			m_rScintilla_TextArea.UseTabs = true;
 			m_rScintilla_TextArea.UpdateUI += OnScintilla_UpdateUI;
+			this.LostFocus += OnForm_LostFocus;
+			m_rScintilla_TextArea.LostFocus += OnScintilla_TextArea_LostFocus;
 			DefineLineMarkers();
 			UpdateCheckBoxReadOnly();
+		}
+
+		// LostFocus kann ich bei Scintilla anlaufen
+		private void OnScintilla_TextArea_LostFocus(object sender, EventArgs e)
+		{
+			//Debug.WriteLine("OnScintilla_TextArea_LostFocus");
+		}
+
+		// Verlust von Focus von OnForm konnte nicht angelaufen werden.
+		private void OnForm_LostFocus(object sender, EventArgs e)
+		{
+			//Debug.WriteLine("OnForm_LostFocus");
 		}
 
 		private void DefineLineMarkers()
