@@ -76,8 +76,20 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.UpdateUI += OnScintilla_UpdateUI;
 			this.LostFocus += OnForm_LostFocus;
 			m_rScintilla_TextArea.LostFocus += OnScintilla_TextArea_LostFocus;
+			this.m_rPanel.Leave += OnPanel_Leave;
+			this.Deactivate += OnForm_Deactivate;
 			DefineLineMarkers();
 			UpdateCheckBoxReadOnly();
+		}
+
+		private void OnForm_Deactivate(object sender, EventArgs e)
+		{
+			
+		}
+
+		private void OnPanel_Leave(object sender, EventArgs e)
+		{
+			//Debug.WriteLine("OnPanel_Leave");
 		}
 
 		// LostFocus kann ich bei Scintilla anlaufen
