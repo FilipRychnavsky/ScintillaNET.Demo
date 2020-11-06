@@ -460,7 +460,7 @@ namespace ScintillaNET.DemoFR
 					m_rScintilla_TextArea.AppendText("\nText nach dem ich ReadOnly auf FALSE gesetzt habe - AppendText");
 					m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\nInserting Text");
 		*/
-			m_rScintilla_TextArea.AppendText("\nvoid abstract MyFunction()");
+			m_rScintilla_TextArea.AppendText("void abstract MyFunction()");
 			m_rScintilla_TextArea.AppendText("\n{");
 			m_rScintilla_TextArea.AppendText("\n\tint n = 0;");
 			m_rScintilla_TextArea.AppendText("\n\tGlobal.Query();");
@@ -496,6 +496,8 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 19");
 			m_rScintilla_TextArea.AppendText("\n\t\t// Kommentarzeile 20");
 			m_rScintilla_TextArea.AppendText("\n}");
+			m_rScintilla_TextArea.AppendText("\n");
+			m_rScintilla_TextArea.AppendText("\n");
 		}
 
 		private void m_rButtonSearch_Click(object sender, EventArgs e)
@@ -716,7 +718,8 @@ namespace ScintillaNET.DemoFR
 																		"\tSystem.DateTime.Now." + "\r" +
 																		"\tif(**." + "\r" +
 																		"\tDemoFilip();" + "\r" +
-																	"}";
+																	"}" +
+																	"\r\r";
 			// Ermittle das Wort
 			// Autocompletion
 			m_rScintilla_TextArea.CurrentPosition = 182;
@@ -753,12 +756,81 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.LineScroll(nDeltaLinesUpwards, 0);
 		}
 
+		private void DebugAnnotations()
+		{
+			string rsDebug = "Line | Annotations | Text\n";
+			for (int i = 0; i < m_rScintilla_TextArea.Lines.Count; i++) {
+				rsDebug +=System.String.Format("{0}|{1}|{2}", i, m_rScintilla_TextArea.Lines[i].AnnotationText, m_rScintilla_TextArea.Lines[i].Text);
+			}
+			Debug.WriteLine(rsDebug);
+		}
+		private void SetAnnotationOnEachLine()
+		{
+			for (int i = 0; i < m_rScintilla_TextArea.Lines.Count; i++) {
+				m_rScintilla_TextArea.Lines[i].AnnotationText = System.String.Format("This is an Annotation for Line {0}.", i);
+			}
+		}
+
+		private void InsertTextDemo()
+		{
+			// Documenting inserting text with and without single quote. Influence on Annotations
+			SetAnnotationOnEachLine();
+			DebugAnnotations();
+#if false
+
+			// This insert new Text on the end of the line 2.
+			Debug.WriteLine("\nInserting Text in the middle; End of Line 2");
+			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.Lines[2].EndPosition, "\rDemoTextToInsertWithoutQuote");
+			Debug.WriteLine("The Annotations of the Line 2 are OK:");
+			DebugAnnotations();
+			SetAnnotationOnEachLine();
+
+			// Insert a Text with single Quote on line 11
+			Debug.WriteLine("\nInserting Text in the middle; End of Line 11");
+			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.Lines[11].EndPosition, "\r'DemoTextToInsertWITHQuote");
+			Debug.Write("The Annotations after Inserting text with quote");
+			DebugAnnotations();
+			SetAnnotationOnEachLine();
+
+			Debug.WriteLine("\nInserting Text in the middle; One position before End of Line 11");
+			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.Lines[11].EndPosition - 1, "\r'DemoTextToInsertWITHQuote");
+			Debug.Write("The Annotations after Inserting text with quote");
+			DebugAnnotations();
+			SetAnnotationOnEachLine();
+
+			Debug.WriteLine("\nInserting Text on the end - with WITHOUT	Quote");
+			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\rDemoTextToInsertWithoutQuote");
+			DebugAnnotations();
+			SetAnnotationOnEachLine();
+
+			Debug.WriteLine("\nInserting Text on the end - with WITH Quote");
+			m_rScintilla_TextArea.InsertText(m_rScintilla_TextArea.TextLength, "\r'DemoTextToInsertWITHQuote");
+			Debug.Write("The Annotations after Inserting text with quote");
+			/* Inserted text is on the end of the lines*/
+			DebugAnnotations();
+			SetAnnotationOnEachLine();
+#endif
+
+			Debug.WriteLine("\nInserting Text on the end after two empty lines - with WITHOUT	Quote");
+			SetAnnotationOnEachLine();
+			DebugAnnotations();
+			int nPositionToInsert = m_rScintilla_TextArea.TextLength;
+			bool bIsAddingOnEndOfTheLastEmptyLine = (nPositionToInsert == m_rScintilla_TextArea.TextLength) &&
+																							m_rScintilla_TextArea.Lines[m_rScintilla_TextArea.LineFromPosition(nPositionToInsert)].Length == 0;
+			m_rScintilla_TextArea.InsertText(nPositionToInsert, "\rDemoText1\rDemoText2");
+			DebugAnnotations();
+			SetAnnotationOnEachLine();
+		}
+
+
+
 		private void m_rButtonBackDoor_Click(object sender, EventArgs e)
 		{
 			//DebugWordsAroundCurrentPosition();
 			//GetWordEntered();
 			//DeleteText();
-			ScrollDemo();
+			//ScrollDemo();
+			InsertTextDemo();
 			m_rScintilla_TextArea.Focus();
 		}
 	}
