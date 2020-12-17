@@ -839,15 +839,25 @@ namespace ScintillaNET.DemoFR
 			SetAnnotationOnEachLine();
 			DebugAnnotations();
 #endif
-//TODO am Ende - leere Zeile
 
-			Debug.WriteLine("\nInserting line break with in the middle of text on an empty line. Annotation is moved into new line");
+			Debug.WriteLine("\n");
 			m_rScintilla_TextArea.ClearAll();
 			m_rScintilla_TextArea.InsertText(0, "abc\r\r\rdef");
 			SetAnnotationOnEachLine();
 			DebugAnnotations();
+			Debug.WriteLine("Inserting line break with in the middle of a text on an empty line. Annotation will be moved into new line");
 			m_rScintilla_TextArea.InsertText(4, "\rnew test");
 			DebugAnnotations();
+
+			Debug.WriteLine("\n");
+			m_rScintilla_TextArea.ClearAll();
+			m_rScintilla_TextArea.InsertText(0, "abc\rSOMETEXT\r\rdef");
+			SetAnnotationOnEachLine();
+			DebugAnnotations();
+			Debug.WriteLine("Inserting line break with in the middle of a text on a non empty line. Annotation will stay on the line of position of insertion.");
+			m_rScintilla_TextArea.InsertText(12, "\rnew test");
+			DebugAnnotations();
+
 		}
 
 
