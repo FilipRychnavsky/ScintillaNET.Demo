@@ -818,14 +818,35 @@ namespace ScintillaNET.DemoFR
 			int nPositionToInsert = m_rScintilla_TextArea.TextLength;
 			bool bIsAddingOnEndOfTheLastEmptyLine = (nPositionToInsert == m_rScintilla_TextArea.TextLength) &&
 																							m_rScintilla_TextArea.Lines[m_rScintilla_TextArea.LineFromPosition(nPositionToInsert)].Length == 0;
-			m_rScintilla_TextArea.InsertText(nPositionToInsert, "\rDemoText1\rDemoText2");
-
+			//m_rScintilla_TextArea.InsertText(nPositionToInsert, "\rDemoText1\rDemoText2\rDemoText3");
+			m_rScintilla_TextArea.InsertText(nPositionToInsert, System.String.Format("{0}{1}{0}{2}{0}{3}", System.Environment.NewLine,"DemoText1", "DemoText2", "DemoText3"));
+			DebugAnnotations();
 #endif
+
+#if false
 			Debug.WriteLine("\nInserting Text in the middle of Text on an filled lines. Position 845 - Ende der Kommentarzeile 03");
 			SetAnnotationOnEachLine();
 			DebugAnnotations();
 			int nPositionToInsert = 845;
 			m_rScintilla_TextArea.InsertText(nPositionToInsert, "\rDemoText1\rDemoText2");
+			DebugAnnotations();
+#endif
+
+//m_rScintilla_TextArea.AppendText("\n");
+//TODO am Ende - leere Zeile
+#if false
+			Debug.WriteLine("\nInserting Text am Ende. Nicht leere Zeile");
+			SetAnnotationOnEachLine();
+			DebugAnnotations();
+#endif
+//TODO am Ende - leere Zeile
+
+			Debug.WriteLine("\nInserting line break with in the middle of text on an empty line. Annotation is moved into new line");
+			m_rScintilla_TextArea.ClearAll();
+			m_rScintilla_TextArea.InsertText(0, "abc\r\r\rdef");
+			SetAnnotationOnEachLine();
+			DebugAnnotations();
+			m_rScintilla_TextArea.InsertText(4, "\rnew test");
 			DebugAnnotations();
 		}
 
