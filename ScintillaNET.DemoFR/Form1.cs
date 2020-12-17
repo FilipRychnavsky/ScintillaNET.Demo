@@ -775,8 +775,8 @@ namespace ScintillaNET.DemoFR
 		{
 			// Documenting inserting text with and without single quote. Influence on Annotations
 			SetAnnotationOnEachLine();
-			DebugAnnotations();
 #if false
+			DebugAnnotations();
 
 			// This insert new Text on the end of the line 2.
 			Debug.WriteLine("\nInserting Text in the middle; End of Line 2");
@@ -832,8 +832,8 @@ namespace ScintillaNET.DemoFR
 			DebugAnnotations();
 #endif
 
-//m_rScintilla_TextArea.AppendText("\n");
-//TODO am Ende - leere Zeile
+			//m_rScintilla_TextArea.AppendText("\n");
+			//TODO am Ende - leere Zeile
 #if false
 			Debug.WriteLine("\nInserting Text am Ende. Nicht leere Zeile");
 			SetAnnotationOnEachLine();
@@ -845,7 +845,7 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.InsertText(0, "abc\r\r\rdef");
 			SetAnnotationOnEachLine();
 			DebugAnnotations();
-			Debug.WriteLine("Inserting line break with in the middle of a text on an empty line. Annotation will be moved into new line");
+			Debug.WriteLine("Inserting line break with in the middle of a text (end of second line) on an empty line. Annotation will be moved into new line");
 			m_rScintilla_TextArea.InsertText(4, "\rnew test");
 			DebugAnnotations();
 
@@ -854,10 +854,27 @@ namespace ScintillaNET.DemoFR
 			m_rScintilla_TextArea.InsertText(0, "abc\rSOMETEXT\r\rdef");
 			SetAnnotationOnEachLine();
 			DebugAnnotations();
-			Debug.WriteLine("Inserting line break with in the middle of a text on a non empty line. Annotation will stay on the line of position of insertion.");
+			Debug.WriteLine("Inserting line break with in the middle of a text (end of second line) on a non empty line. Annotation will stay on the line of position of insertion.");
 			m_rScintilla_TextArea.InsertText(12, "\rnew test");
 			DebugAnnotations();
 
+			Debug.WriteLine("\n");
+			m_rScintilla_TextArea.ClearAll();
+			m_rScintilla_TextArea.InsertText(0, "abc\r\r\r");
+			SetAnnotationOnEachLine();
+			DebugAnnotations();
+			Debug.WriteLine("Inserting line break in the end of a text. Last line ist empty. Annotation will be moved into new line");
+			m_rScintilla_TextArea.InsertText(6, "\rnew test");
+			DebugAnnotations();
+
+			Debug.WriteLine("\n");
+			m_rScintilla_TextArea.ClearAll();
+			m_rScintilla_TextArea.InsertText(0, "abc\r\r\rd");
+			SetAnnotationOnEachLine();
+			DebugAnnotations();
+			Debug.WriteLine("Inserting line break in the end of a text. Last line has some text. Annotation will be moved into new line");
+			m_rScintilla_TextArea.InsertText(7, "\rnew test");
+			DebugAnnotations();
 		}
 
 
@@ -869,6 +886,11 @@ namespace ScintillaNET.DemoFR
 			//DeleteText();
 			//ScrollDemo();
 			InsertTextDemo();
+			/*
+			//TODO_FR Lines for negative indices
+			Debug.WriteLine(m_rScintilla_TextArea.Lines[-1].Text);
+			Debug.WriteLine(m_rScintilla_TextArea.Lines[m_rScintilla_TextArea.Lines.Count].Text);
+			*/
 			m_rScintilla_TextArea.Focus();
 		}
 	}
