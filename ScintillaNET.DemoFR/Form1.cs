@@ -811,6 +811,7 @@ namespace ScintillaNET.DemoFR
 			SetAnnotationOnEachLine();
 #endif
 
+#if false
 			Debug.WriteLine("\nInserting Text on the end after two empty lines - with WITHOUT	Quote");
 			SetAnnotationOnEachLine();
 			DebugAnnotations();
@@ -818,8 +819,14 @@ namespace ScintillaNET.DemoFR
 			bool bIsAddingOnEndOfTheLastEmptyLine = (nPositionToInsert == m_rScintilla_TextArea.TextLength) &&
 																							m_rScintilla_TextArea.Lines[m_rScintilla_TextArea.LineFromPosition(nPositionToInsert)].Length == 0;
 			m_rScintilla_TextArea.InsertText(nPositionToInsert, "\rDemoText1\rDemoText2");
-			DebugAnnotations();
+
+#endif
+			Debug.WriteLine("\nInserting Text in the middle of Text on an filled lines. Position 845 - Ende der Kommentarzeile 03");
 			SetAnnotationOnEachLine();
+			DebugAnnotations();
+			int nPositionToInsert = 845;
+			m_rScintilla_TextArea.InsertText(nPositionToInsert, "\rDemoText1\rDemoText2");
+			DebugAnnotations();
 		}
 
 
