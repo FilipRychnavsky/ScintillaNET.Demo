@@ -543,6 +543,13 @@ namespace ScintillaNET.DemoFR
 			}
 
 			UpdateCheckBoxReadOnly();
+			// gc. Es gibt aber kein Unterschied zwischen user r/o und user-ad-programmatic r/o. https://github.com/jacobslusser/ScintillaNET/issues/360
+			string sVorher = m_rScintilla_TextArea.Text;
+			m_rScintilla_TextArea.Text += "Test während ro";
+			if (sVorher.Equals(m_rScintilla_TextArea.Text)) {
+				DebugAnnotations();
+				Debug.WriteLine("der status ist ro, per code text wurde nicht erweitert");
+			}
 		}
 
 		private void UpdateCheckBoxReadOnly()
